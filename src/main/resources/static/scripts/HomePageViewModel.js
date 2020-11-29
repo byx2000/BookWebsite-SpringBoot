@@ -71,8 +71,13 @@ $(function()
                     });
 
                     // 获取每个类别的随机6本电子书
-                    randomBooks(6,
-                        function(books)
+                    queryBooks(
+                        {
+                            categoryId: c.id,
+                            limit: 6,
+                            orderBy: "random"
+                        },
+                        function (books)
                         {
                             app_category_random.randomBooks.push(books);
                         }
