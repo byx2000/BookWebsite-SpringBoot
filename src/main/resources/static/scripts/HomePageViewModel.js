@@ -55,31 +55,35 @@ $(function()
             function(categories)
             {
                 app_category_random.categories = categories;
-                for (let c of categories)
+                app_category_random.maxScoreBooks = new Array(categories.length);
+                app_category_random.randomBooks = new Array(categories.length);
+
+                for (let i = 0; i < categories.length; ++i)
                 {
                     // 获取每个类别得分最高的电子书
-                    queryBooks(
-                    {
-                        categoryId: c.id,
-                        orderBy: "score",
-                        pageSize: 1,
-                        currentPage: 1
-                    }, 
-                    function(pageBean)
-                    {
-                        app_category_random.maxScoreBooks.push(pageBean.data[0]);
-                    });
+                    queryBooks
+                    (
+                        {
+                            categoryId: categories[i].id,
+                            orderBy: "score",
+                            limit: 1
+                        }, 
+                        function(books)
+                        {
+                            app_category_random.maxScoreBooks.splice(i, 1, books[0]);
+                        }
+                    );
 
                     // 获取每个类别的随机6本电子书
                     queryBooks(
                         {
-                            categoryId: c.id,
+                            categoryId: categories[i].id,
                             limit: 6,
                             orderBy: "random"
                         },
                         function (books)
                         {
-                            app_category_random.randomBooks.push(books);
+                            app_category_random.randomBooks.splice(i, 1, books);
                         }
                     );
                 }
