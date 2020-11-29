@@ -23,27 +23,4 @@ public interface IBookDao
      * @return 电子书列表
      */
     List<Book> query(BookQuery query);
-
-    /**
-     * 获取指定数量的随机电子书
-     * @param count 数量
-     * @return 电子书列表
-     */
-    List<Book> getRandomBooks(int count);
-
-    /**
-     * 搜索建议
-     * @param keyword 搜索关键字
-     * @param count 数量
-     * @return 搜索建议列表
-     */
-    List<Book> getSearchSuggestion(String keyword, int count);
-
-    /**
-     * 同类推荐
-     * @param categoryId 类别id
-     * @param count 数量
-     * @return 推荐列表
-     */
-    List<Book> getSimilarRecommend(int categoryId, int count);
 }

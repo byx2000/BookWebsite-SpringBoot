@@ -35,28 +35,4 @@ public class BookDaoImpl implements IBookDao
                 new BeanPropertyRowMapper<>(Book.class),
                 query.getParameters().toArray());
     }
-
-    @Override
-    public List<Book> getRandomBooks(int count)
-    {
-        return jdbcTemplate.query("SELECT * FROM books ORDER BY RANDOM() LIMIT ?",
-                new BeanPropertyRowMapper<>(Book.class),
-                count);
-    }
-
-    @Override
-    public List<Book> getSearchSuggestion(String keyword, int count)
-    {
-        return jdbcTemplate.query("SELECT * FROM (SELECT * FROM books ORDER BY heat DESC LIMIT ?) ORDER BY RANDOM() LIMIT ?",
-                new BeanPropertyRowMapper<>(Book.class),
-                2 * count, count);
-    }
-
-    @Override
-    public List<Book> getSimilarRecommend(int categoryId, int count)
-    {
-        return jdbcTemplate.query("SELECT * FROM books WHERE categoryId == ? ORDER BY score DESC LIMIT ?",
-                new BeanPropertyRowMapper<>(Book.class),
-                categoryId, count);
-    }
 }

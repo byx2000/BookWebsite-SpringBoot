@@ -119,6 +119,9 @@ public class BookQuery extends Query
                 case "score": // 按得分排序
                     addOrderCondition("score DESC");
                     break;
+                case "random": // 随机顺序
+                    addOrderCondition("RANDOM()");
+                    break;
             }
         }
 

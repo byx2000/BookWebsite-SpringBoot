@@ -53,18 +53,34 @@ public class BookServiceImpl implements IBookService
     @Override
     public List<Book> getRandomBooks(int count)
     {
-        return bookDao.getRandomBooks(count);
+        BookQuery query = new BookQuery();
+        query.setOrderBy("random");
+        query.setLimit(count);
+        return bookDao.query(query);
     }
 
     @Override
     public List<Book> getSearchSuggestion(String keyword, int count)
     {
-        return bookDao.getSearchSuggestion(keyword, count);
+        BookQuery query = new BookQuery();
+        query.setKeyword(keyword);
+        query.setOrderBy("heat");
+        query.setLimit(count);
+        List<Book> books = bookDao.query(query);
+        if (books.size() < count)
+        {
+            books.addAll(getRandomBooks(count - books.size()));
+        }
+        return books;
     }
 
     @Override
     public List<Book> getSimilarRecommend(int categoryId, int count)
     {
-        return bookDao.getSimilarRecommend(categoryId, count);
+        BookQuery query = new BookQuery();
+        query.setCategoryId(categoryId);
+        query.setOrderBy("score");
+        query.setLimit(count);
+        return bookDao.query(query);
     }
 }

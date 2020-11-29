@@ -53,121 +53,12 @@ public class DebugController
     @ResponseBody
     public String debug()
     {
-        /*List<Book> books = jdbcTemplate.query("SELECT * FROM books WHERE categoryId = 1",
-                new BeanPropertyRowMapper<>(Book.class));
-        System.out.println(books.size());
+        List<Book> books = bookService.getRandomBooks(5);
         for (Book b : books)
-        {
-            System.out.println(b);
-        }*/
-
-        /*BookQuery query = new BookQuery();
-        query.setCategoryId(3);
-        int count = bookDao.count(query);
-        System.out.println(count);*/
-
-        /*BookQuery query = new BookQuery();
-        query.setCategoryId(3);
-        List<Book> books = bookDao.query(query);
-        System.out.println(books.size());
-        for (Book b : books)
-        {
-            System.out.println(b.getName());
-        }*/
-
-        /*List<Book> books = bookDao.getRandomBooks(5);
-        System.out.println(books.size());
-        for (Book b : books)
-        {
-            System.out.println(b.getName());
-        }*/
-
-        /*List<Book> books = bookDao.getSearchSuggestion("妻子", 5);
-        System.out.println(books.size());
-        for (Book b : books)
-        {
-            System.out.println(b.getName());
-        }*/
-
-        /*List<Book> books = bookDao.getSimilarRecommend(1, 5);
-        System.out.println(books.size());
-        for (Book b : books)
-        {
-            System.out.println(b.getName());
-        }*/
-
-        /*CategoryQuery query = new CategoryQuery();
-        query.setCategoryId(4);
-        List<Category> categories = categoryDao.query(query);
-        for (Category c : categories)
-        {
-            System.out.println(c);
-        }*/
-
-        /*UserQuery query = new UserQuery();
-        List<User> users = userDao.query(query);
-        System.out.println(users.size());
-        for (User u : users)
-        {
-            System.out.println(u);
-        }*/
-
-        /*CommentQuery query = new CommentQuery();
-        query.setBookId(1);
-        int cnt = commentDao.count(query);
-        System.out.println(cnt);*/
-
-        /*CommentQuery query = new CommentQuery();
-        query.setBookId(1);
-        List<Comment> comments = commentDao.query(query);
-        System.out.println(comments.size());
-        for (Comment c : comments)
-        {
-            System.out.println(c);
-        }*/
-
-        /*Comment comment = new Comment();
-        comment.setBookId(1);
-        comment.setUserId(1);
-        comment.setContent("哈哈");
-        comment.setTime(DateUtils.now());
-        int cnt = commentDao.save(comment);
-        System.out.println(cnt);*/
-
-        /*BookQuery query = new BookQuery();
-        query.setCategoryId(3);
-        List<Book> books = bookService.query(query);
-        System.out.println(books.size());
-        for (Book b : books)
-        {
-            System.out.println(b.getName());
-        }*/
-
-        BookQuery query = new BookQuery();
-        query.setCategoryId(3);
-        PageBean<Book> pageBean = bookService.queryByPage(query, 10, 3);
-        System.out.println(pageBean.getData().size());
-        for (Book b : pageBean.getData())
         {
             System.out.println(b.getName());
         }
 
         return "该接口用于后端调试";
-    }
-
-    @RequestMapping("/json")
-    @ResponseBody
-    public ResultInfo json()
-    {
-        CommentQuery query = new CommentQuery();
-        query.setBookId(1);
-        query.setUserId(1);
-        List<Comment> comments = commentDao.query(query);
-        System.out.println(comments.size());
-        for (Comment c : comments)
-        {
-            System.out.println(c);
-        }
-        return ResultInfo.success(null);
     }
 }
