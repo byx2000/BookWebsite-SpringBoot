@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<htm>
+    <head>
+        <meta charset="UTF-8">
+        <title>用户主页</title>
+        <link rel="stylesheet" href="./styles/common.css"/>
+        <link rel="stylesheet" href="./styles/page.css"/>
+        <script src="./scripts/jquery-3.5.1.js"></script>
+        <script src="./scripts/vue.js"></script>
+        <script src="./scripts/request.js"></script>
+        <script src="./scripts/load_nav.js"></script>
+        <script src="./scripts/parameter.js"></script>
+        <script src="./scripts/UserPageViewModel.js"></script>
+        <style>
+            #content
+            {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                padding-right: 40px;
+                background-color: #f0f0f0;
+                display: flex;
+            }
+
+            #content .user_info
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #content .avatar
+            {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+            }
+
+            #content .username
+            {
+                font-size: 18px;
+                margin-top: 13px;
+            }
+
+            #content .tabs
+            {
+                margin-top: 20px;
+                width: 223px;
+                display: flex;
+                flex-direction: column;
+                border-left: 1px solid #f0f0f0;
+            }
+
+            #content .tab_normal, #content .tab_selected
+            {
+                font-size: 16px;
+                color: #24292e;
+                height: 52px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #content .tab_normal
+            {
+                background-color: #f0f0f0;
+            }
+
+            #content .tab_normal:hover
+            {
+                background-color: #e1ded9;
+            }
+
+            #content .tab_selected
+            {
+                background-color: #e1ded9;
+                font-weight: bold;
+            }
+
+            /* .my_comments, .my_favorites, .my_likes */
+            .tab_content
+            {
+                background-color: white;
+                margin-left: 30px;
+                padding: 30px;
+                flex: 1;
+            }
+
+            .comment_item
+            {
+                width: 100%;
+                margin-bottom: 32px;
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .name_and_content
+            {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 11px;
+            }
+
+            .book_name
+            {
+                font-size: 16px;
+                color: #000000;
+            }
+
+            .book_name:hover
+            {
+                cursor: pointer;
+                color: #f26552;
+            }
+
+            .comment_time
+            {
+                font-size: 12px;
+                color: #9e9e9e;
+            }
+
+            .comment_content
+            {
+                font-size: 14px;
+                color: #9e9e9e;
+                text-align: justify;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                /*height: 60px;
+                line-height: 20px;*/
+                margin-bottom: 11px;
+            }
+
+            .delete
+            {
+                align-self: flex-end;
+                width: 70px;
+                height: 30px;
+                background-color: #f26552;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 14px;
+            }
+
+            .delete:hover
+            {
+                cursor: pointer;
+            }
+
+            .count
+            {
+                color: #383b43;
+                font-size: 18px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #f26552;
+                margin-bottom: 32px;
+            }
+
+            .strong
+            {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <!--导航条-->
+        <div id="nav_holder"></div>
+
+        <!--内容区-->
+        <div id="content">
+            <!--用户信息栏-->
+            <div class="user_info">
+                <img class="avatar" src="./upload/avatar/1.jpg"/>
+                <p v-if="user !== null" class="username">{{user.username}}</p>
+                <!--选项卡-->
+                <div class="tabs">
+                    <a v-for="(tabName, index) in tabNames"
+                    v-bind:class="index === selectedTabIndex ? 'tab_selected' : 'tab_normal'"
+                    v-bind:href="tabLinks[index]">
+                        {{tabName}}
+                    </a>
+                </div>
+            </div>
+
+            <!--选项卡内容-->
+            <div class="tab_content">
+                <!--评论-->
+                <div class="my_comments"
+                    v-if="selectedTabIndex === 0">
+                    <p class="count">
+                        共 <span class="strong">{{totalCount}}</span> 条评论，共 <span class="strong">{{totalPage}}</span> 页，当前第 <span class="strong">{{currentPage}}</span> 页
+                    </p>
+                    <div class="comment_item"
+                            v-for="(comment, index) in comments">
+                        <div class="name_and_content">
+                            <a class="book_name"
+                                v-if="comment_books[index] !== null && comment_books[index] !== undefined"
+                                v-bind:href="'./book_detail.html?bookId=' + comment_books[index].id">
+                                {{comment_books[index].name}}
+                            </a>
+                            <p class="comment_time">发表时间：{{comment.time}}</p>
+                        </div>
+                        <p class="comment_content">{{comment.content}}</p>
+                        <a class="delete">删除</a>
+                    </div>
+                </div>
+
+                <!--收藏-->
+                <div class="my_favorites"
+                    v-if="selectedTabIndex === 1">
+                    我的收藏
+                </div>
+
+                <!--点赞-->
+                <div class="my_likes"
+                    v-if="selectedTabIndex === 2">
+                    我的点赞
+                </div>
+
+                <!--页码切换-->
+                <div class="page_switch">
+                    <a class="last_page"></a>
+                    <p class="current_page">第 {{currentPage}} 页</p>
+                    <a class="next_page"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</htm>

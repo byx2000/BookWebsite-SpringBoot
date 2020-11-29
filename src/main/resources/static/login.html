@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="./styles/common.css"/>
+    <script src="./scripts/jquery-3.5.1.js"></script>
+    <script src="./scripts/vue.js"></script>
+    <script src="./scripts/request.js"></script>
+    <script src="./scripts/LoginViewModel.js"></script>
+    <style>
+        html, body
+        {
+            height: 100%;
+        }
+
+        body
+        {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #content
+        {
+            width: 0;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            /*align-items: center;*/
+        }
+
+        #login
+        {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo
+        {
+            margin-bottom: 50px;
+        }
+
+        .input_holder
+        {
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .username, .password
+        {
+            display: block;
+            width: 250px;
+            height: 35px;
+            outline: none;
+            border: 1px solid #d0d0d0;
+            font-size: 14px;
+            color: #666666;
+            background-color: white;
+            text-indent: 32px;
+        }
+
+        .username
+        {
+            background: url(./images/user.png);
+            background-size: 25px 25px;
+            background-repeat: no-repeat;
+            background-position: left 5px center;
+        }
+
+        .password
+        {
+            background: url(./images/password.png);
+            background-size: 25px 25px;
+            background-repeat: no-repeat;
+            background-position: left 5px center;
+        }
+
+        .username:focus, .password:focus
+        {
+            border: 1px solid #9b9b9b;
+        }
+
+        .login_button
+        {
+            width: 250px;
+            height: 35px;
+            outline: none;
+            border: none;
+            background-color: #009de1;
+            font-size: 14px;
+            color: white;
+        }
+
+        .login_button:hover
+        {
+            background-color: #0b98bd;
+        }
+    </style>
+</head>
+<body>
+    <!--<div id="nav_holder"></div>-->
+    <div id="content">
+        <div id=login>
+            <img class="logo" src="./images/logo_welcome.png"/>
+            <div class="input_holder">
+                <input class="username" type="text" placeholder="请输入用户名" v-model="username"/>
+            </div>
+            <div class="input_holder">
+                <input class="password" type="password" placeholder="请输入密码" v-model="password"/>
+            </div>
+            <input class="login_button" type="button" value="登录" v-on:click="login"/>
+        </div>
+    </div>
+</body>
+</html>

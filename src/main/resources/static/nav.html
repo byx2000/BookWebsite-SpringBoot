@@ -1,0 +1,228 @@
+<script src="./scripts/parameter.js"></script>
+<script src="./scripts/request.js"></script>
+<script src="./scripts/NavBarViewModel.js"></script>
+
+<style>
+    #nav
+    {
+        overflow: hidden;
+        width: 100%;
+        height: 68px;
+        background-color: white;
+    }
+
+    #nav .nav_content
+    {
+        width: 1000px;
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #nav .logo
+    {
+        width: 160px;
+        height: 32px;
+    }
+
+    #nav .tab
+    {
+        list-style: none;
+        padding: 0;
+    }
+
+    #nav .tab li
+    {
+        display: inline-block;
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+
+    #nav .tab li a
+    {
+        display: inline-block;
+        padding-bottom: 10px;
+        font-size: 14px;
+    }
+
+    #nav .tab_normal
+    {
+        color: rgb(158, 158, 158);
+    }
+
+    #nav .tab_normal:hover
+    {
+        color: #f26552;
+    }
+
+    #nav .tab_selected
+    {
+        color: #f26552;
+        border-bottom: 2px solid #f26552;
+    }
+
+    #nav .login_or_register a
+    {
+        display: inline-block;
+        width: 60px;
+        height: 28px;
+        font-size: 14px;
+        color: #9e9e9e;
+        background-color: white;
+        border: 1px solid #d2d2d2;
+        text-align: center;
+        line-height: 26px;
+        margin-left: 10px;
+    }
+
+    #nav .login_or_register a:hover
+    {
+        background-color: #9e9e9e;
+        color: white;
+    }
+
+    #nav .search
+    {
+        height: 30px;
+        border: 1px solid #d2d2d2;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    #nav .search input
+    {
+        width: 200px;
+        height: 100%;
+        outline: none;
+        border: none;
+        background: transparent;
+        padding-left: 12px;
+        color: #9e9e9e;
+        font-size: 12px;
+    }
+
+    #nav .search a
+    {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-left: 5px;
+        margin-right: 10px;
+        background: url(./images/search.png);
+        background-size: 100% 100%;
+    }
+
+    #nav .search a:hover
+    {
+        cursor: pointer;
+    }
+
+    #nav .user_info
+    {
+        font-size: 14px;
+        color: black;
+    }
+
+    #nav .username
+    {
+        display: inline-block;
+        width: 100px;
+        color: #707070;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /*#nav .logout
+    {
+        font-size: 14px;
+        color: #9e9e9e;
+        margin-left: 20px;
+    }
+
+    #nav .logout:hover
+    {
+        color: #f26552;
+        cursor: pointer;
+        text-decoration: underline;
+    }*/
+
+    #nav .logout
+    {
+        display: inline-block;
+        width: 60px;
+        height: 28px;
+        font-size: 14px;
+        color: #9e9e9e;
+        background-color: white;
+        border: 1px solid #d2d2d2;
+        text-align: center;
+        line-height: 26px;
+        margin-left: 10px;
+    }
+
+    #nav .logout:hover
+    {
+        cursor: pointer;
+        background-color: #9e9e9e;
+        color: white;
+    }
+
+    #nav .user_info
+    {
+        display: flex;
+        align-items: center;
+    }
+
+    #nav .avatar
+    {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        margin-right: 10px;
+    }
+</style>
+
+<!--导航栏内容-->
+<div id="nav">
+    <div class="nav_content">
+        <!--logo-->
+        <img class="logo" src="./images/logo.png"/>
+        <!--选项卡-->
+        <ul class="tab">
+            <li v-for="(tab, index) in tabs">
+                <a v-bind:href="links[index]"
+                   v-bind:class="index == selectedTabIndex ? 'tab_selected' : 'tab_normal'">
+                    {{tab}}
+                </a>
+            </li>
+        </ul>
+        <!--搜索框-->
+        <div class="search">
+            <input type="text" 
+                   placeholder="请输入关键词" 
+                   v-model="keyword"
+                   v-on:keyup.enter="search"/>
+            <a v-on:click="search"></a>
+        </div>
+        <!--登录与注册入口-->
+        <div class="login_or_register" v-if="user === null">
+            <a href="./login.html">登录</a>
+            <a href="">注册</a>
+        </div>
+        <!--欢迎信息-->
+        <div class="user_info" v-if="user !== null">
+            <a href="./user_page.html?tab=my_comments&currentPage=1">
+                <img class="avatar" 
+                     v-bind:src="'./upload/avatar/' + user.id + '.jpg'"
+                     onerror="javascript:this.src='./upload/avatar/default.png';"/>
+            </a>
+            <a href="./user_page.html?tab=my_comments&currentPage=1" class="username">{{user.username}}</a>
+            <a class="logout" v-on:click="logout">注销</a>
+        </div>
+    </div>
+</div>

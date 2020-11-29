@@ -1,0 +1,19 @@
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body
+{
+    background-color: rgb(240, 240, 240);
+}
+
+#content
+{
+    width: 1000px;
+    background-color: #f0f0f0;
+    margin: 40px auto;
+}

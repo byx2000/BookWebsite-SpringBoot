@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>电子书网站-书籍详情</title>
+        <link rel="stylesheet" href="./styles/common.css"/>
+        <script src="./scripts/jquery-3.5.1.js"></script>
+        <script src="./scripts/vue.js"></script>
+        <script src="./scripts/request.js"></script>
+        <script src="./scripts/load_nav.js"></script>
+        <script src="./scripts/parameter.js"></script>
+        <script src="./scripts/BookDetailViewModel.js"></script>
+        <style>
+            .book_info
+            {
+                background-color: white;
+                display: flex;
+            }
+
+            .book_cover
+            {
+                width: 269px;
+                flex-grow:0;
+                flex-shrink:0;
+                border-right: 1px solid #f0f0f0;
+                display: flex;
+                justify-content: center;
+                /*align-items: center;*/
+                position: relative;
+            }
+
+            .category_label
+            {
+                width: 86px;
+                height: 23px;
+                position: absolute;
+                top: 11px;
+                left: -5px;
+                background: url(./images/decorate.png);
+                background-position: 0 0;
+                padding-left: 28px;
+                color: white;
+                font-size: 12px;
+                line-height: 19px;
+            }
+
+            .book_cover_img
+            {
+                width: 156px;
+                height: 208px;
+                box-shadow: 0px 0px 5px #888888;
+                margin-top: 68px;
+                margin-bottom: 68px;
+            }
+
+            .book_detail
+            {
+                /*width: 100%;*/
+                flex: 1;
+                width: 0;
+            }
+
+            .book_detail_row1
+            {
+                width: 100%;
+                padding: 22px 40px 20px 30px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .book_detail_row1_row1
+            {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            
+            .book_detail_row1_row1_col2
+            {
+                display: flex;
+                margin-left: 20px;
+            }
+
+            .label
+            {
+                width: 36px;
+                font-size: 12px;
+                color: #9e9e9e;
+                display: flex;
+                align-items: center;
+            }
+
+            .book_score
+            {
+                width: 30px;
+                display: flex;
+                align-items: center;
+            }
+
+            .book_name
+            {
+                width: 600px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .book_name, .book_score
+            {
+                color: #212121;
+                font-size: 20px;
+            }
+
+            .book_detail_row1_row2
+            {
+                display: flex;
+                justify-content: space-between;
+                height: fit-content;
+            }
+
+            .book_detail_row1_row2_col1
+            {
+                display: flex;
+            }
+
+            .book_detail_row1_row2_col2
+            {
+                display: flex;
+            }
+
+            .book_author, .book_word_count, .book_update_time
+            {
+                color: #9e9e9e;
+                font-size: 12px;
+                margin-right: 12px;
+                line-height: 35px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .book_author
+            {
+                width: 100px;
+            }
+
+            .book_word_count
+            {
+                width: 100px;
+            }
+
+            .book_like_count
+            {
+                color: #9e9e9e;
+                font-size: 12px;
+            }
+
+            .book_detail_row2
+            {
+                padding: 27px 40px 27px 30px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .book_description
+            {
+                color: #9e9e9e;
+                font-size: 12px;
+                line-height: 20px;
+                text-align: justify;
+            }
+
+            .book_detail_row3
+            {
+                padding: 24px 0 24px 30px;
+                display: flex;
+            }
+
+            .read_link, .favorite_link
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 85px;
+                height: 35px;
+                color: white;
+                margin-right: 20px;
+                text-align: center;
+                line-height: 30px;
+                font-size: 14px;
+            }
+
+            .read_link:hover, .favorite_link:hover
+            {
+                box-shadow: 0px 0px 5px #888888;
+            }
+
+            .read_link::before, .favorite_link::before
+            {
+                content: "";
+                display: inline-block;
+                margin-right: 5px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .read_link
+            {
+                background-color: #8bc34a;
+            }
+
+            .read_link::before
+            {
+                background: url(./images/book.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+
+            .favorite_link
+            {
+                background-color: #019cdc;
+            }
+
+            .favorite_link::before
+            {
+                background: url(./images/star.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+
+            .like_link, .dislike_link
+            {
+                width: 85px;
+                height: 35px;
+                margin-left: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 14px;
+            }
+
+            .like_link:hover, .dislike_link:hover
+            {
+                box-shadow: 0px 0px 5px #888888;
+            }
+
+            .like_link::before, .dislike_link::before
+            {
+                content: "";
+                display: inline-block;
+                margin-right: 5px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .like_link
+            {
+                background-color: #da473a;
+            }
+
+            .like_link::before
+            {
+                background: url(./images/like_white.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+
+            .dislike_link
+            {
+                background-color: #9e9e9e;
+            }
+
+            .dislike_link::before
+            {
+                background: url(./images/dislike.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+
+            .comment_and_recommend
+            {
+                margin-top: 40px;
+                display: flex;
+            }
+
+            .comment_list
+            {
+                flex: 1;
+                background-color: #fff;
+                padding: 0 40px;
+            }
+
+            .similar_recommend
+            {
+                width: 305px;
+                background-color:#fafafa;
+                border-left: 1px solid #f0f0f0;
+            }
+
+            .comment_list .header
+            {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                /*padding: 34px 40px 34px 40px;*/
+                padding: 34px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .comment_list .header span:first-child
+            {
+                font-size: 16px;
+                color: #212121;
+            }
+
+            .comment_list .header span:nth-child(2)
+            {
+                margin: 0 8px;
+                font-size: 16px;
+                color: #f0f0f0;
+            }
+
+            .comment_list .header span:last-child
+            {
+                font-size: 12px;
+                color: #919191;
+            }
+
+            .comment_list .header a
+            {
+                background-color: #8bc34a;
+                font-size: 12px;
+                color: white;
+                padding: 5px 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 3px;
+            }
+
+            .comment_list .header a::before
+            {
+                content: "";
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                margin-right: 5px;
+                background: url(./images/edit.png);
+                background-size: 100% 100%;
+            }
+
+            .comment_list .header a:hover
+            {
+                cursor: pointer;
+            }
+
+            .comment_item
+            {
+                display: flex;
+                margin: 32px 0;
+                /*padding: 0 40px;*/
+            }
+
+            .avatar
+            {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+
+            .comment_detail
+            {
+                margin-left: 30px;
+                flex: 1;
+                width: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            /*.comment_item:last-child .comment_detail
+            {
+                border-bottom: none;
+            }*/
+
+            .username
+            {
+                font-size: 14px;
+                color: #6b6b6b;
+            }
+
+            .time
+            {
+                font-size: 12px;
+                color: #9e9e9e;
+            }
+
+            .username_and_time
+            {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 11px;
+            }
+
+            .content
+            {
+                font-size: 14px;
+                color: #9e9e9e;
+                padding-top: 7px;
+                text-align: justify;
+                margin-bottom: 13px;
+            }
+
+            .similar_recommend
+            {
+                padding: 43px 40px;
+            }
+
+            .similar_recommend .header
+            {
+                margin-bottom: 32px;
+            }
+
+            .similar_recommend .recommend_items_container
+            {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .similar_recommend .recommend_item
+            {
+                width: 0;
+                flex: 0 0 50%;
+                margin-bottom: 20px;
+            }
+
+            .similar_recommend .recommend_item:nth-child(2n+1)
+            {
+                padding-right: 7px;
+            }
+
+            .similar_recommend .recommend_item:nth-child(2n)
+            {
+                padding-left: 7px;
+            }
+
+            .similar_recommend .book_cover
+            {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .similar_recommend .book_name
+            {
+                display: block;
+                font-size: 14px;
+                color: #212121;
+                max-width: 105px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .similar_recommend .book_name:hover
+            {
+                color: #f26552;
+                cursor: pointer;
+            }
+
+            .similar_recommend .book_author, .similar_recommend .book_heat
+            {
+                font-size: 12px;
+                color: #9e9e9e;
+                line-height: 20px;
+                max-width: 105px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .similar_recommend .book_heat
+            {
+                display: flex;
+                align-items: center;
+            }
+
+            .similar_recommend .book_heat::before
+            {
+                content: "";
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                margin-right: 5px;
+                background: url(./images/heat.png);
+                background-size: 100% 100%;
+            }
+
+            .blank_view
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 90px;
+            }
+
+            .new_comment
+            {
+                display: block;
+                width: 61px;
+                height: 61px;
+                background-color: #8bc34a;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .new_comment img
+            {
+                width: 50%;
+                height: 50%;
+            }
+
+            .blank_view p
+            {
+                font-size: 12px;
+                color: #9e9e9e;
+                margin-top: 15px;
+            }
+
+            .add_comment
+            {
+                margin-top: 34px;
+                margin-bottom: 34px;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .add_comment p
+            {
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+            }
+
+            .add_comment p::before
+            {
+                content: "";
+                display: inline-block;
+                width: 23px;
+                height: 23px;
+                margin-right: 5px;
+                background: url(./images/comment.png);
+                background-size: 100% 100%;
+            }
+
+            .add_comment .edit
+            {
+                width: 100%;
+                height: 100px;
+                resize: none;
+                border: 1px solid #f0f0f0;
+                outline: none;
+                font-size: 16px;
+                padding: 8px;
+                font-family: sans-serif;
+                margin-top: 15px;
+            }
+
+            .add_comment .edit:focus
+            {
+                border: 1px solid #d4d4d4;
+            }
+
+            .add_comment .commit
+            {
+                align-self: flex-end;
+                width: 82px;
+                height: 32px;
+                background-color: #8bc34a;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 14px;
+                margin-top: 15px;
+            }
+
+            /*.add_comment .commit p
+            {
+                font-size: 14px;
+                color: white;
+            }*/
+
+            .add_comment .commit:hover
+            {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <!--导航条-->
+        <div id="nav_holder"></div>
+
+        <!--内容区-->
+        <div id="content">
+            <!--书籍详情-->
+            <div class="book_info" v-if="book !== null && category !== null">
+                <!--封面-->
+                <div class="book_cover">
+                    <!--类别标签-->
+                    <p class="category_label">{{category.name}}</p>
+                    <!--封面图片-->
+                    <img class="book_cover_img" 
+                         v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
+                </div>
+                <!--图书细节-->
+                <div class="book_detail">
+                    <div class="book_detail_row1">
+                        <div class="book_detail_row1_row1">
+                            <p class="book_name">{{book.name}}</p>
+                            <div class="book_detail_row1_row1_col2">
+                                <p class="label">评分：</p>
+                                <p class="book_score">{{book.score.toFixed(1)}}</p>
+                            </div>
+                        </div>
+                        <div class="book_detail_row1_row2">
+                            <div class="book_detail_row1_row2_col1">
+                                <p class="book_author">作者：{{book.author}}</p>
+                                <p class="book_word_count">字数：{{book.wordCount}}</p>
+                                <p class="book_update_time">更新时间：{{book.updateTime}}</p>
+                            </div>
+                            <div class="book_detail_row1_row2_col2">
+                                <a class="like_link" href="">{{book.likeCount}}</a>
+                                <a class="dislike_link" href="">{{book.dislikeCount}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book_detail_row2">
+                        <p class="book_description">{{book.description}}</p>
+                    </div>
+                    <div class="book_detail_row3">
+                        <a class="read_link" href="">阅读</a>
+                        <a class="favorite_link" href="">收藏</a>
+                    </div>
+                </div>
+            </div>
+            <!--评论和推荐-->
+            <div class="comment_and_recommend">
+                <!--评论列表-->
+                <div class="comment_list">
+                    <div class="header">
+                        <div>
+                            <span>评论区</span>
+                            <span>|</span>
+                            <span>共{{comments.length}}条评论</span>
+                        </div>
+                        <a href="#bottom">我来说两句</a>
+                    </div>
+                    <!--评论列表项-->
+                    <div v-for="(comment, index) in comments" 
+                         class="comment_item"
+                         v-if="comments.length > 0 && users.length > 0 && users[index] !== undefined && users[index] !== null" >
+                       <img class="avatar" 
+                            v-bind:src="'./upload/avatar/' + users[index].id + '.jpg'"/>
+                       <div class="comment_detail">
+                           <div class="username_and_time">
+                               <p class="username">{{users[index].username}}</p>
+                               <p class="time">{{comment.time.substring(0, 11)}}</p>
+                           </div>
+                           <p class="content">{{comment.content}}</p>
+                       </div>                        
+                   </div>
+                    <!--空白页-->
+                    <!--<div class="blank_view" v-if="comments.length === 0">
+                        <a class="new_comment" href="#bottom">
+                            <img src="./images/edit.png"/>
+                        </a>
+                        <p>快来说两句，抢沙发</p>
+                    </div>-->
+                    <!--编辑区-->
+                    <div class="add_comment">
+                        <p>发表评论</p>
+                        <textarea class="edit" placeholder="写点什么吧..." v-model="commentText"></textarea>
+                        <a class="commit" v-if="comments.length > 0" v-on:click="addComment">提交</a>
+                        <a class="commit" v-if="comments.length === 0" v-on:click="addComment">抢沙发</a>
+                    </div>
+                </div>
+                <!--同类推荐-->
+                <div class="similar_recommend">
+                    <p class="header">同类推荐</p>
+                    <div class="recommend_items_container">
+                        <div v-for="book in recommends" class="recommend_item">
+                            <a v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                <img class="book_cover" v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
+                            </a>
+                            <a class="book_name" 
+                               v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                {{book.name}}
+                            </a>
+                            <p class="book_author">{{book.author}}</p>
+                            <p class="book_heat">{{book.heat}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--页底标记-->
+        <a id="bottom" ></a>
+    </body>
+</html>
