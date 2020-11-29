@@ -15,11 +15,43 @@ $(function()
                 totalCount: 0,
                 user: null,
                 comments: [],
-                comment_books: []
+                comment_books: [],
+                jumpTo: function(page)
+                {
+                    let url = "./user_page.html?tab=";
+
+                    if (this.selectedTabIndex === 0)
+                        url += "my_comments";
+                    else if (this.selectedTabIndex === 1)
+                        url += "my_favorites";
+                    else
+                        url += "my_likes";
+                    
+                    url += "&currentPage=" + String(page);
+
+                    location.href = url;
+                }
             },
             methods:
             {
-
+                lastPage: function()
+                {
+                    if (this.currentPage > 1)
+                    {
+                        this.jumpTo(this.currentPage - 1);
+                    }
+                },
+                nextPage: function()
+                {
+                    if (this.currentPage < this.totalPage)
+                    {
+                        this.jumpTo(this.currentPage + 1);
+                    }
+                },
+                deleteComment(commentId)
+                {
+                    alert("功能未实现");
+                }
             },
             mounted: function()
             {
@@ -33,7 +65,7 @@ $(function()
                     this.selectedTabIndex = 2;
 
                 // 获取页码
-                this.currentPage = getUrlParameter("currentPage");
+                this.currentPage = Number(getUrlParameter("currentPage"));
 
                 // 获取当前用户信息
                 getCuurentUser(
@@ -65,7 +97,6 @@ $(function()
                                             },
                                             function(books)
                                             {
-                                                //alert(JSON.stringify(books));
                                                 app.comment_books.splice(i, 1, books[0]);
                                             }
                                         );

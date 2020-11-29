@@ -76,13 +76,19 @@
                 font-weight: bold;
             }
 
-            /* .my_comments, .my_favorites, .my_likes */
             .tab_content
             {
-                background-color: white;
+                /* background-color: white; */
                 margin-left: 30px;
-                padding: 30px;
+                /* padding: 30px; */
                 flex: 1;
+            }
+
+            .my_comments, .my_favorites, .my_likes
+            {
+                background-color: white;
+                padding: 30px;
+                margin-bottom: 32px;
             }
 
             .comment_item
@@ -93,6 +99,13 @@
                 flex-direction: column;
                 padding-bottom: 10px;
                 border-bottom: 1px solid #f0f0f0;
+            }
+
+            .comment_item:last-child
+            {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
             }
 
             .name_and_content
@@ -106,6 +119,10 @@
             {
                 font-size: 16px;
                 color: #000000;
+                max-width: 450px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .book_name:hover
@@ -166,6 +183,11 @@
             {
                 font-weight: bold;
             }
+
+            .page_switch
+            {
+                justify-content: center;
+            }
         </style>
     </head>
     <body>
@@ -176,7 +198,9 @@
         <div id="content">
             <!--用户信息栏-->
             <div class="user_info">
-                <img class="avatar" src="./upload/avatar/1.jpg"/>
+                <img class="avatar" 
+                     v-if="user !== null"
+                     v-bind:src="'./upload/avatar/' + user.id + '.jpg'"/>
                 <p v-if="user !== null" class="username">{{user.username}}</p>
                 <!--选项卡-->
                 <div class="tabs">
@@ -196,6 +220,7 @@
                     <p class="count">
                         共 <span class="strong">{{totalCount}}</span> 条评论，共 <span class="strong">{{totalPage}}</span> 页，当前第 <span class="strong">{{currentPage}}</span> 页
                     </p>
+                    <!--评论列表项-->
                     <div class="comment_item"
                             v-for="(comment, index) in comments">
                         <div class="name_and_content">
@@ -207,7 +232,7 @@
                             <p class="comment_time">发表时间：{{comment.time}}</p>
                         </div>
                         <p class="comment_content">{{comment.content}}</p>
-                        <a class="delete">删除</a>
+                        <a class="delete" v-on:click="deleteComment(comment.id)">删除</a>
                     </div>
                 </div>
 
@@ -225,9 +250,9 @@
 
                 <!--页码切换-->
                 <div class="page_switch">
-                    <a class="last_page"></a>
+                    <a class="last_page" v-on:click="lastPage">上一页</a>
                     <p class="current_page">第 {{currentPage}} 页</p>
-                    <a class="next_page"></a>
+                    <a class="next_page" v-on:click="nextPage">下一页</a>
                 </div>
             </div>
         </div>
