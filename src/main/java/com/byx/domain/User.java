@@ -8,6 +8,7 @@ public class User
     private Integer id;
     private String username;
     private String password;
+    private String nickname;
 
     public Integer getId()
     {
@@ -39,6 +40,16 @@ public class User
         this.password = password;
     }
 
+    public String getNickname()
+    {
+        return nickname;
+    }
+
+    public void setNickname(String nickname)
+    {
+        this.nickname = nickname;
+    }
+
     @Override
     public String toString()
     {
@@ -46,6 +57,7 @@ public class User
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
                 '}';
     }
 }

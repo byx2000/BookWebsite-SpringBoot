@@ -221,7 +221,7 @@
                      v-bind:src="'./upload/avatar/' + user.id + '.jpg'"
                      onerror="javascript:this.src='./upload/avatar/default.png';"/>
             </a>
-            <a href="./user_page.html?tab=my_comments&currentPage=1" class="username">{{user.username}}</a>
+            <a href="./user_page.html?tab=my_comments&currentPage=1" class="username">{{user.nickname}}</a>
             <a class="logout" v-on:click="logout">注销</a>
         </div>
     </div>

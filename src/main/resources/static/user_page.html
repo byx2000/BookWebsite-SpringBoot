@@ -16,7 +16,6 @@
             {
                 padding-top: 40px;
                 padding-bottom: 40px;
-                padding-right: 40px;
                 background-color: #f0f0f0;
                 display: flex;
             }
@@ -201,7 +200,7 @@
                 <img class="avatar" 
                      v-if="user !== null"
                      v-bind:src="'./upload/avatar/' + user.id + '.jpg'"/>
-                <p v-if="user !== null" class="username">{{user.username}}</p>
+                <p v-if="user !== null" class="username">{{user.nickname}}</p>
                 <!--选项卡-->
                 <div class="tabs">
                     <a v-for="(tabName, index) in tabNames"
