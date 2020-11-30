@@ -1,14 +1,8 @@
 package com.byx.controller;
 
-import com.byx.dao.IBookDao;
-import com.byx.dao.ICategoryDao;
-import com.byx.dao.ICommentDao;
-import com.byx.dao.IUserDao;
+import com.byx.dao.*;
 import com.byx.domain.*;
-import com.byx.query.BookQuery;
-import com.byx.query.CategoryQuery;
-import com.byx.query.CommentQuery;
-import com.byx.query.UserQuery;
+import com.byx.query.*;
 import com.byx.service.IBookService;
 import com.byx.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +39,9 @@ public class DebugController
     @Autowired
     private IBookService bookService;
 
+    @Autowired
+    private IFavoriteDao favoriteDao;
+
     /**
      * 后端调试接口
      * @return 说明文字
@@ -53,10 +50,13 @@ public class DebugController
     @ResponseBody
     public String debug()
     {
-        List<Book> books = bookService.getRandomBooks(5);
-        for (Book b : books)
+        FavoriteQuery query = new FavoriteQuery();
+        query.setUserId(3);
+        List<Favorite> favorites = favoriteDao.query(query);
+        System.out.println(favorites.size());
+        for (Favorite f : favorites)
         {
-            System.out.println(b.getName());
+            System.out.println(f);
         }
 
         return "该接口用于后端调试";
