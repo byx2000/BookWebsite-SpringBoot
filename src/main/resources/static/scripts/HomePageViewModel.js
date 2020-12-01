@@ -26,8 +26,12 @@ $(function()
         mounted: function()
         {
             // 随机获取4本电子书
-            randomBooks(4,
-                function(books)
+            queryBooks(
+                {
+                    orderBy: "random",
+                    limit: 4
+                },
+                function (books)
                 {
                     app_banner.books = books;
                 }

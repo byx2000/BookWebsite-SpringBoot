@@ -27,27 +27,4 @@ public interface IBookService
      * @return 分页数据
      */
     PageBean<Book> queryByPage(Query query, int pageSize, int currentPage);
-
-    /**
-     * 随机电子书
-     * @param count 数量
-     * @return 电子书列表
-     */
-    List<Book> getRandomBooks(int count);
-
-    /**
-     * 搜索建议
-     * @param keyword 关键词
-     * @param count 数量
-     * @return 电子书列表
-     */
-    List<Book> getSearchSuggestion(String keyword, int count);
-
-    /**
-     * 同类推荐
-     * @param categoryId 类型id
-     * @param count 数量
-     * @return 电子书列表
-     */
-    List<Book> getSimilarRecommend(int categoryId, int count);
 }

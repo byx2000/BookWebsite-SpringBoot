@@ -21,24 +21,6 @@ function queryBooks(conditions, success, fail)
     request("book/query", conditions, success, fail);
 }
 
-// 获取随机电子书
-function randomBooks(count, success, fail)
-{
-    request("book/random", { count: count }, success, fail);
-}
-
-// 获取电子书搜索建议
-function getSearchSuggestion(keyword, count, success, fail)
-{
-    request("book/searchSuggestion", { keyword: keyword, count: count }, success, fail);
-}
-
-// 获取同类电子书推荐
-function getSimilarRecommend(categoryId, count, success, fail)
-{
-    request("book/similarRecommend", { categoryId: categoryId, count: count }, success, fail);
-}
-
 // 登录
 function login(username, password, success, fail)
 {

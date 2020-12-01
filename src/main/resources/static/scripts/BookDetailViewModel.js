@@ -87,9 +87,12 @@ $(function()
                         }
 
                         // 获取同类推荐列表
-                        getSimilarRecommend(
-                            books[0].categoryId, 
-                            comments.length === 0 ? 4 : 6,
+                        queryBooks(
+                            {
+                                categoryId: books[0].categoryId,
+                                orderBy: "score",
+                                limit: comments.length === 0 ? 4 : 6,
+                            },
                             function(books)
                             {
                                 app.recommends = books;

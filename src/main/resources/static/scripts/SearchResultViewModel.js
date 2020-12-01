@@ -86,16 +86,11 @@ $(function()
             );
 
             // 获取搜索建议
-            /*queryBooks(
+            queryBooks(
                 {
-                    random: 4
+                    orderBy: "heat",
+                    limit: 20
                 }, 
-                function(books)
-                {
-                    app.suggestions = books;
-                }
-            );*/
-            getSearchSuggestion(this.keyword, 20, 
                 function(books)
                 {
                     app.suggestions = books;
