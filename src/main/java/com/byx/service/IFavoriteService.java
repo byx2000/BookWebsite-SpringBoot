@@ -1,5 +1,8 @@
 package com.byx.service;
 
+import com.byx.domain.Favorite;
+import com.byx.domain.PageBean;
+import com.byx.query.IQuery;
 import com.byx.query.Query;
 
 import java.util.List;
@@ -9,12 +12,7 @@ import java.util.List;
  */
 public interface IFavoriteService
 {
-    /**
-     * 根据条件查询收藏列表（分页）
-     * @param query 查询条件
-     * @param pageSize 每页显示条数
-     * @param currentPage 当前页码
-     * @return 结果列表，每个列表项包括收藏数据和电子书数据
-     */
-    List<List<Object>> getFavoriteListByPage(Query query, int pageSize, int currentPage);
+    List<Favorite> query(IQuery query);
+
+    PageBean<List<Object>> queryByPage(Query query, int pageSize, int currentPage);
 }

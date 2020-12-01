@@ -2,7 +2,9 @@ package com.byx.dao.impl;
 
 import com.byx.dao.IFavoriteDao;
 import com.byx.domain.Favorite;
+import com.byx.domain.PageBean;
 import com.byx.query.IQuery;
+import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +25,11 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
     public List<Favorite> query(IQuery query)
     {
         return super.query(query, "favorites", Favorite.class);
+    }
+
+    @Override
+    public PageBean<Favorite> queryByPage(Query query, int pageSize, int currentPage)
+    {
+        return super.queryByPage(query, "favorites", Favorite.class, pageSize, currentPage);
     }
 }
