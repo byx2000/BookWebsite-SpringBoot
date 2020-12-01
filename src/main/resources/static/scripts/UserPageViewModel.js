@@ -16,6 +16,7 @@ $(function()
                 user: null,
                 comments: [],
                 comment_books: [],
+                favorites: [],
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -75,6 +76,7 @@ $(function()
                         
                         if (app.selectedTabIndex === 0) // 我的评论
                         {
+                            // 查询评论列表
                             queryComments(
                                 {
                                     userId: user.id,
@@ -101,6 +103,24 @@ $(function()
                                             }
                                         );
                                     }
+                                }
+                            );
+                        }
+                        else if (app.selectedTabIndex === 1) // 我的收藏
+                        {
+                            // 查询收藏列表
+                            queryFavorites(
+                                {
+                                    userId: user.id,
+                                    pageSize: 10,
+                                    currentPage: app.currentPage
+                                },
+                                function (pageBean)
+                                {
+                                    app.totalPage = pageBean.totalPage;
+                                    app.totalCount = pageBean.totalCount;
+                                    app.favorites = pageBean.data;
+                                    //alert(JSON.stringify(app.favorites_and_books));
                                 }
                             );
                         }

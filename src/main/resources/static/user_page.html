@@ -187,6 +187,104 @@
             {
                 justify-content: center;
             }
+
+            .favorite_item
+            {
+                display: flex;
+                padding: 28px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .my_favorites .count
+            {
+                margin-bottom: 0;
+            }
+
+            .favorite_item:last-child
+            {
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+
+            .book_cover
+            {
+                width: 104px;
+                height: 138px;
+            }
+
+            .book_detail
+            {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin-left: 20px;
+            }
+
+            .name_and_time
+            {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .book_name
+            {
+                display: inline-block;
+                font-size: 18px;
+                color: #333333;
+                max-width: 400px;
+            }
+
+            .favorite_time
+            {
+                font-size: 12px;
+                color: #999999;
+            }
+
+            .name_and_cancel
+            {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+            .book_author
+            {
+                font-size: 12px;
+                color: #999999;
+            }
+
+            .cancel_favorite
+            {
+                display: inline-block;
+                font-size: 14px;
+                color: white;
+                width: 80px;
+                height: 30px;
+                background-color: #f26552;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .cancel_favorite:hover
+            {
+                cursor: pointer;
+            }
+
+            .book_description
+            {
+                font-size: 12px;
+                color: #666666;
+                text-align: justify;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                line-height: 20px;
+                height: 60px;
+            }
         </style>
     </head>
     <body>
@@ -238,7 +336,30 @@
                 <!--收藏-->
                 <div class="my_favorites"
                     v-if="selectedTabIndex === 1">
-                    我的收藏
+                    <p class="count">
+                        共 <span class="strong">{{totalCount}}</span> 条收藏，共 <span class="strong">{{totalPage}}</span> 页，当前第 <span class="strong">{{currentPage}}</span> 页
+                    </p>
+                    <!--收藏列表项-->
+                    <div class="favorite_item" v-for="(favorite, index) in favorites">
+                        <a v-bind:href="'./book_detail.html?bookId=' + favorite[1].id">
+                            <img class="book_cover" v-bind:src="'./upload/cover/' + favorite[1].id + '.jpg'"/>
+                        </a>
+                        <div class="book_detail">
+                            <div>
+                                <div class="name_and_time">
+                                    <a class="book_name" v-bind:href="'./book_detail.html?bookId=' + favorite[1].id">
+                                        {{favorite[1].name}}
+                                    </a>
+                                    <p class="favorite_time">收藏时间：{{favorite[0].time.substring(0, 11)}}</p>
+                                </div>
+                                <div class="name_and_cancel">
+                                    <p class="book_author">作者：{{favorite[1].author}}</p>
+                                    <a class="cancel_favorite">取消收藏</a>
+                                </div>
+                            </div>
+                            <p class="book_description">{{favorite[1].description}}</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!--点赞-->
