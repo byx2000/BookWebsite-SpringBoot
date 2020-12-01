@@ -2,7 +2,9 @@ package com.byx.dao.impl;
 
 import com.byx.dao.ICommentDao;
 import com.byx.domain.Comment;
+import com.byx.domain.PageBean;
 import com.byx.query.IQuery;
+import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +25,12 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao
     public List<Comment> query(IQuery query)
     {
         return super.query(query, "comments", Comment.class);
+    }
+
+    @Override
+    public PageBean<Comment> queryByPage(Query query, int pageSize, int currentPage)
+    {
+        return super.queryByPage(query, "comments", Comment.class, pageSize, currentPage);
     }
 
     @Override

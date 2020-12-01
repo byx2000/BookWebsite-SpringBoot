@@ -2,7 +2,8 @@ package com.byx.service;
 
 import com.byx.domain.Comment;
 import com.byx.domain.PageBean;
-import com.byx.query.CommentQuery;
+import com.byx.query.IQuery;
+import com.byx.query.Query;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface ICommentService
      * @param query 查询条件
      * @return 评论列表
      */
-    List<Comment> query(CommentQuery query);
+    List<Comment> query(IQuery query);
 
     /**
      * 根据条件查询评论（无分页）
@@ -25,7 +26,7 @@ public interface ICommentService
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    PageBean<Comment> queryByPage(CommentQuery query, int pageSize, int currentPage);
+    PageBean<Comment> queryByPage(Query query, int pageSize, int currentPage);
 
     /**
      * 保存评论

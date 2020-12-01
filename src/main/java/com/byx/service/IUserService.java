@@ -1,7 +1,7 @@
 package com.byx.service;
 
 import com.byx.domain.User;
-import com.byx.query.UserQuery;
+import com.byx.query.IQuery;
 
 import java.util.List;
 
@@ -23,5 +23,5 @@ public interface IUserService
      * @param query 查询条件
      * @return 用户列表
      */
-    List<User> query(UserQuery query);
+    List<User> query(IQuery query);
 }

@@ -3,7 +3,7 @@ package com.byx.domain;
 import java.util.List;
 
 /**
- * 分页封装类
+ * 封装分页数据
  * @param <T> 列表项数据类型
  */
 public class PageBean<T>

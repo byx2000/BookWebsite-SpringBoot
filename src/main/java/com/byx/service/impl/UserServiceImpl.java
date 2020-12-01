@@ -2,6 +2,7 @@ package com.byx.service.impl;
 
 import com.byx.dao.IUserDao;
 import com.byx.domain.User;
+import com.byx.query.IQuery;
 import com.byx.query.UserQuery;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    public List<User> query(UserQuery query)
+    public List<User> query(IQuery query)
     {
         return userDao.query(query);
     }

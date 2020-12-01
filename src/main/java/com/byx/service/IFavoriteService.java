@@ -1,6 +1,6 @@
 package com.byx.service;
 
-import com.byx.query.FavoriteQuery;
+import com.byx.query.Query;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface IFavoriteService
      * @param currentPage 当前页码
      * @return 结果列表，每个列表项包括收藏数据和电子书数据
      */
-    List<List<Object>> getFavoriteListByPage(FavoriteQuery query, int pageSize, int currentPage);
+    List<List<Object>> getFavoriteListByPage(Query query, int pageSize, int currentPage);
 }
