@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
-public class CommentController
+public class CommentController extends BaseController
 {
     @Autowired
     private ICommentService commentService;
@@ -48,17 +47,16 @@ public class CommentController
      * 保存评论
      * @param bookId 电子书id
      * @param content 评论内容
-     * @param session 会话
      * @return 结果
      */
     @RequestMapping("/save")
-    public ResultInfo save(Integer bookId, String content, HttpSession session)
+    public ResultInfo save(Integer bookId, String content)
     {
         // 参数校验
         if (bookId == null || content == null) return ResultInfo.fail("参数错误");
 
-        // 判断是否登录
-        User user = (User) session.getAttribute("user");
+        // 获取当前登录用户
+        User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
         Comment comment = new Comment();

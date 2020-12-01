@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/book")
-public class BookController
+public class BookController extends BaseController
 {
     @Autowired
     private IBookService bookService;

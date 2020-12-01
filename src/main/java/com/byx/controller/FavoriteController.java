@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -18,19 +17,16 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/favorite")
-public class FavoriteController
+public class FavoriteController extends BaseController
 {
     @Autowired
     private IFavoriteService favoriteService;
-
-    @Autowired
-    private HttpSession session;
 
     @RequestMapping("/query")
     public ResultInfo query(FavoriteQuery favoriteQuery, Integer pageSize, Integer currentPage)
     {
         // 获取当前登录用户信息
-        User user = (User) session.getAttribute("user");
+        User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
         // 只允许访问当前用户的收藏

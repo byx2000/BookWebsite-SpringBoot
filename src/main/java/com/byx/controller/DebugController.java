@@ -1,13 +1,11 @@
 package com.byx.controller;
 
 import com.byx.dao.*;
-import com.byx.domain.*;
-import com.byx.query.*;
+import com.byx.domain.PageBean;
+import com.byx.query.FavoriteQuery;
 import com.byx.service.IBookService;
 import com.byx.service.IFavoriteService;
-import com.byx.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/debug")
-public class DebugController
+public class DebugController extends BaseController
 {
     @Autowired
     private JdbcTemplate jdbcTemplate;
