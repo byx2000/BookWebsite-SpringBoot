@@ -16,6 +16,26 @@ public class Query
     private Integer offset = null;
     private final List<Object> parameters = new ArrayList<>();
 
+    public Integer getLimit()
+    {
+        return limit;
+    }
+
+    public void setLimit(Integer limit)
+    {
+        this.limit = limit;
+    }
+
+    public Integer getOffset()
+    {
+        return offset;
+    }
+
+    public void setOffset(Integer offset)
+    {
+        this.offset = offset;
+    }
+
     protected void addWhereCondition(String cond, Object... params)
     {
         whereConditions.add(cond);
@@ -49,8 +69,6 @@ public class Query
     {
         whereConditions.clear();
         orderConditions.clear();
-        limit = null;
-        offset = null;
         parameters.clear();
         customizeQuery();
     }
@@ -90,12 +108,12 @@ public class Query
         if (limit != null)
         {
             sql.append(" LIMIT (?) ");
-        }
-
-        // 拼接offset子句
-        if (limit != null && offset != null)
-        {
-           sql.append(" OFFSET (?) ");
+            parameters.add(limit);
+            if (offset != null)
+            {
+                sql.append(" OFFSET (?) ");
+                parameters.add(offset);
+            }
         }
 
         return sql.toString();
@@ -108,6 +126,14 @@ public class Query
     public List<Object> getParameters()
     {
         refresh();
+        if (limit != null)
+        {
+            parameters.add(limit);
+            if (offset != null)
+            {
+                parameters.add(offset);
+            }
+        }
         return parameters;
     }
 }

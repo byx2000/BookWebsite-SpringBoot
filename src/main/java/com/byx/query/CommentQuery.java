@@ -7,8 +7,6 @@ public class CommentQuery extends Query
 {
     private Integer bookId = null;
     private Integer userId = null;
-    private Integer limit = null;
-    private Integer offset = null;
 
     public Integer getBookId()
     {
@@ -30,26 +28,6 @@ public class CommentQuery extends Query
         this.userId = userId;
     }
 
-    public Integer getLimit()
-    {
-        return limit;
-    }
-
-    public void setLimit(Integer limit)
-    {
-        this.limit = limit;
-    }
-
-    public Integer getOffset()
-    {
-        return offset;
-    }
-
-    public void setOffset(Integer offset)
-    {
-        this.offset = offset;
-    }
-
     @Override
     protected void customizeQuery()
     {
@@ -60,12 +38,5 @@ public class CommentQuery extends Query
             addWhereCondition("userId == ?", userId);
 
         addOrderCondition("time DESC");
-
-        if (limit != null)
-        {
-            addLimit(limit);
-            if (offset != null)
-                addOffset(offset);
-        }
     }
 }

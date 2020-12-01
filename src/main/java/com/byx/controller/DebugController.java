@@ -50,14 +50,14 @@ public class DebugController
     @ResponseBody
     public String debug()
     {
-        FavoriteQuery query = new FavoriteQuery();
-        query.setUserId(3);
-        List<Favorite> favorites = favoriteDao.query(query);
-        System.out.println(favorites.size());
-        for (Favorite f : favorites)
-        {
-            System.out.println(f);
-        }
+        BookQuery query = new BookQuery();
+        query.setLimit(5);
+
+
+        List<Book> books = bookDao.query(query);
+
+        System.out.println(books.size());
+        System.out.println(books);
 
         return "该接口用于后端调试";
     }

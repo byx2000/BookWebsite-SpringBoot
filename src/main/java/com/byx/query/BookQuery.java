@@ -12,8 +12,6 @@ public class BookQuery extends Query
     private Integer daysAgo = null;
     private String keyword = null;
     private String orderBy = null;
-    private Integer limit = null;
-    private Integer offset = null;
 
     public Integer getBookId()
     {
@@ -53,26 +51,6 @@ public class BookQuery extends Query
     public void setKeyword(String keyword)
     {
         this.keyword = keyword;
-    }
-
-    public Integer getLimit()
-    {
-        return limit;
-    }
-
-    public void setLimit(Integer limit)
-    {
-        this.limit = limit;
-    }
-
-    public Integer getOffset()
-    {
-        return offset;
-    }
-
-    public void setOffset(Integer offset)
-    {
-        this.offset = offset;
     }
 
     public String getOrderBy()
@@ -123,13 +101,6 @@ public class BookQuery extends Query
                     addOrderCondition("RANDOM()");
                     break;
             }
-        }
-
-        if (limit != null)
-        {
-            addLimit(limit);
-            if (offset != null)
-                addOffset(offset);
         }
     }
 }
