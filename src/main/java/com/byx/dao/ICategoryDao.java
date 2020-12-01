@@ -1,7 +1,7 @@
 package com.byx.dao;
 
 import com.byx.domain.Category;
-import com.byx.query.CategoryQuery;
+import com.byx.query.IQuery;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface ICategoryDao
      * @param query 查询条件
      * @return 类型列表
      */
-    List<Category> query(CategoryQuery query);
+    List<Category> query(IQuery query);
 }

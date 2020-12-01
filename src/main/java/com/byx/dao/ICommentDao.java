@@ -1,7 +1,7 @@
 package com.byx.dao;
 
 import com.byx.domain.Comment;
-import com.byx.query.CommentQuery;
+import com.byx.query.IQuery;
 
 import java.util.List;
 
@@ -15,14 +15,14 @@ public interface ICommentDao
      * @param query 查询条件
      * @return 结果总数
      */
-    int count(CommentQuery query);
+    int count(IQuery query);
 
     /**
      * 根据条件查询评论
      * @param query 查询条件
      * @return 评论列表
      */
-    List<Comment> query(CommentQuery query);
+    List<Comment> query(IQuery query);
 
     /**
      * 保存评论

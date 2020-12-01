@@ -2,10 +2,7 @@ package com.byx.dao.impl;
 
 import com.byx.dao.ICommentDao;
 import com.byx.domain.Comment;
-import com.byx.query.CommentQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.byx.query.IQuery;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,26 +11,18 @@ import java.util.List;
  * 评论数据访问实现类
  */
 @Repository
-public class CommentDaoImpl implements ICommentDao
+public class CommentDaoImpl extends BaseDao implements ICommentDao
 {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     @Override
-    public int count(CommentQuery query)
+    public int count(IQuery query)
     {
-        Integer cnt = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM comments " + query.getQueryString(),
-                Integer.class,
-                query.getParameters().toArray());
-        return cnt == null ? 0 : cnt;
+        return super.count(query, "comments");
     }
 
     @Override
-    public List<Comment> query(CommentQuery query)
+    public List<Comment> query(IQuery query)
     {
-        return jdbcTemplate.query("SELECT * FROM comments " + query.getQueryString(),
-                new BeanPropertyRowMapper<>(Comment.class),
-                query.getParameters().toArray());
+        return super.query(query, "comments", Comment.class);
     }
 
     @Override

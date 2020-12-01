@@ -2,10 +2,7 @@ package com.byx.dao.impl;
 
 import com.byx.dao.IBookDao;
 import com.byx.domain.Book;
-import com.byx.query.BookQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.byx.query.IQuery;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,25 +11,17 @@ import java.util.List;
  * 电子书数据访问实现类
  */
 @Repository
-public class BookDaoImpl implements IBookDao
+public class BookDaoImpl extends BaseDao implements IBookDao
 {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     @Override
-    public int count(BookQuery query)
+    public int count(IQuery query)
     {
-        Integer cnt = jdbcTemplate.queryForObject("SELECT COUNT(*) AS cnt FROM books " + query.getQueryString(),
-                Integer.class,
-                query.getParameters().toArray());
-        return cnt == null ? 0 : cnt;
+        return super.count(query, "books");
     }
 
     @Override
-    public List<Book> query(BookQuery query)
+    public List<Book> query(IQuery query)
     {
-        return jdbcTemplate.query("SELECT * FROM books " + query.getQueryString(),
-                new BeanPropertyRowMapper<>(Book.class),
-                query.getParameters().toArray());
+        return super.query(query, "books", Book.class);
     }
 }
