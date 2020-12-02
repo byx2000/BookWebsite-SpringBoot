@@ -67,3 +67,9 @@ function queryFavorites(conditions, success, fail)
 {
     request("favorite/query", conditions, success, fail);
 }
+
+// 添加收藏记录
+function addFavorite(bookId, success, fail)
+{
+    request("favorite/add", { bookId: bookId }, success, fail);
+}

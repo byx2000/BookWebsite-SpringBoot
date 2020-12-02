@@ -31,6 +31,15 @@ $(function()
                         location.reload();
                     }
                 );
+            },
+            favorite: function()
+            {
+                addFavorite(this.book.id, 
+                    function()
+                    {
+                        location.reload();
+                    }
+                );
             }
         },
         mounted: function()

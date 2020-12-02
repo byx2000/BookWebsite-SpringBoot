@@ -192,6 +192,7 @@
             .read_link:hover, .favorite_link:hover, .unfavorite_link:hover
             {
                 box-shadow: 0px 0px 5px #888888;
+                cursor: pointer;
             }
 
             .read_link::before, .favorite_link::before, .unfavorite_link::before
@@ -657,8 +658,8 @@
                     </div>
                     <div class="book_detail_row3">
                         <a class="read_link" href="">阅读</a>
-                        <a class="favorite_link" href="" v-if="!isFavorite">收藏</a>
-                        <a class="unfavorite_link" href="" v-if="isFavorite">取消收藏</a>
+                        <a class="favorite_link" v-if="!isFavorite" v-on:click="favorite">收藏</a>
+                        <a class="unfavorite_link" v-if="isFavorite">取消收藏</a>
                     </div>
                 </div>
             </div>
