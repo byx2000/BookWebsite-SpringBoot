@@ -39,4 +39,11 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
         jdbcTemplate.update("INSERT INTO favorites(bookId, userId, time) VALUES(?, ?, ?)",
                 favorite.getBookId(), favorite.getUserId(), favorite.getTime());
     }
+
+    @Override
+    public void delete(Favorite favorite)
+    {
+        jdbcTemplate.update("DELETE FROM favorites WHERE bookId == ? AND userId == ?",
+                favorite.getBookId(), favorite.getUserId());
+    }
 }

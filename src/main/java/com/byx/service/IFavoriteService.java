@@ -21,8 +21,14 @@ public interface IFavoriteService
     PageBean<List<Object>> queryByPage(Query query, int pageSize, int currentPage);
 
     /**
-     * 添加收藏记录
+     * 添加收藏
      * @param favorite 收藏记录
      */
     void add(Favorite favorite);
+
+    /**
+     * 取消收藏
+     * @param favorite 收藏记录
+     */
+    void cancel(Favorite favorite);
 }

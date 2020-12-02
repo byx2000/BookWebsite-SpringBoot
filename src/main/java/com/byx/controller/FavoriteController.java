@@ -22,6 +22,13 @@ public class FavoriteController extends BaseController
     @Autowired
     private IFavoriteService favoriteService;
 
+    /**
+     * 查询收藏记录
+     * @param favoriteQuery 查询条件
+     * @param pageSize 每页显示条数
+     * @param currentPage 当前页码
+     * @return 分页数据，包含收藏数据和相应的电子书数据
+     */
     @RequestMapping("/query")
     public ResultInfo query(FavoriteQuery favoriteQuery, Integer pageSize, Integer currentPage)
     {
@@ -39,6 +46,11 @@ public class FavoriteController extends BaseController
         return ResultInfo.success(pageBean);
     }
 
+    /**
+     * 添加收藏
+     * @param favorite 收藏记录
+     * @return 操作结果
+     */
     @RequestMapping("/add")
     public ResultInfo add(Favorite favorite)
     {
@@ -54,6 +66,29 @@ public class FavoriteController extends BaseController
 
         // 保存
         favoriteService.add(favorite);
+        return ResultInfo.success();
+    }
+
+    /**
+     * 取消收藏
+     * @param favorite 收藏数据
+     * @return 操作结果
+     */
+    @RequestMapping("/cancel")
+    public ResultInfo cancel(Favorite favorite)
+    {
+        // 参数校验
+        if (favorite.getBookId() == null) return ResultInfo.fail("参数错误");
+
+        // 获取当前登录用户信息
+        User user = getCurrentUser();
+        if (user == null) return ResultInfo.fail("当前未登录");
+
+        // 只允许操作当前用户的收藏
+        favorite.setUserId(user.getId());
+
+        // 删除
+        favoriteService.cancel(favorite);
         return ResultInfo.success();
     }
 }

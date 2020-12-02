@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 收藏服务实现类
+ */
 @Service
 public class FavoriteServiceImpl implements IFavoriteService
 {
@@ -65,5 +68,11 @@ public class FavoriteServiceImpl implements IFavoriteService
 
         // 保存
         favoriteDao.save(favorite);
+    }
+
+    @Override
+    public void cancel(Favorite favorite)
+    {
+        favoriteDao.delete(favorite);
     }
 }

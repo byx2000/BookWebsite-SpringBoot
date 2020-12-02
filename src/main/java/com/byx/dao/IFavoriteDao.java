@@ -40,4 +40,10 @@ public interface IFavoriteDao
      * @param favorite 收藏记录
      */
     void save(Favorite favorite);
+
+    /**
+     * 删除收藏记录
+     * @param favorite 收藏记录
+     */
+    void delete(Favorite favorite);
 }
