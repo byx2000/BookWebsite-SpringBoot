@@ -6,9 +6,10 @@ import com.byx.domain.Book;
 import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
 import com.byx.query.BookQuery;
-import com.byx.query.IQuery;
+import com.byx.query.FavoriteQuery;
 import com.byx.query.Query;
 import com.byx.service.IFavoriteService;
+import com.byx.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,6 @@ public class FavoriteServiceImpl implements IFavoriteService
 
     @Autowired
     private IBookDao bookDao;
-
-    @Override
-    public List<Favorite> query(IQuery query)
-    {
-        return favoriteDao.query(query);
-    }
 
     @Override
     public PageBean<List<Object>> queryByPage(Query query, int pageSize, int currentPage)
@@ -54,5 +49,21 @@ public class FavoriteServiceImpl implements IFavoriteService
         pageBean.setData(result);
 
         return pageBean;
+    }
+
+    @Override
+    public void add(Favorite favorite)
+    {
+        // 判断是否已经收藏
+        FavoriteQuery query = new FavoriteQuery();
+        query.setBookId(favorite.getBookId());
+        query.setUserId(favorite.getUserId());
+        if (favoriteDao.count(query) > 0) return;
+
+        // 设置当前时间
+        favorite.setTime(DateUtils.now());
+
+        // 保存
+        favoriteDao.save(favorite);
     }
 }

@@ -64,6 +64,7 @@ public class CommentController extends BaseController
         comment.setUserId(user.getId());
         comment.setContent(content);
 
+        // 保存
         commentService.save(comment);
         return ResultInfo.success();
     }

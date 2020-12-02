@@ -32,4 +32,11 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
     {
         return super.queryByPage(query, "favorites", Favorite.class, pageSize, currentPage);
     }
+
+    @Override
+    public void save(Favorite favorite)
+    {
+        jdbcTemplate.update("INSERT INTO favorites(bookId, userId, time) VALUES(?, ?, ?)",
+                favorite.getBookId(), favorite.getUserId(), favorite.getTime());
+    }
 }

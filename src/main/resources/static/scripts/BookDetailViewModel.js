@@ -105,11 +105,13 @@ $(function()
                     // 查询当前用户是否已收藏当前电子书
                     queryFavorites(
                         {
-                            bookId: bookId
+                            bookId: bookId,
+                            pageSize: 1,
+                            currentPage: 1
                         },
-                        function (favorites)
+                        function (pageBean)
                         {
-                            if (favorites.length > 0)
+                            if (pageBean.data.length > 0)
                                 app.isFavorite = true;
                         },
                         function (){}

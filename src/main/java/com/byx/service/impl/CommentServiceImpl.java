@@ -38,6 +38,8 @@ public class CommentServiceImpl implements ICommentService
     {
         // 设置评论时间为当前时间
         comment.setTime(DateUtils.now());
+
+        // 保存
         commentDao.save(comment);
     }
 }

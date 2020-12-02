@@ -34,4 +34,10 @@ public interface IFavoriteDao
      * @return 分页数据
      */
     PageBean<Favorite> queryByPage(Query query, int pageSize, int currentPage);
+
+    /**
+     * 保存收藏记录
+     * @param favorite 收藏记录
+     */
+    void save(Favorite favorite);
 }

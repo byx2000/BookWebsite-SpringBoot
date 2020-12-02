@@ -25,6 +25,9 @@ public class FavoriteController extends BaseController
     @RequestMapping("/query")
     public ResultInfo query(FavoriteQuery favoriteQuery, Integer pageSize, Integer currentPage)
     {
+        // 参数校验
+        if (pageSize == null || currentPage == null) return ResultInfo.fail("参数错误");
+
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
@@ -32,17 +35,25 @@ public class FavoriteController extends BaseController
         // 只允许访问当前用户的收藏
         favoriteQuery.setUserId(user.getId());
 
-        // 不带分页的查询
-        if (pageSize == null || currentPage == null)
-        {
-            List<Favorite> favorites = favoriteService.query(favoriteQuery);
-            return ResultInfo.success(favorites);
-        }
-        // 带分页的查询
-        else
-        {
-            PageBean<List<Object>> pageBean = favoriteService.queryByPage(favoriteQuery, pageSize, currentPage);
-            return ResultInfo.success(pageBean);
-        }
+        PageBean<List<Object>> pageBean = favoriteService.queryByPage(favoriteQuery, pageSize, currentPage);
+        return ResultInfo.success(pageBean);
+    }
+
+    @RequestMapping("/add")
+    public ResultInfo add(Favorite favorite)
+    {
+        // 参数校验
+        if (favorite.getBookId() == null) return ResultInfo.fail("参数错误");
+
+        // 获取当前登录用户信息
+        User user = getCurrentUser();
+        if (user == null) return ResultInfo.fail("当前未登录");
+
+        // 只允许操作当前用户的收藏
+        favorite.setUserId(user.getId());
+
+        // 保存
+        favoriteService.add(favorite);
+        return ResultInfo.success();
     }
 }
