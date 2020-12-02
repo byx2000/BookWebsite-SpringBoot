@@ -22,7 +22,10 @@ $(function()
                     function(user)
                     {
                         // 登陆成功，跳转到首页
-                        location.href = "./index.html";
+                        //location.href = "./index.html";
+
+                        // 登录成功，跳转到登陆前的页面
+                        window.location.href = document.referrer;
                     },
                     function(errMsg)
                     {

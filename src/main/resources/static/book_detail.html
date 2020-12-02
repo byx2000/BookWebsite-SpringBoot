@@ -175,7 +175,7 @@
                 display: flex;
             }
 
-            .read_link, .favorite_link
+            .read_link, .favorite_link, .unfavorite_link
             {
                 display: flex;
                 justify-content: center;
@@ -189,12 +189,12 @@
                 font-size: 14px;
             }
 
-            .read_link:hover, .favorite_link:hover
+            .read_link:hover, .favorite_link:hover, .unfavorite_link:hover
             {
                 box-shadow: 0px 0px 5px #888888;
             }
 
-            .read_link::before, .favorite_link::before
+            .read_link::before, .favorite_link::before, .unfavorite_link::before
             {
                 content: "";
                 display: inline-block;
@@ -216,7 +216,7 @@
                 background-position: center center;
             }
 
-            .favorite_link
+            .favorite_link, .unfavorite_link
             {
                 background-color: #019cdc;
             }
@@ -224,6 +224,19 @@
             .favorite_link::before
             {
                 background: url(./images/star.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+
+            .unfavorite_link
+            {
+                width: 100px;
+            }
+
+            .unfavorite_link::before
+            {
+                background: url(./images/unstar.png);
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 background-position: center center;
@@ -644,7 +657,8 @@
                     </div>
                     <div class="book_detail_row3">
                         <a class="read_link" href="">阅读</a>
-                        <a class="favorite_link" href="">收藏</a>
+                        <a class="favorite_link" href="" v-if="!isFavorite">收藏</a>
+                        <a class="unfavorite_link" href="" v-if="isFavorite">取消收藏</a>
                     </div>
                 </div>
             </div>
