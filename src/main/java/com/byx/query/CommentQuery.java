@@ -5,8 +5,20 @@ package com.byx.query;
  */
 public class CommentQuery extends Query
 {
+    private Integer commentId = null;
     private Integer bookId = null;
     private Integer userId = null;
+    private boolean isDelete = false;
+
+    public Integer getCommentId()
+    {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId)
+    {
+        this.commentId = commentId;
+    }
 
     public Integer getBookId()
     {
@@ -28,15 +40,29 @@ public class CommentQuery extends Query
         this.userId = userId;
     }
 
+    public boolean isDelete()
+    {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete)
+    {
+        isDelete = delete;
+    }
+
     @Override
     protected void customizeQuery()
     {
+        if (commentId != null)
+            addWhereCondition("id == ?", commentId);
+
         if (bookId != null)
             addWhereCondition("bookId == ?", bookId);
 
         if (userId != null)
             addWhereCondition("userId == ?", userId);
 
-        addOrderCondition("time DESC");
+        if (!isDelete)
+            addOrderCondition("time DESC");
     }
 }

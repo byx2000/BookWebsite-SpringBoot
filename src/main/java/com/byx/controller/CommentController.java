@@ -47,7 +47,7 @@ public class CommentController extends BaseController
      * 保存评论
      * @param bookId 电子书id
      * @param content 评论内容
-     * @return 结果
+     * @return 操作结果
      */
     @RequestMapping("/save")
     public ResultInfo save(Integer bookId, String content)
@@ -66,6 +66,31 @@ public class CommentController extends BaseController
 
         // 保存
         commentService.save(comment);
+        return ResultInfo.success();
+    }
+
+    /**
+     * 删除评论
+     * @param commentId 评论id
+     * @return 操作结果
+     */
+    @RequestMapping("/delete")
+    public ResultInfo delete(Integer commentId)
+    {
+        // 参数校验
+        if (commentId == null) return ResultInfo.fail("参数错误");
+
+        // 获取当前登录用户
+        User user = getCurrentUser();
+        if (user == null) return ResultInfo.fail("当前未登录");
+
+        // 删除当前用户的指定评论
+        CommentQuery query = new CommentQuery();
+        query.setCommentId(commentId);
+        query.setUserId(user.getId());
+        query.setDelete(true);
+        commentService.delete(query);
+
         return ResultInfo.success();
     }
 }

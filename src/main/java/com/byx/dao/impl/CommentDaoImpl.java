@@ -39,4 +39,11 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao
         jdbcTemplate.update("INSERT INTO comments (bookId, userId, content, time) VALUES (?, ?, ?, ?)",
                 comment.getBookId(), comment.getUserId(), comment.getContent(), comment.getTime());
     }
+
+    @Override
+    public void delete(IQuery query)
+    {
+        jdbcTemplate.update("DELETE FROM comments " + query.getQueryString(),
+                query.getParameters().toArray());
+    }
 }

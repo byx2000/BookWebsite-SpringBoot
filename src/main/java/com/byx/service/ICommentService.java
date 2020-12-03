@@ -33,4 +33,10 @@ public interface ICommentService
      * @param comment 评论数据
      */
     void save(Comment comment);
+
+    /**
+     * 删除评论
+     * @param query 条件
+     */
+    void delete(IQuery query);
 }

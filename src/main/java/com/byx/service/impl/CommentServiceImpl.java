@@ -42,4 +42,10 @@ public class CommentServiceImpl implements ICommentService
         // 保存
         commentDao.save(comment);
     }
+
+    @Override
+    public void delete(IQuery query)
+    {
+        commentDao.delete(query);
+    }
 }
