@@ -36,8 +36,7 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
     @Override
     public void save(Favorite favorite)
     {
-        jdbcTemplate.update("INSERT INTO favorites(bookId, userId, time) VALUES(?, ?, ?)",
-                favorite.getBookId(), favorite.getUserId(), favorite.getTime());
+        super.save(favorite, "favorites");
     }
 
     @Override

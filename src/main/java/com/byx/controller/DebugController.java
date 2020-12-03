@@ -2,11 +2,14 @@ package com.byx.controller;
 
 import com.byx.dao.*;
 import com.byx.domain.PageBean;
+import com.byx.domain.User;
 import com.byx.query.FavoriteQuery;
 import com.byx.service.IBookService;
 import com.byx.service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,16 +55,15 @@ public class DebugController extends BaseController
     @ResponseBody
     public String debug()
     {
-        FavoriteQuery query = new FavoriteQuery();
-        query.setUserId(1);
-        PageBean<List<Object>> result = favoriteService.queryByPage(query, 5, 1);
+        User user = new User();
+        user.setUsername("def");
+        user.setPassword("123");
+        user.setNickname("白宇轩");
 
-        System.out.println(result.getData().size());
-        for (List<Object> item : result.getData())
-        {
-            System.out.println("favorite: " + item.get(0));
-            System.out.println("book: " + item.get(1));
-        }
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        simpleJdbcInsert.withTableName("users")
+                .usingGeneratedKeyColumns("id")
+                .execute(new BeanPropertySqlParameterSource(user));
 
         return "该接口用于后端调试";
     }

@@ -36,8 +36,7 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao
     @Override
     public void save(Comment comment)
     {
-        jdbcTemplate.update("INSERT INTO comments (bookId, userId, content, time) VALUES (?, ?, ?, ?)",
-                comment.getBookId(), comment.getUserId(), comment.getContent(), comment.getTime());
+        super.save(comment, "comments");
     }
 
     @Override

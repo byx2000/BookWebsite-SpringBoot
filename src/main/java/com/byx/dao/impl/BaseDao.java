@@ -6,6 +6,8 @@ import com.byx.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import java.util.List;
 
@@ -78,6 +80,19 @@ public class BaseDao
         pageBean.setData(list);
 
         return pageBean;
+    }
+
+    /**
+     * 保存
+     * @param object 要保存的实体类
+     * @param tableName 表名
+     */
+    protected void save(Object object, String tableName)
+    {
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        simpleJdbcInsert.withTableName(tableName)
+                .usingGeneratedKeyColumns("id")
+                .execute(new BeanPropertySqlParameterSource(object));
     }
 
     /**
