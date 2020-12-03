@@ -60,6 +60,15 @@ $(function()
                             }
                         );
                     }
+                },
+                unfavorite: function(favoriteId)
+                {
+                    cancelFavorite(favoriteId, 
+                        function()
+                        {
+                            location.reload();
+                        }
+                    );
                 }
             },
             mounted: function()

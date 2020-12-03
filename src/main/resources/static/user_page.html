@@ -354,7 +354,7 @@
                                 </div>
                                 <div class="name_and_cancel">
                                     <p class="book_author">作者：{{favorite[1].author}}</p>
-                                    <a class="cancel_favorite">取消收藏</a>
+                                    <a class="cancel_favorite" v-on:click="unfavorite(favorite[0].id)">取消收藏</a>
                                 </div>
                             </div>
                             <p class="book_description">{{favorite[1].description}}</p>
