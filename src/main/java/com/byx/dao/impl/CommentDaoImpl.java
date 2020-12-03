@@ -43,7 +43,6 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao
     @Override
     public void delete(IQuery query)
     {
-        jdbcTemplate.update("DELETE FROM comments " + query.getQueryString(),
-                query.getParameters().toArray());
+        super.delete(query, "comments");
     }
 }

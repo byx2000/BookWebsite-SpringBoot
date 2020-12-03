@@ -18,7 +18,7 @@ public class BaseDao
     protected JdbcTemplate jdbcTemplate;
 
     /**
-     * 根据条件查询结果总数
+     * 查询总数
      * @param query 查询条件
      * @param tableName 表名
      * @return 结果总数
@@ -78,5 +78,16 @@ public class BaseDao
         pageBean.setData(list);
 
         return pageBean;
+    }
+
+    /**
+     * 删除
+     * @param query 查询条件
+     * @param tableName 表名
+     */
+    protected void delete(IQuery query, String tableName)
+    {
+        jdbcTemplate.update("DELETE FROM " + tableName + " " + query.getQueryString(),
+                query.getParameters().toArray());
     }
 }
