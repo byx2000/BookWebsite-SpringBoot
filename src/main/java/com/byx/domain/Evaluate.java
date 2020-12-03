@@ -1,7 +1,7 @@
 package com.byx.domain;
 
 /**
- * 评价记录实体类
+ * 点评实体类
  */
 public class Evaluate
 {
@@ -10,7 +10,7 @@ public class Evaluate
     private Integer userId;
 
     /**
-     * 点赞状态：0表示已赞，1表示已踩
+     * 点评状态：0表示已赞，1表示已踩
      */
     private Integer state;
 

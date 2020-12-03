@@ -13,7 +13,9 @@ $(function()
             recommends: [],
             commentText: "",
             isFavorite: false,
-            favoriteId: null
+            favoriteId: null,
+            isLike: false,
+            isDislike: false
         },
         methods:
         {
@@ -48,6 +50,51 @@ $(function()
                     function()
                     {
                         location.reload();
+                    }
+                );
+            },
+            like: function()
+            {
+                evaluate(this.book.id, "like",
+                    function()
+                    {
+                        app.book.likeCount++;
+                        if (app.isDislike) app.book.dislikeCount--;
+                        app.isLike = true;
+                        app.isDislike = false;
+                        
+                    }
+                );
+            },
+            dislike: function()
+            {
+                evaluate(this.book.id, "dislike",
+                    function()
+                    {
+                        app.book.dislikeCount++;
+                        if (app.isLike) app.book.likeCount--;
+                        app.isDislike = true;
+                        app.isLike = false;
+                    }
+                );
+            },
+            cancelLike: function()
+            {
+                evaluate(this.book.id, "cancelLike",
+                    function()
+                    {
+                        app.isLike = false;
+                        app.book.likeCount--;
+                    }
+                );
+            },
+            cancelDislike: function()
+            {
+                evaluate(this.book.id, "cancelDislike",
+                    function()
+                    {
+                        app.isDislike = false;
+                        app.book.dislikeCount--;
                     }
                 );
             }
@@ -137,6 +184,23 @@ $(function()
                             }
                         },
                         function (){}
+                    );
+
+                    // 查询是否已赞或踩当前电子书
+                    isLike(books[0].id,
+                        function(result)
+                        {
+                            app.isLike = result;
+                        },
+                        function(){}
+                    );
+
+                    isDislike(books[0].id,
+                        function(result)
+                        {
+                            app.isDislike = result;
+                        },
+                        function(){}
                     );
                 }
             );

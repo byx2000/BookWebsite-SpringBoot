@@ -15,24 +15,41 @@ import org.springframework.web.bind.annotation.RestController;
 public class EvaluateController extends BaseController
 {
     @Autowired
-    private IEvaluateService likeService;
+    private IEvaluateService evaluateService;
 
-    @RequestMapping("/like")
-    public ResultInfo like(Integer bookId)
+    @RequestMapping("")
+    public ResultInfo evaluate(Integer bookId, String cmd)
     {
         // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
+        if (bookId == null || cmd == null) return ResultInfo.fail("参数错误");
 
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
-        likeService.like(bookId, user.getId());
+        switch (cmd)
+        {
+            case "like":
+                evaluateService.like(bookId, user.getId());
+                break;
+            case "dislike":
+                evaluateService.dislike(bookId, user.getId());
+                break;
+            case "cancelLike":
+                evaluateService.cancelLike(bookId, user.getId());
+                break;
+            case "cancelDislike":
+                evaluateService.cancelDislike(bookId, user.getId());
+                break;
+            default:
+                return ResultInfo.fail("参数错误");
+        }
+
         return ResultInfo.success();
     }
 
-    @RequestMapping("/dislike")
-    public ResultInfo dislike(Integer bookId)
+    @RequestMapping("/isLike")
+    public ResultInfo isLike(Integer bookId)
     {
         // 参数校验
         if (bookId == null) return ResultInfo.fail("参数错误");
@@ -41,12 +58,11 @@ public class EvaluateController extends BaseController
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
-        likeService.dislike(bookId, user.getId());
-        return ResultInfo.success();
+        return ResultInfo.success(evaluateService.isLike(bookId, user.getId()));
     }
 
-    @RequestMapping("/cancelLike")
-    public ResultInfo cancelLike(Integer bookId)
+    @RequestMapping("/isDislike")
+    public ResultInfo isDislike(Integer bookId)
     {
         // 参数校验
         if (bookId == null) return ResultInfo.fail("参数错误");
@@ -55,21 +71,6 @@ public class EvaluateController extends BaseController
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
-        likeService.cancelLike(bookId, user.getId());
-        return ResultInfo.success();
-    }
-
-    @RequestMapping("/cancelDislike")
-    public ResultInfo cancelDislike(Integer bookId)
-    {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
-        // 获取当前登录用户信息
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        likeService.cancelDislike(bookId, user.getId());
-        return ResultInfo.success();
+        return ResultInfo.success(evaluateService.isDislike(bookId, user.getId()));
     }
 }

@@ -6,7 +6,7 @@ import com.byx.query.IQuery;
 import java.util.List;
 
 /**
- * 点赞数据访问接口
+ * 点评数据访问接口
  */
 public interface IEvaluateDao
 {

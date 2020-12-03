@@ -8,14 +8,16 @@ import com.byx.service.IEvaluateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- * 点赞服务实现类
+ * 点评服务实现类
  */
 @Service
 public class EvaluateServiceImpl implements IEvaluateService
 {
     @Autowired
-    private IEvaluateDao likeDao;
+    private IEvaluateDao evaluateDao;
 
     @Autowired
     private IBookDao bookDao;
@@ -27,27 +29,34 @@ public class EvaluateServiceImpl implements IEvaluateService
         query.setBookId(bookId);
         query.setUserId(userId);
 
-        // 用户已经进行了点赞或点踩操作
-        if (likeDao.count(query) > 0)
+        // 用户已有点评记录
+        if (evaluateDao.count(query) > 0)
         {
-            // 获取点赞记录
-            Evaluate evaluate = likeDao.query(query).get(0);
-            // 如果点赞状态为踩，则更新记录
+            // 获取点评记录
+            Evaluate evaluate = evaluateDao.query(query).get(0);
+            // 当前点评状态为踩
             if (evaluate.getState() == 1)
             {
+                // 设置当前点评状态为赞
                 evaluate.setState(0);
-                likeDao.update(evaluate);
+                evaluateDao.update(evaluate);
+                // 踩的数量-1
+                bookDao.decreaseDislikeCount(bookId);
+                // 赞的数量+1
+                bookDao.increaseLikeCount(bookId);
             }
         }
-        // 用户还没有进行点赞或点踩操作
+        // 用户没有点评记录
         else
         {
-            // 插入记录
+            // 插入点评记录
             Evaluate evaluate = new Evaluate();
             evaluate.setBookId(bookId);
             evaluate.setUserId(userId);
             evaluate.setState(0);
-            likeDao.save(evaluate);
+            evaluateDao.save(evaluate);
+            // 赞的数量+1
+            bookDao.increaseLikeCount(bookId);
         }
     }
 
@@ -58,15 +67,18 @@ public class EvaluateServiceImpl implements IEvaluateService
         query.setBookId(bookId);
         query.setUserId(userId);
 
-        // 用户已经进行了点赞或点踩操作
-        if (likeDao.count(query) > 0)
+        // 用户已有点评记录
+        if (evaluateDao.count(query) > 0)
         {
-            // 获取点赞记录
-            Evaluate evaluate = likeDao.query(query).get(0);
-            // 如果点赞状态为赞，则删除记录
+            // 获取点评记录
+            Evaluate evaluate = evaluateDao.query(query).get(0);
+            // 当前点评状态为赞
             if (evaluate.getState() == 0)
             {
-                likeDao.delete(query);
+                // 删除点评记录
+                evaluateDao.delete(query);
+                // 赞的数量-1
+                bookDao.decreaseLikeCount(bookId);
             }
         }
     }
@@ -78,27 +90,34 @@ public class EvaluateServiceImpl implements IEvaluateService
         query.setBookId(bookId);
         query.setUserId(userId);
 
-        // 用户已经进行了点赞或点踩操作
-        if (likeDao.count(query) > 0)
+        // 用户已有点评记录
+        if (evaluateDao.count(query) > 0)
         {
-            // 获取点赞记录
-            Evaluate evaluate = likeDao.query(query).get(0);
-            // 如果点赞状态为赞，则更新记录
+            // 获取点评记录
+            Evaluate evaluate = evaluateDao.query(query).get(0);
+            // 当前点评状态为赞
             if (evaluate.getState() == 0)
             {
+                // 设置当前点评状态为踩
                 evaluate.setState(1);
-                likeDao.update(evaluate);
+                evaluateDao.update(evaluate);
+                // 赞的数量-1
+                bookDao.decreaseLikeCount(bookId);
+                // 踩的数量+1
+                bookDao.increaseDislikeCount(bookId);
             }
         }
-        // 用户还没有进行点赞或点踩操作
+        // 用户没有点评记录
         else
         {
-            // 插入记录
+            // 插入点评记录
             Evaluate evaluate = new Evaluate();
             evaluate.setBookId(bookId);
             evaluate.setUserId(userId);
             evaluate.setState(1);
-            likeDao.save(evaluate);
+            evaluateDao.save(evaluate);
+            // 踩的数量+1
+            bookDao.increaseDislikeCount(bookId);
         }
     }
 
@@ -109,16 +128,45 @@ public class EvaluateServiceImpl implements IEvaluateService
         query.setBookId(bookId);
         query.setUserId(userId);
 
-        // 用户已经进行了点赞或点踩操作
-        if (likeDao.count(query) > 0)
+        // 用户已有点评记录
+        if (evaluateDao.count(query) > 0)
         {
-            // 获取点赞记录
-            Evaluate evaluate = likeDao.query(query).get(0);
-            // 如果点赞状态为踩，则删除记录
+            // 获取点评记录
+            Evaluate evaluate = evaluateDao.query(query).get(0);
+            // 当前点评记录为踩
             if (evaluate.getState() == 1)
             {
-                likeDao.delete(query);
+                // 删除点评记录
+                evaluateDao.delete(query);
+                // 踩的数量-1
+                bookDao.decreaseDislikeCount(bookId);
             }
         }
+    }
+
+    @Override
+    public boolean isLike(int bookId, int userId)
+    {
+        EvaluateQuery query = new EvaluateQuery();
+        query.setBookId(bookId);
+        query.setUserId(userId);
+
+        List<Evaluate> evaluates = evaluateDao.query(query);
+        if (evaluates.isEmpty()) return false;
+
+        return evaluates.get(0).getState() == 0;
+    }
+
+    @Override
+    public boolean isDislike(int bookId, int userId)
+    {
+        EvaluateQuery query = new EvaluateQuery();
+        query.setBookId(bookId);
+        query.setUserId(userId);
+
+        List<Evaluate> evaluates = evaluateDao.query(query);
+        if (evaluates.isEmpty()) return false;
+
+        return evaluates.get(0).getState() == 1;
     }
 }

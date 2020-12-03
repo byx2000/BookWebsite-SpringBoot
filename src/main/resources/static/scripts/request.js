@@ -85,3 +85,21 @@ function cancelFavorite(favoriteId, success, fail)
 {
     request("favorite/cancel", { favoriteId: favoriteId }, success, fail);
 }
+
+// 点赞
+function evaluate(bookId, cmd, success, fail)
+{
+    request("evaluate", { bookId: bookId, cmd: cmd }, success, fail);
+}
+
+// 是否喜欢
+function isLike(bookId, success, fail)
+{
+    request("evaluate/isLike", { bookId: bookId }, success, fail);
+}
+
+// 是否不喜欢
+function isDislike(bookId, success, fail)
+{
+    request("evaluate/isDislike", { bookId: bookId }, success, fail);
+}

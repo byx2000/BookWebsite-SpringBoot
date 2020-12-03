@@ -1,7 +1,7 @@
 package com.byx.query;
 
 /**
- * 评价记录查询类
+ * 点评查询类
  */
 public class EvaluateQuery extends Query
 {

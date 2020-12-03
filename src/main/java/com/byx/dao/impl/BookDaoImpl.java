@@ -5,8 +5,12 @@ import com.byx.domain.Book;
 import com.byx.domain.PageBean;
 import com.byx.query.IQuery;
 import com.byx.query.Query;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -31,5 +35,29 @@ public class BookDaoImpl extends BaseDao implements IBookDao
     public PageBean<Book> queryByPage(Query query, int pageSize, int currentPage)
     {
         return super.queryByPage(query, "books", Book.class, pageSize, currentPage);
+    }
+
+    @Override
+    public void increaseLikeCount(int bookId)
+    {
+        jdbcTemplate.update("UPDATE books SET likeCount = likeCount + 1 WHERE id == ?", bookId);
+    }
+
+    @Override
+    public void decreaseLikeCount(int bookId)
+    {
+        jdbcTemplate.update("UPDATE books SET likeCount = likeCount - 1 WHERE id == ?", bookId);
+    }
+
+    @Override
+    public void increaseDislikeCount(int bookId)
+    {
+        jdbcTemplate.update("UPDATE books SET dislikeCount = dislikeCount + 1 WHERE id == ?", bookId);
+    }
+
+    @Override
+    public void decreaseDislikeCount(int bookId)
+    {
+        jdbcTemplate.update("UPDATE books SET dislikeCount = dislikeCount - 1 WHERE id == ?", bookId);
     }
 }

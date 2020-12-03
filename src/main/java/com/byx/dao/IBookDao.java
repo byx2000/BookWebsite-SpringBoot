@@ -34,4 +34,9 @@ public interface IBookDao
      * @return 分页数据
      */
     PageBean<Book> queryByPage(Query query, int pageSize, int currentPage);
+
+    void increaseLikeCount(int bookId);
+    void decreaseLikeCount(int bookId);
+    void increaseDislikeCount(int bookId);
+    void decreaseDislikeCount(int bookId);
 }

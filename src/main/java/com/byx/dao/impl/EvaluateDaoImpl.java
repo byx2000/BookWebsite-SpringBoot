@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 点赞数据访问实现类
+ * 点评数据访问实现类
  */
 @Repository
 public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
