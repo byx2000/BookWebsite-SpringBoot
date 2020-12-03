@@ -40,6 +40,15 @@ $(function()
                         location.reload();
                     }
                 );
+            },
+            unfavorite: function()
+            {
+                cancelFavorite(this.book.id, 
+                    function()
+                    {
+                        location.reload();
+                    }
+                );
             }
         },
         mounted: function()

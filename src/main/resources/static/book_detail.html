@@ -659,7 +659,7 @@
                     <div class="book_detail_row3">
                         <a class="read_link" href="">阅读</a>
                         <a class="favorite_link" v-if="!isFavorite" v-on:click="favorite">收藏</a>
-                        <a class="unfavorite_link" v-if="isFavorite">取消收藏</a>
+                        <a class="unfavorite_link" v-if="isFavorite" v-on:click="unfavorite">取消收藏</a>
                     </div>
                 </div>
             </div>
