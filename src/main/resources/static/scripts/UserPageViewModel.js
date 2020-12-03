@@ -51,7 +51,15 @@ $(function()
                 },
                 deleteComment(commentId)
                 {
-                    alert("功能未实现");
+                    if (confirm("您确定要删除该条评论吗？"))
+                    {
+                        deleteComment(commentId,
+                            function()
+                            {
+                                location.reload();
+                            }
+                        );
+                    }
                 }
             },
             mounted: function()

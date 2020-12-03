@@ -62,6 +62,12 @@ function saveComment(bookId, content, success, fail)
     request("comment/save", { bookId: bookId, content: content }, success, fail);
 }
 
+// 删除评论
+function deleteComment(commentId, success, fail)
+{
+    request("comment/delete", { commentId: commentId }, success, fail);
+}
+
 // 查询收藏记录
 function queryFavorites(conditions, success, fail)
 {
