@@ -7,6 +7,7 @@ import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
 import com.byx.query.BookQuery;
 import com.byx.query.FavoriteQuery;
+import com.byx.query.IQuery;
 import com.byx.query.Query;
 import com.byx.service.IFavoriteService;
 import com.byx.util.DateUtils;
@@ -71,8 +72,8 @@ public class FavoriteServiceImpl implements IFavoriteService
     }
 
     @Override
-    public void cancel(Favorite favorite)
+    public void cancel(IQuery query)
     {
-        favoriteDao.delete(favorite);
+        favoriteDao.delete(query);
     }
 }

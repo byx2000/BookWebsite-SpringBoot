@@ -41,9 +41,9 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
     }
 
     @Override
-    public void delete(Favorite favorite)
+    public void delete(IQuery query)
     {
-        jdbcTemplate.update("DELETE FROM favorites WHERE bookId == ? AND userId == ?",
-                favorite.getBookId(), favorite.getUserId());
+        jdbcTemplate.update("DELETE FROM favorites " + query.getQueryString(),
+                query.getParameters().toArray());
     }
 }

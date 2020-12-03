@@ -43,7 +43,7 @@ public interface IFavoriteDao
 
     /**
      * 删除收藏记录
-     * @param favorite 收藏记录
+     * @param query 条件
      */
-    void delete(Favorite favorite);
+    void delete(IQuery query);
 }

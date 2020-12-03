@@ -2,6 +2,7 @@ package com.byx.service;
 
 import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
+import com.byx.query.IQuery;
 import com.byx.query.Query;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface IFavoriteService
 
     /**
      * 取消收藏
-     * @param favorite 收藏记录
+     * @param query 收藏记录
      */
-    void cancel(Favorite favorite);
+    void cancel(IQuery query);
 }

@@ -12,7 +12,8 @@ $(function()
             users: [],
             recommends: [],
             commentText: "",
-            isFavorite: false
+            isFavorite: false,
+            favoriteId: null
         },
         methods:
         {
@@ -43,7 +44,7 @@ $(function()
             },
             unfavorite: function()
             {
-                cancelFavorite(this.book.id, 
+                cancelFavorite(this.favoriteId, 
                     function()
                     {
                         location.reload();
@@ -130,7 +131,10 @@ $(function()
                         function (pageBean)
                         {
                             if (pageBean.data.length > 0)
+                            {
                                 app.isFavorite = true;
+                                app.favoriteId = pageBean.data[0][0].id;
+                            }
                         },
                         function (){}
                     );

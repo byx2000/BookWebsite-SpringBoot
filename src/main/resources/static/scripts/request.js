@@ -81,7 +81,7 @@ function addFavorite(bookId, success, fail)
 }
 
 // 取消收藏
-function cancelFavorite(bookId, success, fail)
+function cancelFavorite(favoriteId, success, fail)
 {
-    request("favorite/cancel", { bookId: bookId }, success, fail);
+    request("favorite/cancel", { favoriteId: favoriteId }, success, fail);
 }

@@ -71,24 +71,26 @@ public class FavoriteController extends BaseController
 
     /**
      * 取消收藏
-     * @param favorite 收藏数据
+     * @param favoriteId 收藏id
      * @return 操作结果
      */
     @RequestMapping("/cancel")
-    public ResultInfo cancel(Favorite favorite)
+    public ResultInfo cancel(Integer favoriteId)
     {
         // 参数校验
-        if (favorite.getBookId() == null) return ResultInfo.fail("参数错误");
+        if (favoriteId == null) return ResultInfo.fail("参数错误");
 
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
-        // 只允许操作当前用户的收藏
-        favorite.setUserId(user.getId());
+        // 删除当前用户指定的收藏
+        FavoriteQuery query = new FavoriteQuery();
+        query.setFavoriteId(favoriteId);
+        query.setUserId(user.getId());
+        query.setDelete(true);
+        favoriteService.cancel(query);
 
-        // 删除
-        favoriteService.cancel(favorite);
         return ResultInfo.success();
     }
 }
