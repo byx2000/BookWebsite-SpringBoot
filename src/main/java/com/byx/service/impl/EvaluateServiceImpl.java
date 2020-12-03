@@ -3,7 +3,6 @@ package com.byx.service.impl;
 import com.byx.dao.IBookDao;
 import com.byx.dao.IEvaluateDao;
 import com.byx.domain.Evaluate;
-import com.byx.query.EvaluateQuery;
 import com.byx.service.IEvaluateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,21 +24,18 @@ public class EvaluateServiceImpl implements IEvaluateService
     @Override
     public void like(int bookId, int userId)
     {
-        EvaluateQuery query = new EvaluateQuery();
-        query.setBookId(bookId);
-        query.setUserId(userId);
+        List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
 
         // 用户已有点评记录
-        if (evaluateDao.count(query) > 0)
+        if (evaluates.size() > 0)
         {
             // 获取点评记录
-            Evaluate evaluate = evaluateDao.query(query).get(0);
+            Evaluate evaluate = evaluates.get(0);
             // 当前点评状态为踩
             if (evaluate.getState() == 1)
             {
                 // 设置当前点评状态为赞
-                evaluate.setState(0);
-                evaluateDao.update(evaluate);
+                evaluateDao.updateState(evaluate.getId(), 0);
                 // 踩的数量-1
                 bookDao.decreaseDislikeCount(bookId);
                 // 赞的数量+1
@@ -63,20 +59,18 @@ public class EvaluateServiceImpl implements IEvaluateService
     @Override
     public void cancelLike(int bookId, int userId)
     {
-        EvaluateQuery query = new EvaluateQuery();
-        query.setBookId(bookId);
-        query.setUserId(userId);
+        List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
 
         // 用户已有点评记录
-        if (evaluateDao.count(query) > 0)
+        if (evaluates.size() > 0)
         {
             // 获取点评记录
-            Evaluate evaluate = evaluateDao.query(query).get(0);
+            Evaluate evaluate = evaluates.get(0);
             // 当前点评状态为赞
             if (evaluate.getState() == 0)
             {
                 // 删除点评记录
-                evaluateDao.delete(query);
+                evaluateDao.delete(evaluate.getId());
                 // 赞的数量-1
                 bookDao.decreaseLikeCount(bookId);
             }
@@ -86,21 +80,18 @@ public class EvaluateServiceImpl implements IEvaluateService
     @Override
     public void dislike(int bookId, int userId)
     {
-        EvaluateQuery query = new EvaluateQuery();
-        query.setBookId(bookId);
-        query.setUserId(userId);
+        List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
 
         // 用户已有点评记录
-        if (evaluateDao.count(query) > 0)
+        if (evaluates.size() > 0)
         {
             // 获取点评记录
-            Evaluate evaluate = evaluateDao.query(query).get(0);
+            Evaluate evaluate = evaluates.get(0);
             // 当前点评状态为赞
             if (evaluate.getState() == 0)
             {
                 // 设置当前点评状态为踩
-                evaluate.setState(1);
-                evaluateDao.update(evaluate);
+                evaluateDao.updateState(evaluate.getId(), 1);
                 // 赞的数量-1
                 bookDao.decreaseLikeCount(bookId);
                 // 踩的数量+1
@@ -124,20 +115,18 @@ public class EvaluateServiceImpl implements IEvaluateService
     @Override
     public void cancelDislike(int bookId, int userId)
     {
-        EvaluateQuery query = new EvaluateQuery();
-        query.setBookId(bookId);
-        query.setUserId(userId);
+        List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
 
         // 用户已有点评记录
-        if (evaluateDao.count(query) > 0)
+        if (evaluates.size() > 0)
         {
             // 获取点评记录
-            Evaluate evaluate = evaluateDao.query(query).get(0);
+            Evaluate evaluate = evaluates.get(0);
             // 当前点评记录为踩
             if (evaluate.getState() == 1)
             {
                 // 删除点评记录
-                evaluateDao.delete(query);
+                evaluateDao.delete(evaluate.getId());
                 // 踩的数量-1
                 bookDao.decreaseDislikeCount(bookId);
             }
@@ -147,26 +136,16 @@ public class EvaluateServiceImpl implements IEvaluateService
     @Override
     public boolean isLike(int bookId, int userId)
     {
-        EvaluateQuery query = new EvaluateQuery();
-        query.setBookId(bookId);
-        query.setUserId(userId);
-
-        List<Evaluate> evaluates = evaluateDao.query(query);
+        List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
         if (evaluates.isEmpty()) return false;
-
         return evaluates.get(0).getState() == 0;
     }
 
     @Override
     public boolean isDislike(int bookId, int userId)
     {
-        EvaluateQuery query = new EvaluateQuery();
-        query.setBookId(bookId);
-        query.setUserId(userId);
-
-        List<Evaluate> evaluates = evaluateDao.query(query);
+        List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
         if (evaluates.isEmpty()) return false;
-
         return evaluates.get(0).getState() == 1;
     }
 }

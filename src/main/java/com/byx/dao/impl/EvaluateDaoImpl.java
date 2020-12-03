@@ -5,6 +5,7 @@ import com.byx.domain.Evaluate;
 import com.byx.query.IQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,16 +14,34 @@ import java.util.List;
 @Repository
 public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
 {
-    @Override
-    public int count(IQuery query)
+    private static class EvaluateQuery implements IQuery
     {
-        return count(query, "evaluates");
+        private final int bookId;
+        private final int userId;
+
+        private EvaluateQuery(int bookId, int userId)
+        {
+            this.bookId = bookId;
+            this.userId = userId;
+        }
+
+        @Override
+        public String getQueryString()
+        {
+            return " WHERE bookId == ? AND userId == ?";
+        }
+
+        @Override
+        public List<Object> getParameters()
+        {
+            return Arrays.asList(bookId, userId);
+        }
     }
 
     @Override
-    public List<Evaluate> query(IQuery query)
+    public List<Evaluate> query(int bookId, int userId)
     {
-        return query(query, "evaluates", Evaluate.class);
+        return query(new EvaluateQuery(bookId, userId), "evaluates", Evaluate.class);
     }
 
     @Override
@@ -32,15 +51,15 @@ public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
     }
 
     @Override
-    public void delete(IQuery query)
+    public void delete(int evaluateId)
     {
-        delete(query, "evaluates");
+        deleteById(evaluateId, "evaluates");
     }
 
     @Override
-    public void update(Evaluate evaluate)
+    public void updateState(int evaluateId, int state)
     {
-        jdbcTemplate.update("UPDATE evaluates SET userId = ?, bookId = ?, state = ? WHERE id == ?",
-                evaluate.getUserId(), evaluate.getBookId(), evaluate.getState(), evaluate.getId());
+        jdbcTemplate.update("UPDATE evaluates SET state = ? WHERE id == ?",
+                state, evaluateId);
     }
 }

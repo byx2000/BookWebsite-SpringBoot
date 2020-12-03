@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 点赞控制器
+ * 点评控制器
  */
 @RestController
 @RequestMapping("/evaluate")
@@ -17,6 +17,17 @@ public class EvaluateController extends BaseController
     @Autowired
     private IEvaluateService evaluateService;
 
+    /**
+     * 点评
+     * <p>cmd参数取值含义：</p>
+     * <p>"like": 点赞</p>
+     * <p>"dislike": 点踩</p>
+     * <p>"cancelLike": 取消点赞</p>
+     * <p>"cancelDislike": 取消点踩</p>
+     * @param bookId 电子书id
+     * @param cmd 操作
+     * @return 成功返回{true, msg}，失败返回{false, msg}
+     */
     @RequestMapping("")
     public ResultInfo evaluate(Integer bookId, String cmd)
     {
@@ -48,6 +59,11 @@ public class EvaluateController extends BaseController
         return ResultInfo.success();
     }
 
+    /**
+     * 是否已点赞
+     * @param bookId 电子书id
+     * @return 成功返回{true, msg}，失败返回{false, msg}
+     */
     @RequestMapping("/isLike")
     public ResultInfo isLike(Integer bookId)
     {
@@ -61,6 +77,11 @@ public class EvaluateController extends BaseController
         return ResultInfo.success(evaluateService.isLike(bookId, user.getId()));
     }
 
+    /**
+     * 是否已点踩
+     * @param bookId 电子书id
+     * @return 成功返回{true, msg}，失败返回{false, msg}
+     */
     @RequestMapping("/isDislike")
     public ResultInfo isDislike(Integer bookId)
     {

@@ -2,11 +2,23 @@ package com.byx.domain;
 
 /**
  * 点评实体类
+ * <p>对应于数据库中的evaluates表</p>
  */
 public class Evaluate
 {
+    /**
+     * 点评id
+     */
     private Integer id;
+
+    /**
+     * 电子书id
+     */
     private Integer bookId;
+
+    /**
+     * 用户id
+     */
     private Integer userId;
 
     /**
@@ -57,7 +69,7 @@ public class Evaluate
     @Override
     public String toString()
     {
-        return "Like{" +
+        return "Evaluate{" +
                 "id=" + id +
                 ", bookId=" + bookId +
                 ", userId=" + userId +
