@@ -1,13 +1,18 @@
 package com.byx.domain;
 
 /**
- * 点赞记录实体类
+ * 评价记录实体类
  */
-public class Like
+public class Evaluate
 {
     private Integer id;
     private Integer bookId;
     private Integer userId;
+
+    /**
+     * 点赞状态：0表示已赞，1表示已踩
+     */
+    private Integer state;
 
     public Integer getId()
     {
@@ -39,6 +44,16 @@ public class Like
         this.userId = userId;
     }
 
+    public Integer getState()
+    {
+        return state;
+    }
+
+    public void setState(Integer state)
+    {
+        this.state = state;
+    }
+
     @Override
     public String toString()
     {
@@ -46,6 +61,7 @@ public class Like
                 "id=" + id +
                 ", bookId=" + bookId +
                 ", userId=" + userId +
+                ", state=" + state +
                 '}';
     }
 }
