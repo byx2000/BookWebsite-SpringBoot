@@ -5,12 +5,8 @@ import com.byx.domain.Book;
 import com.byx.domain.PageBean;
 import com.byx.query.IQuery;
 import com.byx.query.Query;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -22,19 +18,19 @@ public class BookDaoImpl extends BaseDao implements IBookDao
     @Override
     public int count(IQuery query)
     {
-        return super.count(query, "books");
+        return super.count("books", query);
     }
 
     @Override
     public List<Book> query(IQuery query)
     {
-        return super.query(query, "books", Book.class);
+        return super.query("books", query, Book.class);
     }
 
     @Override
     public PageBean<Book> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return super.queryByPage(query, "books", Book.class, pageSize, currentPage);
+        return super.queryByPage("books", query, Book.class, pageSize, currentPage);
     }
 
     @Override

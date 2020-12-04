@@ -41,19 +41,19 @@ public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
     @Override
     public List<Evaluate> query(int bookId, int userId)
     {
-        return query(new EvaluateQuery(bookId, userId), "evaluates", Evaluate.class);
+        return query("evaluates", new EvaluateQuery(bookId, userId), Evaluate.class);
     }
 
     @Override
     public void save(Evaluate evaluate)
     {
-        save(evaluate, "evaluates");
+        save("evaluates", evaluate);
     }
 
     @Override
     public void delete(int evaluateId)
     {
-        deleteById(evaluateId, "evaluates");
+        deleteById("evaluates", evaluateId);
     }
 
     @Override

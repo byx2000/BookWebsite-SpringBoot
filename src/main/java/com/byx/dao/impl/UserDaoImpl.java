@@ -16,6 +16,6 @@ public class UserDaoImpl extends BaseDao implements IUserDao
     @Override
     public List<User> query(IQuery query)
     {
-        return super.query(query, "users", User.class);
+        return super.query("users", query, User.class);
     }
 }

@@ -18,30 +18,30 @@ public class CommentDaoImpl extends BaseDao implements ICommentDao
     @Override
     public int count(IQuery query)
     {
-        return super.count(query, "comments");
+        return super.count("comments", query);
     }
 
     @Override
     public List<Comment> query(IQuery query)
     {
-        return super.query(query, "comments", Comment.class);
+        return super.query("comments", query, Comment.class);
     }
 
     @Override
     public PageBean<Comment> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return super.queryByPage(query, "comments", Comment.class, pageSize, currentPage);
+        return super.queryByPage("comments", query, Comment.class, pageSize, currentPage);
     }
 
     @Override
     public void save(Comment comment)
     {
-        super.save(comment, "comments");
+        super.save("comments", comment);
     }
 
     @Override
     public void delete(IQuery query)
     {
-        super.delete(query, "comments");
+        super.delete("comments", query);
     }
 }
