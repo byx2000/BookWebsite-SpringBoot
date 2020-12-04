@@ -14,8 +14,20 @@ import java.util.List;
 public class UserDaoImpl extends BaseDao implements IUserDao
 {
     @Override
+    public int count(IQuery query)
+    {
+        return count("users", query);
+    }
+
+    @Override
     public List<User> query(IQuery query)
     {
-        return super.query("users", query, User.class);
+        return query("users", query, User.class);
+    }
+
+    @Override
+    public void save(User user)
+    {
+        save("users", user);
     }
 }

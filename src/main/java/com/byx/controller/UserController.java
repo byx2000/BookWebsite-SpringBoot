@@ -76,4 +76,17 @@ public class UserController extends BaseController
         }
         return ResultInfo.success(users);
     }
+
+    /**
+     * 注册
+     * @param user 新用户
+     * @return 成功返回{true, msg}，失败返回{false, msg}
+     * @throws Exception 异常
+     */
+    @RequestMapping("/register")
+    public ResultInfo register(User user) throws Exception
+    {
+        userService.register(user);
+        return ResultInfo.success();
+    }
 }

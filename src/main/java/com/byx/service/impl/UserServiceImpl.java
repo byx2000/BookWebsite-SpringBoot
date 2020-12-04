@@ -2,6 +2,7 @@ package com.byx.service.impl;
 
 import com.byx.dao.IUserDao;
 import com.byx.domain.User;
+import com.byx.exception.BookWebsiteException;
 import com.byx.query.IQuery;
 import com.byx.query.UserQuery;
 import com.byx.service.IUserService;
@@ -34,5 +35,30 @@ public class UserServiceImpl implements IUserService
     public List<User> query(IQuery query)
     {
         return userDao.query(query);
+    }
+
+    @Override
+    public void register(User user)
+    {
+        // 用户名为空
+        if (user.getUsername() == null)
+            throw new BookWebsiteException("用户名为空");
+
+        // 查询用户是否已存在
+        UserQuery query = new UserQuery();
+        query.setUsername(user.getUsername());
+        if (userDao.count(query) > 0)
+            throw new BookWebsiteException("用户已存在：" + user.getUsername());
+
+        // 密码为空
+        if (user.getPassword() == null)
+            throw new BookWebsiteException("密码为空");
+
+        // 昵称为空
+        if (user.getNickname() == null)
+            throw new BookWebsiteException("昵称为空");
+
+        // 插入用户
+        userDao.save(user);
     }
 }

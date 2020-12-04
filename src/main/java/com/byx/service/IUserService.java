@@ -24,4 +24,10 @@ public interface IUserService
      * @return 用户列表
      */
     List<User> query(IQuery query);
+
+    /**
+     * 注册
+     * @param user 新用户
+     */
+    void register(User user);
 }
