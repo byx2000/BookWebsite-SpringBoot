@@ -18,19 +18,19 @@ public class BookDaoImpl extends BaseDao implements IBookDao
     @Override
     public int count(IQuery query)
     {
-        return super.count("books", query);
+        return count("books", query);
     }
 
     @Override
     public List<Book> query(IQuery query)
     {
-        return super.query("books", query, Book.class);
+        return query("books", query, Book.class);
     }
 
     @Override
     public PageBean<Book> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return super.queryByPage("books", query, Book.class, pageSize, currentPage);
+        return queryByPage("books", query, Book.class, pageSize, currentPage);
     }
 
     @Override

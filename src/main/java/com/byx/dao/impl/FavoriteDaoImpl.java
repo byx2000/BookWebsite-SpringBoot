@@ -18,30 +18,30 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
     @Override
     public int count(IQuery query)
     {
-        return super.count("favorites", query);
+        return count("favorites", query);
     }
 
     @Override
     public List<Favorite> query(IQuery query)
     {
-        return super.query("favorites", query, Favorite.class);
+        return query("favorites", query, Favorite.class);
     }
 
     @Override
     public PageBean<Favorite> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return super.queryByPage("favorites", query, Favorite.class, pageSize, currentPage);
+        return queryByPage("favorites", query, Favorite.class, pageSize, currentPage);
     }
 
     @Override
     public void save(Favorite favorite)
     {
-        super.save("favorites", favorite);
+        save("favorites", favorite);
     }
 
     @Override
     public void delete(IQuery query)
     {
-        super.delete("favorites", query);
+        delete("favorites", query);
     }
 }

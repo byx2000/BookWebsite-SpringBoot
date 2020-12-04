@@ -16,6 +16,6 @@ public class CategoryDaoImpl extends BaseDao implements ICategoryDao
     @Override
     public List<Category> query(IQuery query)
     {
-        return super.query("categories", query, Category.class);
+        return query("categories", query, Category.class);
     }
 }
