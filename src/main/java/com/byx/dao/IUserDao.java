@@ -27,6 +27,7 @@ public interface IUserDao
     /**
      * 保存用户
      * @param user 用户
+     * @return 新用户的id
      */
-    void save(User user);
+    int save(User user);
 }

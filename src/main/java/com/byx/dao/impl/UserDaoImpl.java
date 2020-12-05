@@ -26,8 +26,8 @@ public class UserDaoImpl extends BaseDao implements IUserDao
     }
 
     @Override
-    public void save(User user)
+    public int save(User user)
     {
-        save("users", user);
+        return save("users", user);
     }
 }

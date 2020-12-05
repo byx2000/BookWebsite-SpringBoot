@@ -2,8 +2,10 @@ package com.byx.controller;
 
 import com.byx.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 
 /**
  * 所有Controller的基类
@@ -37,5 +39,14 @@ public class BaseController
     protected void invalidateSession()
     {
         session.invalidate();
+    }
+
+    /**
+     * 获取静态资源实际路径
+     * @return 静态资源路径
+     */
+    protected File getStaticResourcePath()
+    {
+        return new File(new ApplicationHome().getDir(), "static");
     }
 }

@@ -28,6 +28,7 @@ public interface IUserService
     /**
      * 注册
      * @param user 新用户
+     * @return 新用户的id
      */
-    void register(User user);
+    int register(User user);
 }

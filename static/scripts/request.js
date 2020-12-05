@@ -1,7 +1,7 @@
 // 发起请求
 function request(url, parameters, success, fail = e => alert(e))
 {
-    $.get(url, parameters, 
+    $.post(url, parameters, 
     function(response)
     {
         if (response.flag) success(response.data);
@@ -102,4 +102,29 @@ function isLike(bookId, success, fail)
 function isDislike(bookId, success, fail)
 {
     request("evaluate/isDislike", { bookId: bookId }, success, fail);
+}
+
+// 注册
+function register(username, password, nickname, avatar, success, fail = e => alert(e))
+{
+    let formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("nickname", nickname);
+    formData.append("avatar", avatar);
+    $.ajax(
+        {
+            url: "user/register", 
+            type: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(response)
+            {
+                if (response.flag) success(response.data);
+                else fail(response.errMsg);
+            }
+        }
+    );
 }

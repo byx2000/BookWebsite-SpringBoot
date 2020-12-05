@@ -5,9 +5,18 @@ import com.byx.domain.User;
 import com.byx.query.UserQuery;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.system.ApplicationHome;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -80,13 +89,19 @@ public class UserController extends BaseController
     /**
      * 注册
      * @param user 新用户
+     * @param avatar 头像图片
      * @return 成功返回{true, msg}，失败返回{false, msg}
-     * @throws Exception 异常
      */
     @RequestMapping("/register")
-    public ResultInfo register(User user) throws Exception
+    public ResultInfo register(User user, MultipartFile avatar) throws Exception
     {
-        userService.register(user);
+        // 保存用户数据，并获取id
+        int id = userService.register(user);
+
+        // 保存用户头像
+        File uploadPath = new File(getStaticResourcePath(), "upload/avatar");
+        avatar.transferTo(new File(uploadPath, id + ".jpg"));
+
         return ResultInfo.success();
     }
 }

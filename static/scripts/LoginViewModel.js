@@ -21,11 +21,11 @@ $(function()
                     login(this.username, this.password,
                     function(user)
                     {
-                        // 登陆成功，跳转到首页
-                        //location.href = "./index.html";
-
                         // 登录成功，跳转到登陆前的页面
-                        window.location.href = document.referrer;
+                        if (document.referrer.indexOf("register.html") === -1)
+                            window.location.href = document.referrer;
+                        else
+                            window.location.href = "./index.html";
                     },
                     function(errMsg)
                     {

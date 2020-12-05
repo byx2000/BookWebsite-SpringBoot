@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    public void register(User user)
+    public int register(User user)
     {
         // 用户名为空
         if (user.getUsername() == null)
@@ -59,6 +59,6 @@ public class UserServiceImpl implements IUserService
             throw new BookWebsiteException("昵称为空");
 
         // 插入用户
-        userDao.save(user);
+        return userDao.save(user);
     }
 }

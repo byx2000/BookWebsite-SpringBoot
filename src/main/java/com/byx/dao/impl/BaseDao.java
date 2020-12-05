@@ -86,13 +86,14 @@ public class BaseDao
      * 保存
      * @param tableName 表名
      * @param object 要保存的实体类
+     * @return 新插入记录的id
      */
-    protected void save(String tableName, Object object)
+    protected int save(String tableName, Object object)
     {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        simpleJdbcInsert.withTableName(tableName)
+        return (int) simpleJdbcInsert.withTableName(tableName)
                 .usingGeneratedKeyColumns("id")
-                .execute(new BeanPropertySqlParameterSource(object));
+                .executeAndReturnKey(new BeanPropertySqlParameterSource(object));
     }
 
     /**
