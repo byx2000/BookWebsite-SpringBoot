@@ -8,6 +8,7 @@ import com.byx.query.UserQuery;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,12 +16,14 @@ import java.util.List;
  * 用户服务实现类
  */
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService
 {
     @Autowired
     private IUserDao userDao;
 
     @Override
+    @Transactional(readOnly = true)
     public User login(String username, String password)
     {
         UserQuery query = new UserQuery();
@@ -32,6 +35,7 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> query(IQuery query)
     {
         return userDao.query(query);

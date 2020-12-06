@@ -6,6 +6,7 @@ import com.byx.domain.Evaluate;
 import com.byx.service.IEvaluateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * 点评服务实现类
  */
 @Service
+@Transactional
 public class EvaluateServiceImpl implements IEvaluateService
 {
     @Autowired
@@ -134,6 +136,7 @@ public class EvaluateServiceImpl implements IEvaluateService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isLike(int bookId, int userId)
     {
         List<Evaluate> evaluates = evaluateDao.query(bookId, userId);
@@ -142,6 +145,7 @@ public class EvaluateServiceImpl implements IEvaluateService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isDislike(int bookId, int userId)
     {
         List<Evaluate> evaluates = evaluateDao.query(bookId, userId);

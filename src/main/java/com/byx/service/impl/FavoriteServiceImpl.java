@@ -13,6 +13,7 @@ import com.byx.service.IFavoriteService;
 import com.byx.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import java.util.List;
  * 收藏服务实现类
  */
 @Service
+@Transactional
 public class FavoriteServiceImpl implements IFavoriteService
 {
     @Autowired
@@ -31,6 +33,7 @@ public class FavoriteServiceImpl implements IFavoriteService
     private IBookDao bookDao;
 
     @Override
+    @Transactional(readOnly = true)
     public PageBean<List<Object>> queryByPage(Query query, int pageSize, int currentPage)
     {
         PageBean<Favorite> favoritePageBean = favoriteDao.queryByPage(query, pageSize, currentPage);

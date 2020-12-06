@@ -8,6 +8,7 @@ import com.byx.query.Query;
 import com.byx.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,18 +16,21 @@ import java.util.List;
  * 电子书服务实现类
  */
 @Service
+@Transactional
 public class BookServiceImpl implements IBookService
 {
     @Autowired
     private IBookDao bookDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> query(IQuery query)
     {
         return bookDao.query(query);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageBean<Book> queryByPage(Query query, int pageSize, int currentPage)
     {
         return bookDao.queryByPage(query, pageSize, currentPage);
