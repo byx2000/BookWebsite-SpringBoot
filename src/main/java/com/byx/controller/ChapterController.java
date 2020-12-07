@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/chapter")
-public class ChapterController
+public class ChapterController extends BaseController
 {
     @Autowired
     private IChapterService chapterService;
@@ -27,6 +27,9 @@ public class ChapterController
         // 参数校验
         if (bookId == null) return ResultInfo.fail("参数错误");
 
+        // 判断是否登录
+        if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
+
         return ResultInfo.success(chapterService.getChapterCount(bookId));
     }
 
@@ -41,6 +44,9 @@ public class ChapterController
     {
         // 参数校验
         if (bookId == null || chapter == null) return ResultInfo.fail("参数错误");
+
+        // 判断是否登录
+        if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
 
         return ResultInfo.success(chapterService.getChapter(bookId, chapter));
     }
