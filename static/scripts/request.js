@@ -128,3 +128,9 @@ function register(username, password, nickname, avatar, success, fail = e => ale
         }
     );
 }
+
+// 获取电子书文本
+function read(bookId, currentPage, success, fail)
+{
+    request("read", { bookId: bookId, currentPage: currentPage }, success, fail);
+}
