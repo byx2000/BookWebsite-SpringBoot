@@ -6,45 +6,54 @@ $(function()
             data:
             {
                 bookId: 0,
-                currentPage: 1,
-                totalCount: 0,
-                totalPage: 0,
-                text: "",
-                jumpTo: function(page)
+                chapter: 1,
+                chapterCount: 1,
+                book: null,
+                text: null,
+                jumpTo: function(chapter)
                 {
-                    location.href = "./read.html?bookId=" + this.bookId + "&currentPage=" + page;
+                    location.href = "./read.html?bookId=" + this.bookId + "&chapter=" + chapter;
                 }
             },
             methods:
             {
-                lastPage: function()
+                lastChapter: function()
                 {
-                    if (this.currentPage > 1)
+                    if (this.chapter > 1)
                     {
-                        this.jumpTo(this.currentPage - 1);
+                        this.jumpTo(this.chapter - 1);
                     }
                 },
-                nextPage: function()
+                nextChapter: function()
                 {
-                    if (this.currentPage < this.totalPage)
+                    if (this.chapter < this.chapterCount)
                     {
-                        this.jumpTo(this.currentPage + 1);
+                        this.jumpTo(this.chapter + 1);
                     }
                 }
             },
             mounted: function()
             {
                 this.bookId = Number(getUrlParameter("bookId"));
-                this.currentPage = Number(getUrlParameter("currentPage"));
+                this.chapter = Number(getUrlParameter("chapter"));
 
-                read(this.bookId, this.currentPage,
-                    function(pageBean)
+                // 获取章节数量
+                getChapterCount(this.bookId,
+                    function(cnt)
                     {
-                        app.totalCount = pageBean.totalCount;
-                        app.totalPage = pageBean.totalPage;
-                        app.text = pageBean.data[0];
+                        app.chapterCount = cnt;
+
+                        // 获取章节文本和电子书信息
+                        getChapter(app.bookId, app.chapter,
+                            function(result)
+                            {
+                                app.text = result[0];
+                                app.book = result[1];
+                            }
+                        );
                     }
                 );
+
             }
         }
     );
