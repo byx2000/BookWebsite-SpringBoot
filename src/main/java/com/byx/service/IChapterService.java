@@ -1,13 +1,11 @@
 package com.byx.service;
 
-import com.byx.domain.Text;
-
 import java.util.List;
 
 /**
- * 电子书文本服务接口
+ * 电子书章节服务接口
  */
-public interface ITextService
+public interface IChapterService
 {
     /**
      * 获取电子书章节数

@@ -1,14 +1,14 @@
 package com.byx.dao;
 
-import com.byx.domain.Text;
+import com.byx.domain.Chapter;
 import com.byx.query.IQuery;
 
 import java.util.List;
 
 /**
- * 电子书文本数据访问接口
+ * 电子书章节数据访问接口
  */
-public interface ITextDao
+public interface IChapterDao
 {
     /**
      * 查询结果总数
@@ -22,5 +22,5 @@ public interface ITextDao
      * @param query 查询条件
      * @return 结果列表
      */
-    List<Text> query(IQuery query);
+    List<Chapter> query(IQuery query);
 }

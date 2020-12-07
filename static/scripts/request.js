@@ -129,20 +129,14 @@ function register(username, password, nickname, avatar, success, fail = e => ale
     );
 }
 
-// 获取电子书文本
-// function read(bookId, currentPage, success, fail)
-// {
-//     request("read", { bookId: bookId, currentPage: currentPage }, success, fail);
-// }
-
 // 获取章节数
 function getChapterCount(bookId, success, fail)
 {
-    request("text/count", { bookId: bookId }, success, fail);
+    request("chapter/count", { bookId: bookId }, success, fail);
 }
 
 // 获取章节
 function getChapter(bookId, chapter, success, fail)
 {
-    request("text/chapter", { bookId: bookId, chapter: chapter }, success, fail);
+    request("chapter/data", { bookId: bookId, chapter: chapter }, success, fail);
 }

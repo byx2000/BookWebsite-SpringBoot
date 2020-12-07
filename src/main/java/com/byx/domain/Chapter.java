@@ -1,9 +1,9 @@
 package com.byx.domain;
 
 /**
- * 电子书文本实体类
+ * 电子书章节实体类
  */
-public class Text
+public class Chapter
 {
     private Integer id;
     private Integer bookId;
@@ -53,7 +53,7 @@ public class Text
     @Override
     public String toString()
     {
-        return "Text{" +
+        return "Chapter{" +
                 "id=" + id +
                 ", bookId=" + bookId +
                 ", chapter=" + chapter +

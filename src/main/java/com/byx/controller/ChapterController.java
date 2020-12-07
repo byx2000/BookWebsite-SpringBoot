@@ -1,20 +1,20 @@
 package com.byx.controller;
 
 import com.byx.domain.ResultInfo;
-import com.byx.service.ITextService;
+import com.byx.service.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 电子书文本控制器
+ * 电子书章节控制器
  */
 @RestController
-@RequestMapping("/text")
-public class TextController
+@RequestMapping("/chapter")
+public class ChapterController
 {
     @Autowired
-    private ITextService textService;
+    private IChapterService chapterService;
 
     /**
      * 获取章节数
@@ -27,7 +27,7 @@ public class TextController
         // 参数校验
         if (bookId == null) return ResultInfo.fail("参数错误");
 
-        return ResultInfo.success(textService.getChapterCount(bookId));
+        return ResultInfo.success(chapterService.getChapterCount(bookId));
     }
 
     /**
@@ -36,12 +36,12 @@ public class TextController
      * @param chapter 章节
      * @return {Text, Book}
      */
-    @RequestMapping("/chapter")
+    @RequestMapping("/data")
     public ResultInfo chapter(Integer bookId, Integer chapter)
     {
         // 参数校验
         if (bookId == null || chapter == null) return ResultInfo.fail("参数错误");
 
-        return ResultInfo.success(textService.getChapter(bookId, chapter));
+        return ResultInfo.success(chapterService.getChapter(bookId, chapter));
     }
 }

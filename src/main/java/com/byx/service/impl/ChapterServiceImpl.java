@@ -1,12 +1,12 @@
 package com.byx.service.impl;
 
 import com.byx.dao.IBookDao;
-import com.byx.dao.ITextDao;
+import com.byx.dao.IChapterDao;
 import com.byx.domain.Book;
-import com.byx.domain.Text;
+import com.byx.domain.Chapter;
 import com.byx.query.BookQuery;
-import com.byx.query.TextQuery;
-import com.byx.service.ITextService;
+import com.byx.query.ChapterQuery;
+import com.byx.service.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 电子书文本服务实现类
+ * 电子书章节服务实现类
  */
 @Service
-public class TextServiceImpl implements ITextService
+public class ChapterServiceImpl implements IChapterService
 {
     @Autowired
-    private ITextDao textDao;
+    private IChapterDao chapterDao;
 
     @Autowired
     private IBookDao bookDao;
@@ -28,25 +28,25 @@ public class TextServiceImpl implements ITextService
     @Override
     public int getChapterCount(int bookId)
     {
-        TextQuery query = new TextQuery();
+        ChapterQuery query = new ChapterQuery();
         query.setBookId(bookId);
-        return textDao.count(query);
+        return chapterDao.count(query);
     }
 
     @Override
     public List<Object> getChapter(int bookId, int chapter)
     {
         // 查询文本信息
-        TextQuery textQuery = new TextQuery();
-        textQuery.setBookId(bookId);
-        textQuery.setChapter(chapter);
-        Text text = textDao.query(textQuery).get(0);
+        ChapterQuery chapterQuery = new ChapterQuery();
+        chapterQuery.setBookId(bookId);
+        chapterQuery.setChapter(chapter);
+        Chapter c = chapterDao.query(chapterQuery).get(0);
 
         // 查询电子书信息
         BookQuery bookQuery = new BookQuery();
         bookQuery.setBookId(bookId);
         Book book = bookDao.query(bookQuery).get(0);
 
-        return Arrays.asList(text, book);
+        return Arrays.asList(c, book);
     }
 }

@@ -1,9 +1,9 @@
 package com.byx.query;
 
 /**
- * 电子书文本查询类
+ * 电子书章节查询类
  */
-public class TextQuery extends Query
+public class ChapterQuery extends Query
 {
     private Integer bookId;
     private Integer chapter;

@@ -9,7 +9,7 @@ $(function()
                 chapter: 1,
                 chapterCount: 1,
                 book: null,
-                text: null,
+                chapterData: null,
                 jumpTo: function(chapter)
                 {
                     location.href = "./read.html?bookId=" + this.bookId + "&chapter=" + chapter;
@@ -47,7 +47,7 @@ $(function()
                         getChapter(app.bookId, app.chapter,
                             function(result)
                             {
-                                app.text = result[0];
+                                app.chapterData = result[0];
                                 app.book = result[1];
                             }
                         );
