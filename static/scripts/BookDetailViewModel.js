@@ -97,6 +97,11 @@ $(function()
                         app.book.dislikeCount--;
                     }
                 );
+            },
+            read: function()
+            {
+                // 打开新的阅读标签页
+                window.open("./read.html?bookId=" + this.book.id + "&chapter=1");
             }
         },
         mounted: function()

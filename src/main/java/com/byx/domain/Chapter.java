@@ -8,6 +8,7 @@ public class Chapter
     private Integer id;
     private Integer bookId;
     private Integer chapter;
+    private String name;
     private String content;
 
     public Integer getId()
@@ -40,6 +41,16 @@ public class Chapter
         this.chapter = chapter;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
     public String getContent()
     {
         return content;
@@ -57,6 +68,7 @@ public class Chapter
                 "id=" + id +
                 ", bookId=" + bookId +
                 ", chapter=" + chapter +
+                ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }

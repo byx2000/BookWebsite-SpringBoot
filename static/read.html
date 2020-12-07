@@ -93,7 +93,7 @@
     <div id="content">
         <div class="book_and_chapter_info" v-if="book !== null">
             <p class="book_name">《{{book.name}}》</p>
-            <p class="chapter_info_small">第{{chapter}}章</p>
+            <p class="chapter_info_small">第{{chapter}}章 - {{chapterData.name}}</p>
         </div>
         <div>
         <pre class="book_text" v-if="chapterData !== null">
