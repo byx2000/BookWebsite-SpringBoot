@@ -24,6 +24,7 @@ public class CommentServiceImpl implements ICommentService
     private ICommentDao commentDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comment> queryByBookId(int bookId)
     {
         CommentQuery query = new CommentQuery();
@@ -32,6 +33,7 @@ public class CommentServiceImpl implements ICommentService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageBean<Comment> queryByUserId(int userId, int pageSize, int currentPage)
     {
         CommentQuery query = new CommentQuery();

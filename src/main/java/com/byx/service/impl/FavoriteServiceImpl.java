@@ -60,6 +60,7 @@ public class FavoriteServiceImpl implements IFavoriteService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isFavorite(int bookId, int userId)
     {
         return favoriteDao.count(new FavoriteQuery(bookId, userId, false)) > 0;

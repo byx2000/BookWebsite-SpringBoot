@@ -21,12 +21,14 @@ public class CategoryServiceImpl implements ICategoryService
     private ICategoryDao categoryDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Category> queryAll()
     {
         return categoryDao.query(new CategoryQuery());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Category queryById(int categoryId)
     {
         CategoryQuery query = new CategoryQuery();

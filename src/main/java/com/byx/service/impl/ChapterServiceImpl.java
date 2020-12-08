@@ -9,6 +9,7 @@ import com.byx.query.ChapterQuery;
 import com.byx.service.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * 电子书章节服务实现类
  */
 @Service
+@Transactional
 public class ChapterServiceImpl implements IChapterService
 {
     @Autowired
@@ -26,12 +28,14 @@ public class ChapterServiceImpl implements IChapterService
     private IBookDao bookDao;
 
     @Override
+    @Transactional(readOnly = true)
     public int getChapterCount(int bookId)
     {
         return chapterDao.count(new ChapterQuery(bookId, null));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Object> getChapterAndBook(int bookId, int chapter)
     {
         // 查询文本信息
