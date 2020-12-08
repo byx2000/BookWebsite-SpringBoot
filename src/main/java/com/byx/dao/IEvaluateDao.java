@@ -1,6 +1,7 @@
 package com.byx.dao;
 
 import com.byx.domain.Evaluate;
+import com.byx.query.IQuery;
 
 import java.util.List;
 
@@ -11,11 +12,10 @@ public interface IEvaluateDao
 {
     /**
      * 查询点评记录
-     * @param bookId 电子书id
-     * @param userId 用户id
+     * @param query 查询条件
      * @return 结果列表
      */
-    List<Evaluate> query(int bookId, int userId);
+    List<Evaluate> query(IQuery query);
 
     /**
      * 保存点评记录
@@ -25,9 +25,9 @@ public interface IEvaluateDao
 
     /**
      * 删除点评记录
-     * @param evaluateId 点评记录id
+     * @param query 查询条件
      */
-    void delete(int evaluateId);
+    void delete(IQuery query);
 
     /**
      * 更新点评记录的状态

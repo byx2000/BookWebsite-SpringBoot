@@ -5,7 +5,6 @@ import com.byx.domain.Evaluate;
 import com.byx.query.IQuery;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,34 +13,10 @@ import java.util.List;
 @Repository
 public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
 {
-    private static class EvaluateQuery implements IQuery
-    {
-        private final int bookId;
-        private final int userId;
-
-        private EvaluateQuery(int bookId, int userId)
-        {
-            this.bookId = bookId;
-            this.userId = userId;
-        }
-
-        @Override
-        public String getQueryString()
-        {
-            return " WHERE bookId == ? AND userId == ?";
-        }
-
-        @Override
-        public List<Object> getParameters()
-        {
-            return Arrays.asList(bookId, userId);
-        }
-    }
-
     @Override
-    public List<Evaluate> query(int bookId, int userId)
+    public List<Evaluate> query(IQuery query)
     {
-        return query("evaluates", new EvaluateQuery(bookId, userId), Evaluate.class);
+        return query("evaluates", query, Evaluate.class);
     }
 
     @Override
@@ -51,9 +26,9 @@ public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
     }
 
     @Override
-    public void delete(int evaluateId)
+    public void delete(IQuery query)
     {
-        deleteById("evaluates", evaluateId);
+        delete("evaluates", query);
     }
 
     @Override

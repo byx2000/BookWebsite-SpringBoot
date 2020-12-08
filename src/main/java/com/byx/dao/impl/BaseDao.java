@@ -106,14 +106,4 @@ public class BaseDao
         jdbcTemplate.update("DELETE FROM " + tableName + " " + query.getQueryString(),
                 query.getParameters().toArray());
     }
-
-    /**
-     * 根据id删除
-     * @param tableName 表名
-     * @param id id
-     */
-    protected void deleteById(String tableName, int id)
-    {
-        jdbcTemplate.update("DELETE FROM " + tableName + " WHERE id == ?", id);
-    }
 }
