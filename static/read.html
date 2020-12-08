@@ -68,9 +68,23 @@
             /* max-width: 300px; */
         }
 
+        .chapter_info
+        {
+            display: flex;
+            justify-content: center;
+        }
+
+        .chapter_info_big
+        {
+            font-size: 18px;
+            color: #333333;
+            font-weight: 600;
+            font-family: "Microsoft Yahei", arial,sans-serif;
+            margin: 50px 0;
+        }
+
         .book_text
         {
-            margin-top: 20px;
             padding-bottom: 20px;
             font-size: 16px;
             color: #333333;
@@ -91,9 +105,12 @@
 </head>
 <body>
     <div id="content">
-        <div class="book_and_chapter_info" v-if="book !== null">
+        <div class="book_and_chapter_info" v-if="book !== null && chapterData !== null">
             <p class="book_name">《{{book.name}}》</p>
             <p class="chapter_info_small">第{{chapter}}章 - {{chapterData.name}}</p>
+        </div>
+        <div class="chapter_info" v-if="chapterData !== null">
+            <p class="chapter_info_big">第{{chapter}}章 {{chapterData.name}}</p>
         </div>
         <div>
         <pre class="book_text" v-if="chapterData !== null">
