@@ -61,9 +61,11 @@ $(function()
                         );
                     }
                 },
-                unfavorite: function(favoriteId)
+                unfavorite: function(index)
                 {
-                    cancelFavorite(favoriteId, 
+                    //alert(index);
+                    //alert(JSON.stringify(this.comment_books[index]));
+                    cancelFavorite(this.favorites[index][1].id, 
                         function()
                         {
                             location.reload();

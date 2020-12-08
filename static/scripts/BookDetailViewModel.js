@@ -200,7 +200,8 @@ $(function()
                         function(res)
                         {
                             app.isFavorite = res;
-                        }
+                        },
+                        function(){}
                     );
 
                     // 查询是否已点赞
