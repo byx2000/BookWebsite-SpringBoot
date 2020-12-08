@@ -1,7 +1,6 @@
 package com.byx.service;
 
 import com.byx.domain.Category;
-import com.byx.query.IQuery;
 
 import java.util.List;
 
@@ -11,9 +10,15 @@ import java.util.List;
 public interface ICategoryService
 {
     /**
-     * 根据条件查询电子书类型
-     * @param query 查询条件
+     * 获取所有电子书类型
      * @return 类型列表
      */
-    List<Category> query(IQuery query);
+    List<Category> queryAll();
+
+    /**
+     * 根据id查询电子书类型
+     * @param categoryId 类型id
+     * @return 类型
+     */
+    Category queryById(int categoryId);
 }

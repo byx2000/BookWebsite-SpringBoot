@@ -127,9 +127,9 @@ $(function()
                         {
                             categoryId: app.book.categoryId
                         },
-                        function(categories)
+                        function(category)
                         {
-                            app.category = categories[0];
+                            app.category = category;
                         }
                     );
 
