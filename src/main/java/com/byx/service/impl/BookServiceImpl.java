@@ -3,8 +3,7 @@ package com.byx.service.impl;
 import com.byx.dao.IBookDao;
 import com.byx.domain.Book;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
-import com.byx.query.Query;
+import com.byx.query.BookQuery;
 import com.byx.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +23,14 @@ public class BookServiceImpl implements IBookService
 
     @Override
     @Transactional(readOnly = true)
-    public List<Book> query(IQuery query)
+    public List<Book> query(BookQuery query)
     {
         return bookDao.query(query);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<Book> queryByPage(Query query, int pageSize, int currentPage)
+    public PageBean<Book> queryByPage(BookQuery query, int pageSize, int currentPage)
     {
         return bookDao.queryByPage(query, pageSize, currentPage);
     }

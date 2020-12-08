@@ -35,8 +35,27 @@ public interface IBookDao
      */
     PageBean<Book> queryByPage(Query query, int pageSize, int currentPage);
 
+    /**
+     * 点赞数量+1
+     * @param bookId 电子书id
+     */
     void increaseLikeCount(int bookId);
+
+    /**
+     * 点赞数量-1
+     * @param bookId 电子书id
+     */
     void decreaseLikeCount(int bookId);
+
+    /**
+     * 点踩数量+1
+     * @param bookId 电子书id
+     */
     void increaseDislikeCount(int bookId);
+
+    /**
+     * 点踩数量-1
+     * @param bookId 电子书id
+     */
     void decreaseDislikeCount(int bookId);
 }
