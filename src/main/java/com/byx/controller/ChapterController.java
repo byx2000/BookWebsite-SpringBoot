@@ -27,7 +27,7 @@ public class ChapterController extends BaseController
         // 参数校验
         if (bookId == null) return ResultInfo.fail("参数错误");
 
-        // 判断是否登录
+        // 登录校验
         if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
 
         return ResultInfo.success(chapterService.getChapterCount(bookId));
@@ -45,9 +45,9 @@ public class ChapterController extends BaseController
         // 参数校验
         if (bookId == null || chapter == null) return ResultInfo.fail("参数错误");
 
-        // 判断是否登录
+        // 登录校验
         if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
 
-        return ResultInfo.success(chapterService.getChapter(bookId, chapter));
+        return ResultInfo.success(chapterService.getChapterAndBook(bookId, chapter));
     }
 }

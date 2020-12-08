@@ -8,6 +8,12 @@ public class ChapterQuery extends Query
     private Integer bookId;
     private Integer chapter;
 
+    public ChapterQuery(Integer bookId, Integer chapter)
+    {
+        this.bookId = bookId;
+        this.chapter = chapter;
+    }
+
     public Integer getBookId()
     {
         return bookId;

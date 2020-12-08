@@ -14,11 +14,11 @@ public interface IChapterService
      */
     int getChapterCount(int bookId);
 
-    /**
+    /**H
      * 获取章节数据及其对应的电子书信息
      * @param bookId 电子书id
      * @param chapter 章节
-     * @return [[Text, Book], ...]
+     * @return [Text, Book]
      */
-    List<Object> getChapter(int bookId, int chapter);
+    List<Object> getChapterAndBook(int bookId, int chapter);
 }

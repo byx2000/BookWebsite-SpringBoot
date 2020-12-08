@@ -28,19 +28,14 @@ public class ChapterServiceImpl implements IChapterService
     @Override
     public int getChapterCount(int bookId)
     {
-        ChapterQuery query = new ChapterQuery();
-        query.setBookId(bookId);
-        return chapterDao.count(query);
+        return chapterDao.count(new ChapterQuery(bookId, null));
     }
 
     @Override
-    public List<Object> getChapter(int bookId, int chapter)
+    public List<Object> getChapterAndBook(int bookId, int chapter)
     {
         // 查询文本信息
-        ChapterQuery chapterQuery = new ChapterQuery();
-        chapterQuery.setBookId(bookId);
-        chapterQuery.setChapter(chapter);
-        Chapter c = chapterDao.query(chapterQuery).get(0);
+        Chapter c = chapterDao.query(new ChapterQuery(bookId, chapter)).get(0);
 
         // 查询电子书信息
         BookQuery bookQuery = new BookQuery();
