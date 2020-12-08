@@ -3,7 +3,6 @@ package com.byx.service;
 import com.byx.domain.Comment;
 import com.byx.domain.PageBean;
 import com.byx.query.IQuery;
-import com.byx.query.Query;
 
 import java.util.List;
 
@@ -13,20 +12,18 @@ import java.util.List;
 public interface ICommentService
 {
     /**
-     * 根据条件查询评论（无分页）
-     * @param query 查询条件
+     * 查找指定电子书的所有评论
+     * @param bookId 电子书id
      * @return 评论列表
      */
-    List<Comment> query(IQuery query);
+    List<Comment> queryByBookId(int bookId);
 
     /**
-     * 根据条件查询评论（无分页）
-     * @param query 查询条件
-     * @param pageSize 每页显示条数
-     * @param currentPage 当前页码
-     * @return 分页数据
+     * 查找指定用户的所有评论
+     * @param userId 用户id
+     * @return 评论列表
      */
-    PageBean<Comment> queryByPage(Query query, int pageSize, int currentPage);
+    PageBean<Comment> queryByUserId(int userId, int pageSize, int currentPage);
 
     /**
      * 保存评论

@@ -1,7 +1,6 @@
 package com.byx.controller;
 
 import com.byx.domain.Comment;
-import com.byx.domain.PageBean;
 import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
 import com.byx.query.CommentQuery;
@@ -9,8 +8,6 @@ import com.byx.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
@@ -20,26 +17,32 @@ public class CommentController extends BaseController
     private ICommentService commentService;
 
     /**
-     * 根据条件查询评论
-     * @param commentQuery 查询条件
-     * @param pageSize 每页显示的条数
+     * 查询评论
+     * @param bookId 电子书id
+     * @param userId 用户id
+     * @param pageSize 每页显示条数
      * @param currentPage 当前页码
-     * @return 结果
+     * @return 评论列表或分页数据
      */
     @RequestMapping("/query")
-    public ResultInfo query(CommentQuery commentQuery, Integer pageSize, Integer currentPage)
+    public ResultInfo query(Integer bookId, Integer userId, Integer pageSize, Integer currentPage)
     {
-        // 不带分页的查询
-        if (pageSize == null || currentPage == null)
+        // 查询指定电子书的所有评论
+        if (bookId != null)
         {
-            List<Comment> comments = commentService.query(commentQuery);
-            return ResultInfo.success(comments);
+            return ResultInfo.success(commentService.queryByBookId(bookId));
         }
-        // 带分页的查询
+        // 查询指定用户的所有评论
+        else if (userId != null && pageSize != null && currentPage != null)
+        {
+            // 当前未登录
+            if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
+            return ResultInfo.success(commentService.queryByUserId(userId, pageSize, currentPage));
+        }
+        // 参数错误
         else
         {
-            PageBean<Comment> pageBean = commentService.queryByPage(commentQuery, pageSize, currentPage);
-            return ResultInfo.success(pageBean);
+            return ResultInfo.fail("参数错误");
         }
     }
 

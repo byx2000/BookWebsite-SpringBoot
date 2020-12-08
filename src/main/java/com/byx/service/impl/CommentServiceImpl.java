@@ -3,8 +3,8 @@ package com.byx.service.impl;
 import com.byx.dao.ICommentDao;
 import com.byx.domain.Comment;
 import com.byx.domain.PageBean;
+import com.byx.query.CommentQuery;
 import com.byx.query.IQuery;
-import com.byx.query.Query;
 import com.byx.service.ICommentService;
 import com.byx.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +24,18 @@ public class CommentServiceImpl implements ICommentService
     private ICommentDao commentDao;
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Comment> query(IQuery query)
+    public List<Comment> queryByBookId(int bookId)
     {
+        CommentQuery query = new CommentQuery();
+        query.setBookId(bookId);
         return commentDao.query(query);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public PageBean<Comment> queryByPage(Query query, int pageSize, int currentPage)
+    public PageBean<Comment> queryByUserId(int userId, int pageSize, int currentPage)
     {
+        CommentQuery query = new CommentQuery();
+        query.setUserId(userId);
         return commentDao.queryByPage(query, pageSize, currentPage);
     }
 
