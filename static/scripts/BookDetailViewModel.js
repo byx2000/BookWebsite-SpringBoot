@@ -46,7 +46,7 @@ $(function()
             },
             unfavorite: function()
             {
-                cancelFavorite(this.favoriteId, 
+                cancelFavorite(this.book.id, 
                     function()
                     {
                         location.reload();
@@ -177,25 +177,33 @@ $(function()
                         }
                     );
 
-                    // 查询当前用户是否已收藏当前电子书
-                    queryFavorites(
+                    //查询当前用户是否已收藏当前电子书
+                    // queryFavorites(
+                    //     {
+                    //         bookId: bookId,
+                    //         pageSize: 1,
+                    //         currentPage: 1
+                    //     },
+                    //     function (pageBean)
+                    //     {
+                    //         if (pageBean.data.length > 0)
+                    //         {
+                    //             app.isFavorite = true;
+                    //             app.favoriteId = pageBean.data[0][0].id;
+                    //         }
+                    //     },
+                    //     function (){}
+                    // );
+
+                    // //查询当前用户是否已收藏当前电子书
+                    isFavorite(bookId,
+                        function(res)
                         {
-                            bookId: bookId,
-                            pageSize: 1,
-                            currentPage: 1
-                        },
-                        function (pageBean)
-                        {
-                            if (pageBean.data.length > 0)
-                            {
-                                app.isFavorite = true;
-                                app.favoriteId = pageBean.data[0][0].id;
-                            }
-                        },
-                        function (){}
+                            app.isFavorite = res;
+                        }
                     );
 
-                    // 查询是否已赞或踩当前电子书
+                    // 查询是否已点赞
                     isLike(books[0].id,
                         function(result)
                         {
@@ -204,6 +212,7 @@ $(function()
                         function(){}
                     );
 
+                    // 查询是否已点踩
                     isDislike(books[0].id,
                         function(result)
                         {

@@ -2,8 +2,6 @@ package com.byx.service;
 
 import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
-import com.byx.query.Query;
 
 import java.util.List;
 
@@ -13,13 +11,21 @@ import java.util.List;
 public interface IFavoriteService
 {
     /**
-     * 分页查询
-     * @param query 查询条件
+     * 分页查询收藏和电子书
+     * @param userId 用户id
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
-     * @return 结果列表，每个列表项包含收藏数据和与之关联的电子书数据
+     * @return 返回指定id用户的收藏列表，列表项格式为[Favorite, Book]
      */
-    PageBean<List<Object>> queryByPage(Query query, int pageSize, int currentPage);
+    PageBean<List<Object>> queryFavoriteAndBookByPage(int userId, int pageSize, int currentPage);
+
+    /**
+     * 判断指定用户是否收藏指定电子书
+     * @param bookId 电子书id
+     * @param userId 用户id
+     * @return true/false
+     */
+    boolean isFavorite(int bookId, int userId);
 
     /**
      * 添加收藏
@@ -29,7 +35,8 @@ public interface IFavoriteService
 
     /**
      * 取消收藏
-     * @param query 收藏记录
+     * @param bookId 电子书id
+     * @param userId 用户id
      */
-    void cancel(IQuery query);
+    void cancel(int bookId, int userId);
 }

@@ -74,6 +74,12 @@ function queryFavorites(conditions, success, fail)
     request("favorite/query", conditions, success, fail);
 }
 
+// 是否收藏
+function isFavorite(bookId, success, fail)
+{
+    request("favorite/isFavorite", { bookId: bookId }, success, fail);
+}
+
 // 添加收藏记录
 function addFavorite(bookId, success, fail)
 {
@@ -81,9 +87,9 @@ function addFavorite(bookId, success, fail)
 }
 
 // 取消收藏
-function cancelFavorite(favoriteId, success, fail)
+function cancelFavorite(bookId, success, fail)
 {
-    request("favorite/cancel", { favoriteId: favoriteId }, success, fail);
+    request("favorite/cancel", { bookId: bookId }, success, fail);
 }
 
 // 点赞

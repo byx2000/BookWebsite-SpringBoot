@@ -1,30 +1,19 @@
 package com.byx.query;
 
+/**
+ * 收藏查询类
+ */
 public class FavoriteQuery extends Query
 {
-    private Integer favoriteId;
-    private Integer userId;
     private Integer bookId;
-    private boolean isDelete = false;
+    private Integer userId;
+    private boolean isDelete;
 
-    public Integer getFavoriteId()
+    public FavoriteQuery(Integer bookId, Integer userId, boolean isDelete)
     {
-        return favoriteId;
-    }
-
-    public void setFavoriteId(Integer favoriteId)
-    {
-        this.favoriteId = favoriteId;
-    }
-
-    public Integer getUserId()
-    {
-        return userId;
-    }
-
-    public void setUserId(Integer userId)
-    {
+        this.bookId = bookId;
         this.userId = userId;
+        this.isDelete = isDelete;
     }
 
     public Integer getBookId()
@@ -35,6 +24,16 @@ public class FavoriteQuery extends Query
     public void setBookId(Integer bookId)
     {
         this.bookId = bookId;
+    }
+
+    public Integer getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(Integer userId)
+    {
+        this.userId = userId;
     }
 
     public boolean isDelete()
@@ -50,15 +49,10 @@ public class FavoriteQuery extends Query
     @Override
     protected void customizeQuery()
     {
-        if (favoriteId != null)
-            addWhereCondition("id == ?", favoriteId);
-
-        if (userId != null)
-            addWhereCondition("userId == ?", userId);
-
         if (bookId != null)
             addWhereCondition("bookId == ?", bookId);
-
+        if (userId != null)
+            addWhereCondition("userId == ?", userId);
         if (!isDelete)
             addOrderCondition("time DESC");
     }
