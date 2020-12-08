@@ -2,22 +2,13 @@ package com.byx.controller;
 
 import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
-import com.byx.query.UserQuery;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.system.ApplicationHome;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -70,20 +61,17 @@ public class UserController extends BaseController
     }
 
     /**
-     * 查询用户
-     * @param userQuery 查询条件
+     * 根据id查询用户
+     * @param userId 用户id
      * @return 结果
      */
     @RequestMapping("/query")
-    public ResultInfo query(UserQuery userQuery)
+    public ResultInfo query(Integer userId)
     {
-        userQuery.setPassword(null);
-        List<User> users = userService.query(userQuery);
-        for (User u : users)
-        {
-            u.setPassword(null);
-        }
-        return ResultInfo.success(users);
+        // 参数校验
+        if (userId == null) return ResultInfo.fail("参数错误");
+
+        return ResultInfo.success(userService.queryById(userId));
     }
 
     /**

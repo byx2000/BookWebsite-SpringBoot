@@ -1,9 +1,6 @@
 package com.byx.service;
 
 import com.byx.domain.User;
-import com.byx.query.IQuery;
-
-import java.util.List;
 
 /**
  * 用户服务接口
@@ -19,11 +16,11 @@ public interface IUserService
     User login(String username, String password);
 
     /**
-     * 根据条件查询用户
-     * @param query 查询条件
+     * 根据id查询用户
+     * @param userId 用户id
      * @return 用户列表
      */
-    List<User> query(IQuery query);
+    User queryById(int userId);
 
     /**
      * 注册

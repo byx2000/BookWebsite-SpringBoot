@@ -3,7 +3,6 @@ package com.byx.service.impl;
 import com.byx.dao.IUserDao;
 import com.byx.domain.User;
 import com.byx.exception.BookWebsiteException;
-import com.byx.query.IQuery;
 import com.byx.query.UserQuery;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,13 @@ public class UserServiceImpl implements IUserService
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> query(IQuery query)
+    public User queryById(int userId)
     {
-        return userDao.query(query);
+        UserQuery query = new UserQuery();
+        query.setUserId(userId);
+        User user = userDao.query(query).get(0);
+        user.setPassword(null);
+        return user;
     }
 
     @Override
