@@ -25,10 +25,10 @@ public interface ICommentService
     PageBean<Comment> queryByUserId(int userId, int pageSize, int currentPage);
 
     /**
-     * 保存评论
+     * 发表评论
      * @param comment 评论数据
      */
-    void save(Comment comment);
+    void publish(Comment comment);
 
     /**
      * 根据id删除评论

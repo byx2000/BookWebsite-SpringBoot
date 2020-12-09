@@ -1,12 +1,21 @@
 // 发起请求
 function request(url, parameters, success, fail = e => alert(e))
 {
-    $.post(url, parameters, 
-    function(response)
-    {
-        if (response.flag) success(response.data);
-        else fail(response.errMsg);
-    });
+    $.ajax(
+        {
+            url: url,
+            data: parameters,
+            success: function(response)
+            {
+                if (response.flag) success(response.data);
+                else fail(response.errMsg);
+            },
+            error: function()
+            {
+                alert("网络错误");
+            }
+        }
+    );
 }
 
 // 查询分类
@@ -56,10 +65,10 @@ function queryComments(conditions, success, fail)
     request("comment/query", conditions, success, fail);
 }
 
-// 添加评论
-function saveComment(bookId, content, success, fail)
+// 发表评论
+function publishComment(bookId, content, success, fail)
 {
-    request("comment/save", { bookId: bookId, content: content }, success, fail);
+    request("comment/publish", { bookId: bookId, content: content }, success, fail);
 }
 
 // 删除评论

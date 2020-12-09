@@ -27,8 +27,8 @@ $(function()
                     return;
                 }
 
-                // 添加评论
-                saveComment(this.book.id, this.commentText, 
+                // 发表评论
+                publishComment(this.book.id, this.commentText, 
                     function()
                     {
                         location.reload();

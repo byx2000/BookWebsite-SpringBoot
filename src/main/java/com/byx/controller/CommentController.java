@@ -51,8 +51,8 @@ public class CommentController extends BaseController
      * @param content 评论内容
      * @return 操作结果
      */
-    @RequestMapping("/save")
-    public ResultInfo save(Integer bookId, String content)
+    @RequestMapping("/publish")
+    public ResultInfo publish(Integer bookId, String content)
     {
         // 参数校验
         if (bookId == null || content == null) return ResultInfo.fail("参数错误");
@@ -67,7 +67,7 @@ public class CommentController extends BaseController
         comment.setContent(content);
 
         // 保存
-        commentService.save(comment);
+        commentService.publish(comment);
         return ResultInfo.success();
     }
 

@@ -41,7 +41,7 @@ public class CommentServiceImpl implements ICommentService
     }
 
     @Override
-    public void save(Comment comment)
+    public void publish(Comment comment)
     {
         comment.setTime(DateUtils.now());
         commentDao.save(comment);
