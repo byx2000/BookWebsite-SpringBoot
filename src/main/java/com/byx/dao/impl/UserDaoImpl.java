@@ -14,20 +14,26 @@ import java.util.List;
 public class UserDaoImpl extends BaseDao implements IUserDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "users";
+    }
+
+    @Override
     public int count(Query query)
     {
-        return count("users", query);
+        return super.count(query);
     }
 
     @Override
     public List<User> query(Query query)
     {
-        return query("users", query, User.class);
+        return query(query, User.class);
     }
 
     @Override
     public int save(User user)
     {
-        return save("users", user);
+        return super.save(user);
     }
 }

@@ -15,32 +15,38 @@ import java.util.List;
 public class CommentDaoImpl extends BaseDao implements ICommentDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "comments";
+    }
+
+    @Override
     public int count(Query query)
     {
-        return count("comments", query);
+        return super.count(query);
     }
 
     @Override
     public List<Comment> query(Query query)
     {
-        return query("comments", query, Comment.class);
+        return query(query, Comment.class);
     }
 
     @Override
     public PageBean<Comment> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return queryByPage("comments", query, Comment.class, pageSize, currentPage);
+        return queryByPage(query, Comment.class, pageSize, currentPage);
     }
 
     @Override
     public void save(Comment comment)
     {
-        save("comments", comment);
+        super.save(comment);
     }
 
     @Override
     public void delete(Query query)
     {
-        delete("comments", query);
+        super.delete(query);
     }
 }

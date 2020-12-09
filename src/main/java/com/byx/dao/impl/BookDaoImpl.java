@@ -15,21 +15,27 @@ import java.util.List;
 public class BookDaoImpl extends BaseDao implements IBookDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "books";
+    }
+
+    @Override
     public int count(Query query)
     {
-        return count("books", query);
+        return super.count(query);
     }
 
     @Override
     public List<Book> query(Query query)
     {
-        return query("books", query, Book.class);
+        return query(query, Book.class);
     }
 
     @Override
     public PageBean<Book> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return queryByPage("books", query, Book.class, pageSize, currentPage);
+        return queryByPage(query, Book.class, pageSize, currentPage);
     }
 
     @Override

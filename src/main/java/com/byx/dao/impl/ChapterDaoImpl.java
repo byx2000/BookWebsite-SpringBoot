@@ -14,14 +14,20 @@ import java.util.List;
 public class ChapterDaoImpl extends BaseDao implements IChapterDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "chapters";
+    }
+
+    @Override
     public int count(Query query)
     {
-        return count("chapters", query);
+        return super.count(query);
     }
 
     @Override
     public List<Chapter> query(Query query)
     {
-        return query("chapters", query, Chapter.class);
+        return query(query, Chapter.class);
     }
 }

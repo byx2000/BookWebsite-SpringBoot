@@ -14,8 +14,14 @@ import java.util.List;
 public class CategoryDaoImpl extends BaseDao implements ICategoryDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "categories";
+    }
+
+    @Override
     public List<Category> query(Query query)
     {
-        return query("categories", query, Category.class);
+        return query(query, Category.class);
     }
 }

@@ -14,21 +14,27 @@ import java.util.List;
 public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "evaluates";
+    }
+
+    @Override
     public List<Evaluate> query(Query query)
     {
-        return query("evaluates", query, Evaluate.class);
+        return query(query, Evaluate.class);
     }
 
     @Override
     public void save(Evaluate evaluate)
     {
-        save("evaluates", evaluate);
+        super.save(evaluate);
     }
 
     @Override
     public void delete(Query query)
     {
-        delete("evaluates", query);
+        super.delete(query);
     }
 
     @Override

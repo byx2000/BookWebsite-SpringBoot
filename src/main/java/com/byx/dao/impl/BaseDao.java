@@ -13,20 +13,25 @@ import java.util.List;
 /**
  * 所有dao的基类，包含一些公共方法
  */
-public class BaseDao
+public abstract class BaseDao
 {
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
     /**
+     * 获取表名（子类实现）
+     * @return 表名
+     */
+    protected abstract String getTableName();
+
+    /**
      * 查询总数
-     * @param tableName 表名
      * @param query 查询条件
      * @return 结果总数
      */
-    protected int count(String tableName, Query query)
+    protected int count(Query query)
     {
-        query.setTableName(tableName).setColumn("COUNT(*)");
+        query.setTableName(getTableName()).setColumn("COUNT(*)");
         Integer cnt = jdbcTemplate.queryForObject(query.getQueryClause(),
                 Integer.class,
                 query.getQueryParams().toArray());
@@ -36,14 +41,13 @@ public class BaseDao
     /**
      * 查询
      * @param <T> 实体类
-     * @param tableName 表名
      * @param query 查询条件
      * @param entityClass 实体类
      * @return 结果列表
      */
-    protected <T> List<T> query(String tableName, Query query, Class<T> entityClass)
+    protected <T> List<T> query(Query query, Class<T> entityClass)
     {
-        query.setTableName(tableName).setColumn("*");
+        query.setTableName(getTableName()).setColumn("*");
         return jdbcTemplate.query(query.getQueryClause(),
                 new BeanPropertyRowMapper<>(entityClass),
                 query.getQueryParams().toArray());
@@ -52,24 +56,23 @@ public class BaseDao
     /**
      * 分页查询
      * @param <T> 实体类
-     * @param tableName 表名
      * @param query 查询条件
      * @param entityClass 实体类
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    protected <T> PageBean<T> queryByPage(String tableName, Query query, Class<T> entityClass, int pageSize, int currentPage)
+    protected <T> PageBean<T> queryByPage(Query query, Class<T> entityClass, int pageSize, int currentPage)
     {
         // 计算结果总数
         query.setLimit(null);
         query.setOffset(null);
-        int totalCount = count(tableName, query);
+        int totalCount = count(query);
 
         // 获取查询结果
         query.setLimit(pageSize);
         query.setOffset(pageSize * (currentPage - 1));
-        List<T> list = query(tableName, query, entityClass);
+        List<T> list = query(query, entityClass);
 
         // 组装PageBean
         PageBean<T> pageBean = new PageBean<>();
@@ -85,26 +88,24 @@ public class BaseDao
 
     /**
      * 保存
-     * @param tableName 表名
      * @param object 要保存的实体类
      * @return 新插入记录的id
      */
-    protected int save(String tableName, Object object)
+    protected int save(Object object)
     {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        return (int) simpleJdbcInsert.withTableName(tableName)
+        return (int) simpleJdbcInsert.withTableName(getTableName())
                 .usingGeneratedKeyColumns("id")
                 .executeAndReturnKey(new BeanPropertySqlParameterSource(object));
     }
 
     /**
      * 删除
-     * @param tableName 表名
      * @param query 查询条件
      */
-    protected void delete(String tableName, Query query)
+    protected void delete(Query query)
     {
-        query.setTableName(tableName);
+        query.setTableName(getTableName());
         jdbcTemplate.update(query.getDeleteCaluse(),
                 query.getDeleteParams().toArray());
     }

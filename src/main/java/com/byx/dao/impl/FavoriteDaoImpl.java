@@ -15,32 +15,38 @@ import java.util.List;
 public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
 {
     @Override
+    protected String getTableName()
+    {
+        return "favorites";
+    }
+
+    @Override
     public int count(Query query)
     {
-        return count("favorites", query);
+        return super.count(query);
     }
 
     @Override
     public List<Favorite> query(Query query)
     {
-        return query("favorites", query, Favorite.class);
+        return query(query, Favorite.class);
     }
 
     @Override
     public PageBean<Favorite> queryByPage(Query query, int pageSize, int currentPage)
     {
-        return queryByPage("favorites", query, Favorite.class, pageSize, currentPage);
+        return queryByPage(query, Favorite.class, pageSize, currentPage);
     }
 
     @Override
     public void save(Favorite favorite)
     {
-        save("favorites", favorite);
+        super.save(favorite);
     }
 
     @Override
     public void delete(Query query)
     {
-        delete("favorites", query);
+        super.delete(query);
     }
 }
