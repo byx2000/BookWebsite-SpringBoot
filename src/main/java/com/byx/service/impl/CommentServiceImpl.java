@@ -34,7 +34,8 @@ public class CommentServiceImpl implements ICommentService
     public PageBean<List<Object>> queryCommentAndUserByBookId(int bookId, int pageSize, int currentPage)
     {
         // 查询评论
-        PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("bookId == ?", bookId),
+        PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("bookId == ?", bookId)
+                        .addOrder("time", true),
                 pageSize, currentPage);
 
         // 查询评论对应的用户
