@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>电子书网站-书籍详情</title>
         <link rel="stylesheet" href="./styles/common.css"/>
+        <link rel="stylesheet" href="./styles/page.css"/>
         <script src="./scripts/jquery.js"></script>
         <script src="./scripts/vue.js"></script>
         <script src="./scripts/request.js"></script>
@@ -354,8 +355,15 @@
                 color: #f0f0f0;
             }
 
-            .comment_list .header span:last-child
+            .comment_list .header span:nth-child(3)
             {
+                font-size: 12px;
+                color: #919191;
+            }
+
+            .comment_list .header span:nth-child(4)
+            {
+                margin-left: 8px;
                 font-size: 12px;
                 color: #919191;
             }
@@ -629,6 +637,12 @@
             {
                 cursor: pointer;
             }
+
+            .page_switch
+            {
+                display: flex;
+                justify-content: center;
+            }
         </style>
     </head>
     <body>
@@ -690,37 +704,44 @@
                         <div>
                             <span>评论区</span>
                             <span>|</span>
-                            <span>共{{comments.length}}条评论</span>
+                            <span>共{{totalCount}}条评论</span>
+                            <span>共{{totalPage}}页</span>
                         </div>
                         <a href="#bottom">我来说两句</a>
                     </div>
                     <!--评论列表项-->
-                    <div v-for="(comment, index) in comments" 
+                    <div v-for="(commentAndBook, index) in commentsAndBooks" 
                          class="comment_item"
-                         v-if="comments.length > 0 && users.length > 0 && users[index] !== undefined && users[index] !== null" >
-                       <img class="avatar" 
-                            v-bind:src="'./upload/avatar/' + users[index].id + '.jpg'"/>
-                       <div class="comment_detail">
-                           <div class="username_and_time">
-                               <p class="username">{{users[index].nickname}}</p>
-                               <p class="time">{{comment.time.substring(0, 11)}}</p>
-                           </div>
-                           <p class="content">{{comment.content}}</p>
-                       </div>                        
-                   </div>
+                         v-if="commentsAndBooks !== undefined && commentsAndBooks !== null && commentsAndBooks.length > 0">
+                        <img class="avatar" 
+                                v-bind:src="'./upload/avatar/' + commentAndBook[1].id + '.jpg'"/>
+                        <div class="comment_detail">
+                            <div class="username_and_time">
+                                <p class="username">{{commentAndBook[1].nickname}}</p>
+                                <p class="time">{{commentAndBook[0].time.substring(0, 11)}}</p>
+                            </div>
+                            <p class="content">{{commentAndBook[0].content}}</p>
+                        </div>                        
+                    </div>
+                    <!--分页组件-->
+                    <div class="page_switch" v-if="totalPage > 1">
+                        <a class="last_page" v-on:click="lastPage">上一页</a>
+                        <p class="current_page">第 {{currentPage}} 页</p>
+                        <a class="next_page" v-on:click="nextPage">下一页</a>
+                    </div>
                     <!--空白页-->
-                    <!--<div class="blank_view" v-if="comments.length === 0">
+                    <div class="blank_view" v-if="totalCount === 0">
                         <a class="new_comment" href="#bottom">
                             <img src="./images/edit.png"/>
                         </a>
                         <p>快来说两句，抢沙发</p>
-                    </div>-->
+                    </div>
                     <!--编辑区-->
                     <div class="add_comment">
                         <p>发表评论</p>
                         <textarea class="edit" placeholder="写点什么吧..." v-model="commentText"></textarea>
-                        <a class="commit" v-if="comments.length > 0" v-on:click="addComment">提交</a>
-                        <a class="commit" v-if="comments.length === 0" v-on:click="addComment">抢沙发</a>
+                        <a class="commit" v-if="commentsAndBooks.length > 0" v-on:click="addComment">提交</a>
+                        <a class="commit" v-if="commentsAndBooks.length === 0" v-on:click="addComment">抢沙发</a>
                     </div>
                 </div>
                 <!--同类推荐-->

@@ -27,9 +27,9 @@ public class CommentController extends BaseController
     public ResultInfo query(Integer bookId, Integer userId, Integer pageSize, Integer currentPage)
     {
         // 查询指定电子书的所有评论
-        if (bookId != null)
+        if (bookId != null && pageSize != null && currentPage != null)
         {
-            return ResultInfo.success(commentService.queryByBookId(bookId));
+            return ResultInfo.success(commentService.queryCommentAndUserByBookId(bookId, pageSize, currentPage));
         }
         // 查询指定用户的所有评论
         else if (userId != null && pageSize != null && currentPage != null)

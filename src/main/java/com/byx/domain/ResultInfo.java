@@ -1,11 +1,8 @@
 package com.byx.domain;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 /**
  * 返回JSON数据封装类
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultInfo
 {
 	private final boolean flag;

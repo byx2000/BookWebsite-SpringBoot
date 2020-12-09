@@ -6,9 +6,13 @@ $(function()
         el: "#content",
         data: 
         {
+            bookId: null,
             book: null,
             category: null,
-            comments: [],
+            commentsAndBooks: [],
+            currentPage: 1,
+            totalCount: 0,
+            totalPage: 0,
             users: [],
             recommends: [],
             commentText: "",
@@ -106,17 +110,57 @@ $(function()
                     // 打开新的阅读标签页
                     window.open("./read.html?bookId=" + app.book.id + "&chapter=1");
                 });
+            },
+            lastPage: function()
+            {
+                if (this.currentPage > 1)
+                {
+                    queryComments(
+                        {
+                            bookId: this.bookId,
+                            pageSize: 5,
+                            currentPage: app.currentPage - 1
+                        },
+                        function(pageBean)
+                        {
+                            app.commentsAndBooks = pageBean.data;
+                            app.totalCount = pageBean.totalCount;
+                            app.totalPage = pageBean.totalPage;
+                            app.currentPage--;
+                        }
+                    );
+                }
+            },
+            nextPage: function()
+            {
+                if (this.currentPage < this.totalPage)
+                {
+                    queryComments(
+                        {
+                            bookId: this.bookId,
+                            pageSize: 5,
+                            currentPage: app.currentPage + 1
+                        },
+                        function(pageBean)
+                        {
+                            app.commentsAndBooks = pageBean.data;
+                            app.totalCount = pageBean.totalCount;
+                            app.totalPage = pageBean.totalPage;
+                            app.currentPage++;
+                        }
+                    );
+                }
             }
         },
         mounted: function()
         {
             // 从url获取电子书id
-            let bookId = getUrlParameter("bookId");
+            this.bookId = getUrlParameter("bookId");
 
             // 获取电子书详情
             queryBooks(
                 {
-                    bookId: bookId
+                    bookId: this.bookId
                 },
                 function(books)
                 {
@@ -133,95 +177,61 @@ $(function()
                         }
                     );
 
-                    // 获取评论
-                    queryComments(
+                    // 获取同类推荐列表
+                    queryBooks(
                         {
-                            bookId: books[0].id
+                            categoryId: books[0].categoryId,
+                            orderBy: "score",
+                            limit: 6
                         },
-                        function(comments)
+                        function(books)
                         {
-                            app.comments = comments;
-
-                            app.users = new Array(comments.length);
-                            
-                            for (let i = 0; i < comments.length; ++i)
-                            {
-                                // 获取用户信息
-                                queryUsers(
-                                    {
-                                        userId: comments[i].userId
-                                    },
-                                    function(user)
-                                    {
-                                        // 这里不能用app.users[i] = users[0];
-                                        // 因为这样会导致Vue无法及时更新视图
-                                        app.users.splice(i, 1, user);
-                                        //console.log(JSON.stringify(users[0], null, '\t'));
-                                        //console.log(JSON.stringify(app.users, null, '\t'));
-                                    }
-                                );
-                            }
-
-                            // 获取同类推荐列表
-                            queryBooks(
-                                {
-                                    categoryId: books[0].categoryId,
-                                    orderBy: "score",
-                                    limit: comments.length === 0 ? 4 : 6,
-                                },
-                                function(books)
-                                {
-                                    app.recommends = books;
-                                }
-                            );
+                            app.recommends = books;
                         }
                     );
-
-                    //查询当前用户是否已收藏当前电子书
-                    // queryFavorites(
-                    //     {
-                    //         bookId: bookId,
-                    //         pageSize: 1,
-                    //         currentPage: 1
-                    //     },
-                    //     function (pageBean)
-                    //     {
-                    //         if (pageBean.data.length > 0)
-                    //         {
-                    //             app.isFavorite = true;
-                    //             app.favoriteId = pageBean.data[0][0].id;
-                    //         }
-                    //     },
-                    //     function (){}
-                    // );
-
-                    // //查询当前用户是否已收藏当前电子书
-                    isFavorite(bookId,
-                        function(res)
-                        {
-                            app.isFavorite = res;
-                        },
-                        function(){}
-                    );
-
-                    // 查询是否已点赞
-                    isLike(books[0].id,
-                        function(result)
-                        {
-                            app.isLike = result;
-                        },
-                        function(){}
-                    );
-
-                    // 查询是否已点踩
-                    isDislike(books[0].id,
-                        function(result)
-                        {
-                            app.isDislike = result;
-                        },
-                        function(){}
-                    );
                 }
+            );
+        
+            // 获取评论
+            queryComments(
+                {
+                    bookId: this.bookId,
+                    pageSize: 5,
+                    currentPage: this.currentPage
+                },
+                function(pageBean)
+                {
+                    app.commentsAndBooks = pageBean.data;
+                    app.totalCount = pageBean.totalCount;
+                    app.totalPage = pageBean.totalPage;
+                }
+            );
+
+            // 查询当前用户是否已收藏当前电子书
+            isFavorite(this.bookId,
+                function(res)
+                {
+                    app.isFavorite = res;
+                },
+                function(){}
+            );
+
+            // 查询是否已点赞
+            isLike(this.bookId,
+                function(result)
+                {
+                    app.isLike = result;
+                },
+                function(){}
+            );
+
+            // 查询是否已点踩
+            isDislike(this.bookId,
+                function(result)
+                {
+                    app.isDislike = result;
+                },
+                function(){}
             );
         }
     });
