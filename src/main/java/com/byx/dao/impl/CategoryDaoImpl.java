@@ -2,7 +2,7 @@ package com.byx.dao.impl;
 
 import com.byx.dao.ICategoryDao;
 import com.byx.domain.Category;
-import com.byx.query.IQuery;
+import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoryDaoImpl extends BaseDao implements ICategoryDao
 {
     @Override
-    public List<Category> query(IQuery query)
+    public List<Category> query(Query query)
     {
         return query("categories", query, Category.class);
     }

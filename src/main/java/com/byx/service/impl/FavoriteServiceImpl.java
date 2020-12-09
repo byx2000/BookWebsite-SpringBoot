@@ -5,7 +5,7 @@ import com.byx.dao.IFavoriteDao;
 import com.byx.domain.Book;
 import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
-import com.byx.query.*;
+import com.byx.query.Query;
 import com.byx.service.IFavoriteService;
 import com.byx.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +34,16 @@ public class FavoriteServiceImpl implements IFavoriteService
     public PageBean<List<Object>> queryFavoriteAndBookByPage(int userId, int pageSize, int currentPage)
     {
         // 查询收藏记录
-        PageBean<Favorite> favoritePageBean = favoriteDao.queryByPage(new FavoriteQuery(null, userId, false),
-                pageSize, currentPage);
+        PageBean<Favorite> favoritePageBean = favoriteDao.queryByPage(new Query()
+                .addWhere("userId == ?", userId)
+                .addOrder("time", true), pageSize, currentPage);
 
         // 查询每条收藏记录对应的电子书信息
         List<List<Object>> result = new ArrayList<>();
         for (Favorite f : favoritePageBean.getData())
         {
             int bookId = f.getBookId();
-            BookQuery bookQuery = new BookQuery();
-            bookQuery.setBookId(bookId);
-            List<Book> books = bookDao.query(bookQuery);
+            List<Book> books = bookDao.query(new Query().addWhere("id == ?", bookId));
             result.add(Arrays.asList(f, books.get(0)));
         }
 
@@ -63,7 +62,9 @@ public class FavoriteServiceImpl implements IFavoriteService
     @Transactional(readOnly = true)
     public boolean isFavorite(int bookId, int userId)
     {
-        return favoriteDao.count(new FavoriteQuery(bookId, userId, false)) > 0;
+        return favoriteDao.count(new Query()
+                .addWhere("bookId == ?", bookId)
+                .addWhere("userId == ?", userId)) > 0;
     }
 
     @Override
@@ -71,10 +72,8 @@ public class FavoriteServiceImpl implements IFavoriteService
     {
         // 判断是否已经收藏
         if (isFavorite(favorite.getBookId(), favorite.getUserId())) return;
-
         // 设置当前时间
         favorite.setTime(DateUtils.now());
-
         // 保存
         favoriteDao.save(favorite);
     }
@@ -82,6 +81,7 @@ public class FavoriteServiceImpl implements IFavoriteService
     @Override
     public void cancel(int bookId, int userId)
     {
-        favoriteDao.delete(new FavoriteQuery(bookId, userId, true));
+        favoriteDao.delete(new Query().addWhere("bookId == ?", bookId)
+                .addWhere("userId == ?", userId));
     }
 }

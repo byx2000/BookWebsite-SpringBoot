@@ -3,7 +3,6 @@ package com.byx.dao.impl;
 import com.byx.dao.IBookDao;
 import com.byx.domain.Book;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
 import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,13 +15,13 @@ import java.util.List;
 public class BookDaoImpl extends BaseDao implements IBookDao
 {
     @Override
-    public int count(IQuery query)
+    public int count(Query query)
     {
         return count("books", query);
     }
 
     @Override
-    public List<Book> query(IQuery query)
+    public List<Book> query(Query query)
     {
         return query("books", query, Book.class);
     }

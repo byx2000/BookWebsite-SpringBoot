@@ -1,7 +1,7 @@
 package com.byx.dao;
 
 import com.byx.domain.Evaluate;
-import com.byx.query.IQuery;
+import com.byx.query.Query;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface IEvaluateDao
      * @param query 查询条件
      * @return 结果列表
      */
-    List<Evaluate> query(IQuery query);
+    List<Evaluate> query(Query query);
 
     /**
      * 保存点评记录
@@ -27,7 +27,7 @@ public interface IEvaluateDao
      * 删除点评记录
      * @param query 查询条件
      */
-    void delete(IQuery query);
+    void delete(Query query);
 
     /**
      * 更新点评记录的状态

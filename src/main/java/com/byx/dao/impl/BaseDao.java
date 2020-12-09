@@ -1,7 +1,6 @@
 package com.byx.dao.impl;
 
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
 import com.byx.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -25,11 +24,12 @@ public class BaseDao
      * @param query 查询条件
      * @return 结果总数
      */
-    protected int count(String tableName, IQuery query)
+    protected int count(String tableName, Query query)
     {
-        Integer cnt = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM " + tableName + " " + query.getQueryString(),
+        query.setTableName(tableName).setColumn("COUNT(*)");
+        Integer cnt = jdbcTemplate.queryForObject(query.getQueryClause(),
                 Integer.class,
-                query.getParameters().toArray());
+                query.getQueryParams().toArray());
         return cnt == null ? 0 : cnt;
     }
 
@@ -41,11 +41,12 @@ public class BaseDao
      * @param entityClass 实体类
      * @return 结果列表
      */
-    protected <T> List<T> query(String tableName, IQuery query, Class<T> entityClass)
+    protected <T> List<T> query(String tableName, Query query, Class<T> entityClass)
     {
-        return jdbcTemplate.query("SELECT * FROM " + tableName + " " + query.getQueryString(),
+        query.setTableName(tableName).setColumn("*");
+        return jdbcTemplate.query(query.getQueryClause(),
                 new BeanPropertyRowMapper<>(entityClass),
-                query.getParameters().toArray());
+                query.getQueryParams().toArray());
     }
 
     /**
@@ -101,9 +102,10 @@ public class BaseDao
      * @param tableName 表名
      * @param query 查询条件
      */
-    protected void delete(String tableName, IQuery query)
+    protected void delete(String tableName, Query query)
     {
-        jdbcTemplate.update("DELETE FROM " + tableName + " " + query.getQueryString(),
-                query.getParameters().toArray());
+        query.setTableName(tableName);
+        jdbcTemplate.update(query.getDeleteCaluse(),
+                query.getDeleteParams().toArray());
     }
 }

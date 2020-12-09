@@ -2,7 +2,7 @@ package com.byx.dao.impl;
 
 import com.byx.dao.IChapterDao;
 import com.byx.domain.Chapter;
-import com.byx.query.IQuery;
+import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,13 +14,13 @@ import java.util.List;
 public class ChapterDaoImpl extends BaseDao implements IChapterDao
 {
     @Override
-    public int count(IQuery query)
+    public int count(Query query)
     {
         return count("chapters", query);
     }
 
     @Override
-    public List<Chapter> query(IQuery query)
+    public List<Chapter> query(Query query)
     {
         return query("chapters", query, Chapter.class);
     }

@@ -2,7 +2,6 @@ package com.byx.dao;
 
 import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
 import com.byx.query.Query;
 
 import java.util.List;
@@ -17,14 +16,14 @@ public interface IFavoriteDao
      * @param query 查询条件
      * @return 查询结果数
      */
-    int count(IQuery query);
+    int count(Query query);
 
     /**
      * 查询
      * @param query 查询条件
      * @return 收藏列表
      */
-    List<Favorite> query(IQuery query);
+    List<Favorite> query(Query query);
 
     /**
      * 分页查询
@@ -45,5 +44,5 @@ public interface IFavoriteDao
      * 删除收藏记录
      * @param query 条件
      */
-    void delete(IQuery query);
+    void delete(Query query);
 }

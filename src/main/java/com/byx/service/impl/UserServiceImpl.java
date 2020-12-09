@@ -3,7 +3,7 @@ package com.byx.service.impl;
 import com.byx.dao.IUserDao;
 import com.byx.domain.User;
 import com.byx.exception.BookWebsiteException;
-import com.byx.query.UserQuery;
+import com.byx.query.Query;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +25,9 @@ public class UserServiceImpl implements IUserService
     @Transactional(readOnly = true)
     public User login(String username, String password)
     {
-        UserQuery query = new UserQuery();
-        query.setUsername(username);
-        query.setPassword(password);
-        List<User> users = userDao.query(query);
+        List<User> users = userDao.query(new Query()
+                .addWhere("username == ?", username)
+                .addWhere("password == ?", password));
         if (users.size() != 1) return null;
         return users.get(0);
     }
@@ -37,9 +36,7 @@ public class UserServiceImpl implements IUserService
     @Transactional(readOnly = true)
     public User queryById(int userId)
     {
-        UserQuery query = new UserQuery();
-        query.setUserId(userId);
-        User user = userDao.query(query).get(0);
+        User user = userDao.query(new Query().addWhere("id == ?", userId)).get(0);
         user.setPassword(null);
         return user;
     }
@@ -52,9 +49,7 @@ public class UserServiceImpl implements IUserService
             throw new BookWebsiteException("用户名为空");
 
         // 查询用户是否已存在
-        UserQuery query = new UserQuery();
-        query.setUsername(user.getUsername());
-        if (userDao.count(query) > 0)
+        if (userDao.count(new Query().addWhere("username == ?", user.getUsername())) > 0)
             throw new BookWebsiteException("用户已存在：" + user.getUsername());
 
         // 密码为空

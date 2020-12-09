@@ -2,7 +2,7 @@ package com.byx.dao.impl;
 
 import com.byx.dao.IUserDao;
 import com.byx.domain.User;
-import com.byx.query.IQuery;
+import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,13 +14,13 @@ import java.util.List;
 public class UserDaoImpl extends BaseDao implements IUserDao
 {
     @Override
-    public int count(IQuery query)
+    public int count(Query query)
     {
         return count("users", query);
     }
 
     @Override
-    public List<User> query(IQuery query)
+    public List<User> query(Query query)
     {
         return query("users", query, User.class);
     }

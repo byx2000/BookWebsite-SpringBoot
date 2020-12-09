@@ -5,135 +5,188 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 查询基类
- * <p>该类负责封装各种查询条件、生成sql字符串和对应参数</p>
+ * 查询工具类
  */
-public class Query implements IQuery
+public class Query
 {
-    private final List<String> whereConditions = new ArrayList<>();
-    private final List<String> orderConditions = new ArrayList<>();
-    private Integer limit = null;
-    private Integer offset = null;
-    private final List<Object> parameters = new ArrayList<>();
+    private String tableName;
+    private String columns;
+    private final List<String> wheres = new ArrayList<>();
+    private final List<Object> whereParams = new ArrayList<>();
+    private final List<String> orders = new ArrayList<>();
+    private final List<Boolean> orderDescs = new ArrayList<>();
+    private Integer limit;
+    private Integer offset;
 
-    public Integer getLimit()
+    /**
+     * 设置表名
+     * @param tableName 表名
+     * @return 当前查询对象
+     */
+    public Query setTableName(String tableName)
     {
-        return limit;
-    }
-
-    public void setLimit(Integer limit)
-    {
-        this.limit = limit;
-    }
-
-    public Integer getOffset()
-    {
-        return offset;
-    }
-
-    public void setOffset(Integer offset)
-    {
-        this.offset = offset;
-    }
-
-    protected void addWhereCondition(String cond, Object... params)
-    {
-        whereConditions.add(cond);
-        parameters.addAll(Arrays.asList(params));
-    }
-
-    protected void addOrderCondition(String cond, Object... params)
-    {
-        orderConditions.add(cond);
-        parameters.addAll(Arrays.asList(params));
-    }
-
-    protected void addLimit(int limit)
-    {
-        this.limit = limit;
-        parameters.add(limit);
-    }
-
-    protected void addOffset(int offset)
-    {
-        this.offset = offset;
-        parameters.add(offset);
+        this.tableName = tableName;
+        return this;
     }
 
     /**
-     * 子类实现：自定义查询条件
+     * 设置列
+     * @param columns 列名
+     * @return 当前查询对象
      */
-    protected void customizeQuery() {}
-
-    private void refresh()
+    public Query setColumn(String columns)
     {
-        whereConditions.clear();
-        orderConditions.clear();
-        parameters.clear();
-        customizeQuery();
+        this.columns = columns;
+        return this;
     }
 
     /**
-     * 获取sql查询子句
-     * @return sql查询子句，格式为 WHERE ... ORDER BY ... LIMIT ? OFFSET ?
+     * 添加WHERE子句条件
+     * @param cond 条件
+     * @param params 参数
+     * @return 当前查询对象
      */
-    public String getQueryString()
+    public Query addWhere(String cond, Object... params)
     {
-        refresh();
+        wheres.add(cond);
+        whereParams.addAll(Arrays.asList(params));
+        return this;
+    }
+
+    /**
+     * 添加ORDER BY子句条件
+     * @param cond 条件
+     * @return 当前查询对象
+     */
+    public Query addOrder(String cond)
+    {
+        orders.add(cond);
+        orderDescs.add(false);
+        return this;
+    }
+
+    /**
+     * 添加ORDER BY子句条件
+     * @param cond 条件
+     * @param desc 是否降序
+     * @return 当前查询对象
+     */
+    public Query addOrder(String cond, boolean desc)
+    {
+        orders.add(cond);
+        orderDescs.add(desc);
+        return this;
+    }
+
+    /**
+     * 设置limit值
+     * @param limit limit
+     * @return 当前查询对象
+     */
+    public Query setLimit(Integer limit)
+    {
+        this.limit = limit;
+        return this;
+    }
+
+    /**
+     * 设置offset值
+     * @param offset offset
+     * @return 当前查询对象
+     */
+    public Query setOffset(Integer offset)
+    {
+        this.offset = offset;
+        return this;
+    }
+
+    /**
+     * 获取查询sql字符串
+     * @return sql字符串
+     */
+    public String getQueryClause()
+    {
         StringBuilder sql = new StringBuilder();
 
-        // 拼接where字句
-        if (!whereConditions.isEmpty())
+        // 拼接表名和列名
+        if (tableName != null && !columns.isEmpty())
         {
-            for (int i = 0; i < whereConditions.size(); ++i)
-            {
-                if (i == 0) sql.append(" WHERE ");
-                else sql.append(" AND ");
-                sql.append(" (").append(whereConditions.get(i)).append(") ");
-            }
+            sql.append("SELECT ").append(columns).append(" FROM ").append(tableName).append(" ");
         }
 
-        // 拼接order子句
-        if (!orderConditions.isEmpty())
+        // 拼接where子句
+        if (!wheres.isEmpty()) sql.append(" WHERE ");
+        for (int i = 0; i < wheres.size(); ++i)
         {
-            for (int i = 0; i < orderConditions.size(); ++i)
-            {
-                if (i == 0) sql.append(" ORDER BY ");
-                else sql.append(" , ");
-                sql.append(orderConditions.get(i));
-            }
+            if (i > 0) sql.append(" AND ");
+            sql.append(" ( ").append(wheres.get(i)).append(" ) ");
         }
 
-        // 拼接limit子句
+        // 拼接order by子句
+        if (!orders.isEmpty()) sql.append(" ORDER BY ");
+        for (int i = 0; i < orders.size(); ++i)
+        {
+            sql.append(" ( ").append(orders.get(i)).append(" ) ");
+            if (orderDescs.get(i)) sql.append(" DESC ");
+            if (i != orders.size() - 1) sql.append(",");
+        }
+
+        // 拼接LIMIT 子句
         if (limit != null)
         {
-            sql.append(" LIMIT (?) ");
-            parameters.add(limit);
-            if (offset != null)
-            {
-                sql.append(" OFFSET (?) ");
-                parameters.add(offset);
-            }
+            sql.append(" LIMIT ? ");
+            if (offset != null) sql.append(" OFFSET ? ");
         }
 
+        System.out.println("query clause: " + sql.toString());
+        return sql.toString();
+    }
+
+    /**
+     * 获取删除sql字符串
+     * @return sql字符串
+     */
+    public String getDeleteCaluse()
+    {
+        StringBuilder sql = new StringBuilder();
+
+        // 拼接表名
+        if (tableName != null)
+            sql.append("DELETE FROM ").append(tableName).append(" ");
+
+        // 拼接where子句
+        if (!wheres.isEmpty()) sql.append(" WHERE ");
+        for (int i = 0; i < wheres.size(); ++i)
+        {
+            if (i > 0) sql.append(" AND ");
+            sql.append(" ( ").append(wheres.get(i)).append(" ) ");
+        }
+
+        System.out.println("delete clause: " + sql.toString());
         return sql.toString();
     }
 
     /**
      * 获取查询参数
-     * @return 查询参数
+     * @return 参数数组
      */
-    public List<Object> getParameters()
+    public List<Object> getQueryParams()
     {
-        refresh();
-        if (limit != null)
-        {
-            parameters.add(limit);
-            if (offset != null)
-            {
-                parameters.add(offset);
-            }
-        }
-        return parameters;
+        List<Object> params = new ArrayList<>(whereParams);
+        if (limit != null) params.add(limit);
+        if (offset != null) params.add(offset);
+
+        System.out.println("query params: " + params);
+        return params;
+    }
+
+    /**
+     * 获取删除参数
+     * @return 参数数组
+     */
+    public List<Object> getDeleteParams()
+    {
+        System.out.println("delete params: " + whereParams);
+        return whereParams;
     }
 }

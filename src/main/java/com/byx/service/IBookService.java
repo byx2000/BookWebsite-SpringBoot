@@ -2,7 +2,7 @@ package com.byx.service;
 
 import com.byx.domain.Book;
 import com.byx.domain.PageBean;
-import com.byx.query.BookQuery;
+import com.byx.query.BookQueryCondition;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface IBookService
      * @param query 查询条件
      * @return 电子书列表
      */
-    List<Book> query(BookQuery query);
+    List<Book> query(BookQueryCondition query);
 
     /**
      * 根据条件查询电子书（分页）
@@ -25,5 +25,5 @@ public interface IBookService
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    PageBean<Book> queryByPage(BookQuery query, int pageSize, int currentPage);
+    PageBean<Book> queryByPage(BookQueryCondition query, int pageSize, int currentPage);
 }

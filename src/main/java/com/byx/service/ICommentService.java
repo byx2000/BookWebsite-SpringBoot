@@ -2,7 +2,6 @@ package com.byx.service;
 
 import com.byx.domain.Comment;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
 
 import java.util.List;
 
@@ -32,8 +31,8 @@ public interface ICommentService
     void save(Comment comment);
 
     /**
-     * 删除评论
-     * @param query 条件
+     * 根据id删除评论
+     * @param commentId 评论id
      */
-    void delete(IQuery query);
+    void delete(int commentId);
 }

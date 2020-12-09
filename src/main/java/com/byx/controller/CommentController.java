@@ -3,7 +3,6 @@ package com.byx.controller;
 import com.byx.domain.Comment;
 import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
-import com.byx.query.CommentQuery;
 import com.byx.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,16 +82,12 @@ public class CommentController extends BaseController
         // 参数校验
         if (commentId == null) return ResultInfo.fail("参数错误");
 
-        // 获取当前登录用户
+        // 登录校验
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
-        // 删除当前用户的指定评论
-        CommentQuery query = new CommentQuery();
-        query.setCommentId(commentId);
-        query.setUserId(user.getId());
-        query.setDelete(true);
-        commentService.delete(query);
+        // 删除评论
+        commentService.delete(commentId);
 
         return ResultInfo.success();
     }

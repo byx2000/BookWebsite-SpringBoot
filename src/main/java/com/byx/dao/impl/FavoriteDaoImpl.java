@@ -3,7 +3,6 @@ package com.byx.dao.impl;
 import com.byx.dao.IFavoriteDao;
 import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
 import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,13 +15,13 @@ import java.util.List;
 public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
 {
     @Override
-    public int count(IQuery query)
+    public int count(Query query)
     {
         return count("favorites", query);
     }
 
     @Override
-    public List<Favorite> query(IQuery query)
+    public List<Favorite> query(Query query)
     {
         return query("favorites", query, Favorite.class);
     }
@@ -40,7 +39,7 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
     }
 
     @Override
-    public void delete(IQuery query)
+    public void delete(Query query)
     {
         delete("favorites", query);
     }

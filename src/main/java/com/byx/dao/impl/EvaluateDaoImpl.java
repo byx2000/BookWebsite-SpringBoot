@@ -2,7 +2,7 @@ package com.byx.dao.impl;
 
 import com.byx.dao.IEvaluateDao;
 import com.byx.domain.Evaluate;
-import com.byx.query.IQuery;
+import com.byx.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
 {
     @Override
-    public List<Evaluate> query(IQuery query)
+    public List<Evaluate> query(Query query)
     {
         return query("evaluates", query, Evaluate.class);
     }
@@ -26,7 +26,7 @@ public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
     }
 
     @Override
-    public void delete(IQuery query)
+    public void delete(Query query)
     {
         delete("evaluates", query);
     }

@@ -2,7 +2,7 @@ package com.byx.service.impl;
 
 import com.byx.dao.ICategoryDao;
 import com.byx.domain.Category;
-import com.byx.query.CategoryQuery;
+import com.byx.query.Query;
 import com.byx.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +24,13 @@ public class CategoryServiceImpl implements ICategoryService
     @Transactional(readOnly = true)
     public List<Category> queryAll()
     {
-        return categoryDao.query(new CategoryQuery());
+        return categoryDao.query(new Query());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Category queryById(int categoryId)
     {
-        CategoryQuery query = new CategoryQuery();
-        query.setCategoryId(categoryId);
-        return categoryDao.query(query).get(0);
+        return categoryDao.query(new Query().addWhere("id == ?", categoryId)).get(0);
     }
 }

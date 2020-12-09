@@ -2,7 +2,6 @@ package com.byx.dao;
 
 import com.byx.domain.Book;
 import com.byx.domain.PageBean;
-import com.byx.query.IQuery;
 import com.byx.query.Query;
 
 import java.util.List;
@@ -17,14 +16,14 @@ public interface IBookDao
      * @param query 查询条件
      * @return 结果数量
      */
-    int count(IQuery query);
+    int count(Query query);
 
     /**
      * 查询
      * @param query 查询条件
      * @return 电子书列表
      */
-    List<Book> query(IQuery query);
+    List<Book> query(Query query);
 
     /**
      * 分页查询

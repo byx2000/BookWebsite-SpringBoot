@@ -1,7 +1,7 @@
 package com.byx.dao;
 
 import com.byx.domain.Chapter;
-import com.byx.query.IQuery;
+import com.byx.query.Query;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ public interface IChapterDao
      * @param query 查询条件
      * @return 结果总数
      */
-    int count(IQuery query);
+    int count(Query query);
 
     /**
      * 查询结果列表
      * @param query 查询条件
      * @return 结果列表
      */
-    List<Chapter> query(IQuery query);
+    List<Chapter> query(Query query);
 }
