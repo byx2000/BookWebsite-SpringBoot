@@ -9,7 +9,6 @@ import java.util.List;
 public class PageBean<T>
 {
     private int totalCount;
-    private int totalPage;
     private int currentPage;
     private int pageSize;
     private List<T> data;
@@ -26,12 +25,8 @@ public class PageBean<T>
 
     public int getTotalPage()
     {
-        return totalPage;
-    }
-
-    public void setTotalPage(int totalPage)
-    {
-        this.totalPage = totalPage;
+        if (pageSize == 0) return 0;
+        return (totalCount % pageSize == 0) ? (totalCount / pageSize) : (totalCount / pageSize + 1);
     }
 
     public int getCurrentPage()
@@ -69,7 +64,6 @@ public class PageBean<T>
     {
         return "PageBean{" +
                 "totalCount=" + totalCount +
-                ", totalPage=" + totalPage +
                 ", currentPage=" + currentPage +
                 ", pageSize=" + pageSize +
                 ", data=" + data +

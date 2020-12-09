@@ -51,7 +51,6 @@ public class FavoriteServiceImpl implements IFavoriteService
         PageBean<List<Object>> pageBean = new PageBean<>();
         pageBean.setPageSize(pageSize);
         pageBean.setCurrentPage(currentPage);
-        pageBean.setTotalPage(favoritePageBean.getTotalPage());
         pageBean.setTotalCount(favoritePageBean.getTotalCount());
         pageBean.setData(result);
 

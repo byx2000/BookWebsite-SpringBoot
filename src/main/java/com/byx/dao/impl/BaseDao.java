@@ -79,8 +79,6 @@ public abstract class BaseDao
         pageBean.setPageSize(pageSize);
         pageBean.setCurrentPage(currentPage);
         pageBean.setTotalCount(totalCount);
-        int totalPage = (totalCount % pageSize == 0) ? (totalCount / pageSize) : (totalCount / pageSize + 1);
-        pageBean.setTotalPage(totalPage);
         pageBean.setData(list);
 
         return pageBean;
