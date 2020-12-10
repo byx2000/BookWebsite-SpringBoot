@@ -50,4 +50,21 @@ public class ChapterController extends BaseController
 
         return ResultInfo.success(chapterService.getChapterAndBook(bookId, chapter));
     }
+
+    /**
+     * 获取电子书目录
+     * @param bookId 电子书id
+     * @return [Chapter, ...]
+     */
+    @RequestMapping("/contents")
+    public ResultInfo contents(Integer bookId)
+    {
+        // 参数校验
+        if (bookId == null) return ResultInfo.fail("参数错误");
+
+        // 登录校验
+        if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
+
+        return ResultInfo.success(chapterService.getContents(bookId));
+    }
 }

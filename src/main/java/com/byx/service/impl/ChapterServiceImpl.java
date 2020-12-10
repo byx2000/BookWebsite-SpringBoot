@@ -46,4 +46,15 @@ public class ChapterServiceImpl implements IChapterService
 
         return Arrays.asList(c, book);
     }
+
+    @Override
+    public List<Chapter> getContents(int bookId)
+    {
+        List<Chapter> chapters = chapterDao.query(new Query().addWhere("bookId == ?", bookId).addOrder("chapter"));
+        for (Chapter c : chapters)
+        {
+            c.setContent(null);
+        }
+        return chapters;
+    }
 }

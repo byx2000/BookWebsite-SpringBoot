@@ -1,5 +1,7 @@
 package com.byx.service;
 
+import com.byx.domain.Chapter;
+
 import java.util.List;
 
 /**
@@ -21,4 +23,11 @@ public interface IChapterService
      * @return [Text, Book]
      */
     List<Object> getChapterAndBook(int bookId, int chapter);
+
+    /**
+     * 获取电子书目录
+     * @param bookId 电子书id
+     * @return 章节列表
+     */
+    List<Chapter> getContents(int bookId);
 }
