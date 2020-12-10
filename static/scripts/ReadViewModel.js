@@ -6,11 +6,12 @@ $(function()
             data:
             {
                 bookId: 0,
-                chapter: 1,
+                currentChapter: 1,
                 chapterCount: 1,
                 book: null,
                 chapterData: null,
                 isBookContentsShow: false,
+                contents: [],
                 jumpTo: function(chapter)
                 {
                     location.href = "./read.html?bookId=" + this.bookId + "&chapter=" + chapter;
@@ -20,28 +21,27 @@ $(function()
             {
                 lastChapter: function()
                 {
-                    if (this.chapter > 1)
+                    if (this.currentChapter > 1)
                     {
-                        this.jumpTo(this.chapter - 1);
+                        this.jumpTo(this.currentChapter - 1);
                     }
                 },
                 nextChapter: function()
                 {
-                    if (this.chapter < this.chapterCount)
+                    if (this.currentChapter < this.chapterCount)
                     {
-                        this.jumpTo(this.chapter + 1);
+                        this.jumpTo(this.currentChapter + 1);
                     }
                 },
                 openOrCloseContents: function()
                 {
-                    //alert("目录功能未实现");
                     this.isBookContentsShow = !this.isBookContentsShow;
                 }
             },
             mounted: function()
             {
                 this.bookId = Number(getUrlParameter("bookId"));
-                this.chapter = Number(getUrlParameter("chapter"));
+                this.currentChapter = Number(getUrlParameter("chapter"));
 
                 // 获取章节数量
                 getChapterCount(this.bookId,
@@ -50,7 +50,7 @@ $(function()
                         app.chapterCount = cnt;
 
                         // 获取章节文本和电子书信息
-                        getChapter(app.bookId, app.chapter,
+                        getChapter(app.bookId, app.currentChapter,
                             function(result)
                             {
                                 app.chapterData = result[0];
@@ -60,6 +60,13 @@ $(function()
                     }
                 );
 
+                // 获取目录
+                getContents(this.bookId,
+                    function(contents)
+                    {
+                        app.contents = contents;
+                    }
+                );
             }
         }
     );

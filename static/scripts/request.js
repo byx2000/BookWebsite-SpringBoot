@@ -155,3 +155,9 @@ function getChapter(bookId, chapter, success, fail)
 {
     request("chapter/data", { bookId: bookId, chapter: chapter }, success, fail);
 }
+
+// 获取目录
+function getContents(bookId, success, fail)
+{
+    request("chapter/contents", { bookId: bookId }, success, fail);
+}

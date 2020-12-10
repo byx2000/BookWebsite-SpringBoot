@@ -94,7 +94,7 @@
 
         .book_text
         {
-            padding-bottom: 20px;
+            padding-bottom: 100px;
             font-size: 16px;
             color: #333333;
             line-height: 50px;
@@ -102,13 +102,19 @@
             text-align: justify;
         }
 
-        .page_switch_container
+        .page_switch
         {
             display: flex;
             justify-content: center;
             padding-top: 20px;
             border-top: 1px solid #c7c7c7;
             padding-bottom: 20px;
+            position: fixed;
+            width: 750px;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            background-color: #f8f0e7;
         }
 
         #content
@@ -141,6 +147,31 @@
             height: 300px;
             background-color: white;
             box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+
+        .book_contents_link_normal, .book_contents_link_current
+        {
+            display: inline-block;
+            font-size: 16px;
+            line-height: 30px;
+        }
+
+        .book_contents_link_normal
+        {
+            color: #333333;
+        }
+
+        .book_contents_link_current
+        {
+            color: #db4e4e;
+        }
+
+        .book_contents_link_normal:hover, .book_contents_link_current:hover
+        {
+            color: #db4e4e;
         }
     </style>
 </head>
@@ -150,25 +181,28 @@
             <img src="./images/content.png"/>
         </a>
         <div class="book_contents" v-if="isBookContentsShow">
-            目录（功能未实现）
+            <div class="contents_item" v-if="contents !== null && contents !== undefined" v-for="(chapter, index) in contents">
+                <a v-bind:class="(currentChapter === chapter.chapter) ? 'book_contents_link_current' : 'book_contents_link_normal'" 
+                   v-bind:href="'./read.html?bookId=' + bookId + '&chapter=' + chapter.chapter">
+                    第{{chapter.chapter}}章 {{chapter.name}}
+                </a>
+            </div>
         </div>
         <div class="book_and_chapter_info" v-if="book !== null && chapterData !== null">
             <p class="book_name">《{{book.name}}》</p>
-            <p class="chapter_info_small">第{{chapter}}章 - {{chapterData.name}}</p>
+            <p class="chapter_info_small">第{{currentChapter}}章 - {{chapterData.name}}</p>
         </div>
         <div class="chapter_info" v-if="chapterData !== null">
-            <p class="chapter_info_big">第{{chapter}}章 {{chapterData.name}}</p>
+            <p class="chapter_info_big">第{{currentChapter}}章 {{chapterData.name}}</p>
         </div>
         <div>
         <pre class="book_text" v-if="chapterData !== null">
 {{chapterData.content}}</pre>
         </div>
-        <div class="page_switch_container">
-            <div class="page_switch">
-                <a class="last_page" v-on:click="lastChapter">上一章</a>
-                <p class="current_page">{{chapter}} / {{chapterCount}}</p>
-                <a class="next_page" v-on:click="nextChapter">下一章</a>
-            </div>
+        <div class="page_switch">
+            <a class="last_page" v-on:click="lastChapter">上一章</a>
+            <p class="current_page">{{currentChapter}} / {{chapterCount}}</p>
+            <a class="next_page" v-on:click="nextChapter">下一章</a>
         </div>
     </div>
 </body>
