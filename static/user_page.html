@@ -319,17 +319,17 @@
                     </p>
                     <!--评论列表项-->
                     <div class="comment_item"
-                            v-for="(comment, index) in comments">
+                            v-for="(commentAndBook, index) in commentsAndBooks">
                         <div class="name_and_content">
                             <a class="book_name"
-                                v-if="comment_books[index] !== null && comment_books[index] !== undefined"
-                                v-bind:href="'./book_detail.html?bookId=' + comment_books[index].id">
-                                {{comment_books[index].name}}
+                                v-if="commentAndBook[1] !== null && commentAndBook[1] !== undefined"
+                                v-bind:href="'./book_detail.html?bookId=' + commentAndBook[1].id">
+                                {{commentAndBook[1].name}}
                             </a>
-                            <p class="comment_time">发表时间：{{comment.time}}</p>
+                            <p class="comment_time">发表时间：{{commentAndBook[0].time}}</p>
                         </div>
-                        <p class="comment_content">{{comment.content}}</p>
-                        <a class="delete" v-on:click="deleteComment(comment.id)">删除</a>
+                        <p class="comment_content">{{commentAndBook[0].content}}</p>
+                        <a class="delete" v-on:click="deleteComment(commentAndBook[0].id)">删除</a>
                     </div>
                 </div>
 

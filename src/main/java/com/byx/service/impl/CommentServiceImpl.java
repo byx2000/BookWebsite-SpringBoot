@@ -1,7 +1,9 @@
 package com.byx.service.impl;
 
+import com.byx.dao.IBookDao;
 import com.byx.dao.ICommentDao;
 import com.byx.dao.IUserDao;
+import com.byx.domain.Book;
 import com.byx.domain.Comment;
 import com.byx.domain.PageBean;
 import com.byx.domain.User;
@@ -29,9 +31,12 @@ public class CommentServiceImpl implements ICommentService
     @Autowired
     private IUserDao userDao;
 
+    @Autowired
+    private IBookDao bookDao;
+
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryCommentAndUserByBookId(int bookId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryCommentsAndUsersByBookId(int bookId, int pageSize, int currentPage)
     {
         // 查询评论
         PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("bookId == ?", bookId)
@@ -60,11 +65,29 @@ public class CommentServiceImpl implements ICommentService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<Comment> queryByUserId(int userId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryCommentsAndBooksByUserId(int userId, int pageSize, int currentPage)
     {
-        return commentDao.queryByPage(new Query().addWhere("userId == ?", userId)
-                .addOrder("time", true),
+        // 查询评论
+        PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("userId == ?", userId)
+                        .addOrder("time", true),
                 pageSize, currentPage);
+
+        // 查询评论对应的电子书
+        List<List<Object>> result = new ArrayList<>();
+        for (Comment comment : commentPageBean.getData())
+        {
+            Book book = bookDao.query(new Query().addWhere("id == ?", comment.getBookId())).get(0);
+            result.add(Arrays.asList(comment, book));
+        }
+
+        // 构造PageBean
+        PageBean<List<Object>> pageBean = new PageBean<>();
+        pageBean.setTotalCount(commentPageBean.getTotalCount());
+        pageBean.setPageSize(pageSize);
+        pageBean.setCurrentPage(currentPage);
+        pageBean.setData(result);
+
+        return pageBean;
     }
 
     @Override

@@ -14,8 +14,7 @@ $(function()
                 totalPage: 0,
                 totalCount: 0,
                 user: null,
-                comments: [],
-                comment_books: [],
+                commentsAndBooks: [],
                 favorites: [],
                 jumpTo: function(page)
                 {
@@ -104,24 +103,9 @@ $(function()
                                 },
                                 function (pageBean)
                                 {
-                                    app.comments = pageBean.data;
+                                    app.commentsAndBooks = pageBean.data;
                                     app.totalPage = pageBean.totalPage;
                                     app.totalCount = pageBean.totalCount;
-
-                                    app.comment_books = new Array(app.comments.length);
-                                    for (let i = 0; i < app.comments.length; ++i)
-                                    {
-                                        // 获取评论所属的电子书
-                                        queryBooks(
-                                            {
-                                                bookId: app.comments[i].bookId
-                                            },
-                                            function(books)
-                                            {
-                                                app.comment_books.splice(i, 1, books[0]);
-                                            }
-                                        );
-                                    }
                                 }
                             );
                         }
@@ -139,13 +123,13 @@ $(function()
                                     app.totalPage = pageBean.totalPage;
                                     app.totalCount = pageBean.totalCount;
                                     app.favorites = pageBean.data;
-                                    //alert(JSON.stringify(app.favorites_and_books));
                                 }
                             );
                         }
                     },
-                    function(msg) // 未登录
+                    function() // 未登录
                     {
+                        // 跳转到登录页面
                         location.href = "./login.html";
                     }
                 );

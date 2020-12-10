@@ -11,18 +11,22 @@ import java.util.List;
 public interface ICommentService
 {
     /**
-     * 查找电子书评论及其对应的用户信息
+     * 查找电子书的所有评论及其对应的用户信息
      * @param bookId 电子书id
+     * @param pageSize 每页显示条数
+     * @param currentPage 当前页码
      * @return 分页数据，每个列表项格式为[Comment, User]
      */
-    PageBean<List<Object>> queryCommentAndUserByBookId(int bookId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryCommentsAndUsersByBookId(int bookId, int pageSize, int currentPage);
 
     /**
-     * 查找指定用户的所有评论
+     * 查找用户的所有评论及其对应的电子书信息
      * @param userId 用户id
-     * @return 评论列表
+     * @param pageSize 每页显示条数
+     * @param currentPage 当前页码
+     * @return 分页数据，每个列表项格式为[Comment, Book]
      */
-    PageBean<Comment> queryByUserId(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryCommentsAndBooksByUserId(int userId, int pageSize, int currentPage);
 
     /**
      * 发表评论

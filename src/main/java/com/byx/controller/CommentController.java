@@ -29,14 +29,14 @@ public class CommentController extends BaseController
         // 查询指定电子书的所有评论
         if (bookId != null && pageSize != null && currentPage != null)
         {
-            return ResultInfo.success(commentService.queryCommentAndUserByBookId(bookId, pageSize, currentPage));
+            return ResultInfo.success(commentService.queryCommentsAndUsersByBookId(bookId, pageSize, currentPage));
         }
         // 查询指定用户的所有评论
         else if (userId != null && pageSize != null && currentPage != null)
         {
-            // 当前未登录
+            // 登录校验
             if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
-            return ResultInfo.success(commentService.queryByUserId(userId, pageSize, currentPage));
+            return ResultInfo.success(commentService.queryCommentsAndBooksByUserId(userId, pageSize, currentPage));
         }
         // 参数错误
         else
