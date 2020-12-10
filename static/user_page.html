@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<htm>
+<html>
     <head>
         <meta charset="UTF-8">
         <title>用户主页</title>
@@ -340,24 +340,24 @@
                         共 <span class="strong">{{totalCount}}</span> 条收藏，共 <span class="strong">{{totalPage}}</span> 页，当前第 <span class="strong">{{currentPage}}</span> 页
                     </p>
                     <!--收藏列表项-->
-                    <div class="favorite_item" v-for="(favorite, index) in favorites">
-                        <a v-bind:href="'./book_detail.html?bookId=' + favorite[1].id">
-                            <img class="book_cover" v-bind:src="'./upload/cover/' + favorite[1].id + '.jpg'"/>
+                    <div class="favorite_item" v-for="(favoriteAndBook, index) in favoritesAndBooks">
+                        <a v-bind:href="'./book_detail.html?bookId=' + favoriteAndBook[1].id">
+                            <img class="book_cover" v-bind:src="'./upload/cover/' + favoriteAndBook[1].id + '.jpg'"/>
                         </a>
                         <div class="book_detail">
                             <div>
                                 <div class="name_and_time">
-                                    <a class="book_name" v-bind:href="'./book_detail.html?bookId=' + favorite[1].id">
-                                        {{favorite[1].name}}
+                                    <a class="book_name" v-bind:href="'./book_detail.html?bookId=' + favoriteAndBook[1].id">
+                                        {{favoriteAndBook[1].name}}
                                     </a>
-                                    <p class="favorite_time">收藏时间：{{favorite[0].time.substring(0, 11)}}</p>
+                                    <p class="favorite_time">收藏时间：{{favoriteAndBook[0].time.substring(0, 11)}}</p>
                                 </div>
                                 <div class="name_and_cancel">
-                                    <p class="book_author">作者：{{favorite[1].author}}</p>
-                                    <a class="cancel_favorite" v-on:click="unfavorite(index)">取消收藏</a>
+                                    <p class="book_author">作者：{{favoriteAndBook[1].author}}</p>
+                                    <a class="cancel_favorite" v-on:click="unfavorite(favoriteAndBook[1].id)">取消收藏</a>
                                 </div>
                             </div>
-                            <p class="book_description">{{favorite[1].description}}</p>
+                            <p class="book_description">{{favoriteAndBook[1].description}}</p>
                         </div>
                     </div>
                 </div>
@@ -377,4 +377,4 @@
             </div>
         </div>
     </body>
-</htm>
+</html>

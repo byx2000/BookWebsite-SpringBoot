@@ -15,7 +15,7 @@ $(function()
                 totalCount: 0,
                 user: null,
                 commentsAndBooks: [],
-                favorites: [],
+                favoritesAndBooks: [],
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -60,11 +60,9 @@ $(function()
                         );
                     }
                 },
-                unfavorite: function(index)
+                unfavorite: function(bookId)
                 {
-                    //alert(index);
-                    //alert(JSON.stringify(this.comment_books[index]));
-                    cancelFavorite(this.favorites[index][1].id, 
+                    cancelFavorite(bookId, 
                         function()
                         {
                             location.reload();
@@ -122,7 +120,7 @@ $(function()
                                 {
                                     app.totalPage = pageBean.totalPage;
                                     app.totalCount = pageBean.totalCount;
-                                    app.favorites = pageBean.data;
+                                    app.favoritesAndBooks = pageBean.data;
                                 }
                             );
                         }
