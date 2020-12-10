@@ -10,6 +10,7 @@ $(function()
                 chapterCount: 1,
                 book: null,
                 chapterData: null,
+                isBookContentsShow: false,
                 jumpTo: function(chapter)
                 {
                     location.href = "./read.html?bookId=" + this.bookId + "&chapter=" + chapter;
@@ -30,6 +31,11 @@ $(function()
                     {
                         this.jumpTo(this.chapter + 1);
                     }
+                },
+                openOrCloseContents: function()
+                {
+                    //alert("目录功能未实现");
+                    this.isBookContentsShow = !this.isBookContentsShow;
                 }
             },
             mounted: function()

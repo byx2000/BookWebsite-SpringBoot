@@ -33,12 +33,21 @@
             margin-bottom: 0;
             padding-left: 50px;
             padding-right: 50px;
+            padding-top: 50px;
             width: 750px;
         }
 
         .book_and_chapter_info
         {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            width: 750px;
+            transform: translateX(-50%);
+            background-color: #f8f0e7;
             padding-top: 42px;
+            padding-left: 50px;
+            padding-right: 50px;
             border-bottom: 1px solid #c7c7c7;
             padding-bottom: 5px;
             display: flex;
@@ -101,10 +110,48 @@
             border-top: 1px solid #c7c7c7;
             padding-bottom: 20px;
         }
+
+        #content
+        {
+            position: relative;
+        }
+
+        .book_contents_trigger
+        {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            background-color: #f8f0e7;
+            padding: 10px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        }
+
+        .book_contents_trigger img
+        {
+            width: 25px;
+            height: 25px;
+        }
+
+        .book_contents
+        {
+            position: fixed;
+            left: 60px;
+            top: 70px;
+            width: 500px;
+            height: 300px;
+            background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        }
     </style>
 </head>
 <body>
     <div id="content">
+        <a class="book_contents_trigger" href="javascript:void(0);" v-on:click="openOrCloseContents">
+            <img src="./images/content.png"/>
+        </a>
+        <div class="book_contents" v-if="isBookContentsShow">
+            目录（功能未实现）
+        </div>
         <div class="book_and_chapter_info" v-if="book !== null && chapterData !== null">
             <p class="book_name">《{{book.name}}》</p>
             <p class="chapter_info_small">第{{chapter}}章 - {{chapterData.name}}</p>
