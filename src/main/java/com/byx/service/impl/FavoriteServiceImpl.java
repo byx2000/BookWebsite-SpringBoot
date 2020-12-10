@@ -31,7 +31,7 @@ public class FavoriteServiceImpl implements IFavoriteService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryFavoriteAndBookByPage(int userId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryFavoritesAndBooksByUserId(int userId, int pageSize, int currentPage)
     {
         // 查询收藏记录
         PageBean<Favorite> favoritePageBean = favoriteDao.queryByPage(new Query()

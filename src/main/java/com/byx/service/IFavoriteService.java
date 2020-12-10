@@ -17,7 +17,7 @@ public interface IFavoriteService
      * @param currentPage 当前页码
      * @return 返回指定id用户的收藏列表，列表项格式为[Favorite, Book]
      */
-    PageBean<List<Object>> queryFavoriteAndBookByPage(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryFavoritesAndBooksByUserId(int userId, int pageSize, int currentPage);
 
     /**
      * 判断指定用户是否收藏指定电子书

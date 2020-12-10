@@ -38,7 +38,7 @@ public class FavoriteController extends BaseController
         if (user == null) return ResultInfo.fail("当前未登录");
 
         // 获取收藏列表
-        PageBean<List<Object>> pageBean = favoriteService.queryFavoriteAndBookByPage(user.getId(), pageSize, currentPage);
+        PageBean<List<Object>> pageBean = favoriteService.queryFavoritesAndBooksByUserId(user.getId(), pageSize, currentPage);
         return ResultInfo.success(pageBean);
     }
 
