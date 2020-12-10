@@ -117,33 +117,49 @@
             background-color: #f8f0e7;
         }
 
-        #content
-        {
-            position: relative;
-        }
-
-        .book_contents_trigger
+        .book_contents_trigger_close, .book_contents_trigger_open
         {
             position: fixed;
-            left: 0;
-            top: 70px;
-            background-color: #f8f0e7;
-            padding: 10px;
-            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            margin-left: -110px;
+            margin-top: 50px;
+            width: 48px;
+            height: 48px;
+            padding: 5px;
+            box-shadow: 0px 0px 6px #ccc1b6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .book_contents_trigger img
+        .book_contents_trigger_close
         {
-            width: 25px;
-            height: 25px;
+            background-color: #eedfd0;
+        }
+
+        .book_contents_trigger_open
+        {
+            background-color: #ffffff;
+        }
+
+        .book_contents_trigger_img
+        {
+            width: 24px;
+            height: 17px;
+        }
+
+        .book_contents_trigger_p
+        {
+            font-size: 14px;
+            color: #333333;
         }
 
         .book_contents
         {
             position: fixed;
-            left: 60px;
-            top: 70px;
-            width: 500px;
+            margin-left: -50px;
+            margin-top: 50px;
+            width: 300px;
             height: 300px;
             background-color: white;
             box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
@@ -152,11 +168,16 @@
             padding: 10px;
         }
 
+        .contents_item
+        {
+            border-bottom: 1px dashed #e2e2e2;
+        }
+
         .book_contents_link_normal, .book_contents_link_current
         {
             display: inline-block;
-            font-size: 16px;
-            line-height: 30px;
+            font-size: 14px;
+            line-height: 40px;
         }
 
         .book_contents_link_normal
@@ -177,8 +198,11 @@
 </head>
 <body>
     <div id="content">
-        <a class="book_contents_trigger" href="javascript:void(0);" v-on:click="openOrCloseContents">
-            <img src="./images/content.png"/>
+        <a v-bind:class="isBookContentsShow ? 'book_contents_trigger_open' : 'book_contents_trigger_close'" 
+           href="javascript:void(0);" 
+           v-on:click="openOrCloseContents">
+            <img class="book_contents_trigger_img" src="./images/content.png"/>
+            <p class="book_contents_trigger_p">目录</p>
         </a>
         <div class="book_contents" v-if="isBookContentsShow">
             <div class="contents_item" v-if="contents !== null && contents !== undefined" v-for="(chapter, index) in contents">
