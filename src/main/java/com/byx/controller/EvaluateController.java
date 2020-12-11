@@ -4,14 +4,18 @@ import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
 import com.byx.service.IEvaluateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 点评控制器
  */
 @RestController
 @RequestMapping("/evaluate")
+@Validated
 public class EvaluateController extends BaseController
 {
     @Autowired
@@ -29,11 +33,9 @@ public class EvaluateController extends BaseController
      * @return 成功返回{true, msg}，失败返回{false, msg}
      */
     @RequestMapping("")
-    public ResultInfo evaluate(Integer bookId, String cmd)
+    public ResultInfo evaluate(@NotNull Integer bookId,
+                               @NotNull String cmd)
     {
-        // 参数校验
-        if (bookId == null || cmd == null) return ResultInfo.fail("参数错误");
-
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
@@ -65,11 +67,8 @@ public class EvaluateController extends BaseController
      * @return 成功返回{true, msg}，失败返回{false, msg}
      */
     @RequestMapping("/isLike")
-    public ResultInfo isLike(Integer bookId)
+    public ResultInfo isLike(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
@@ -83,11 +82,8 @@ public class EvaluateController extends BaseController
      * @return 成功返回{true, msg}，失败返回{false, msg}
      */
     @RequestMapping("/isDislike")
-    public ResultInfo isDislike(Integer bookId)
+    public ResultInfo isDislike(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");

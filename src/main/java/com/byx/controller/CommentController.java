@@ -5,11 +5,15 @@ import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
 import com.byx.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping("/comment")
+@Validated
 public class CommentController extends BaseController
 {
     @Autowired
@@ -24,15 +28,18 @@ public class CommentController extends BaseController
      * @return 评论列表或分页数据
      */
     @RequestMapping("/query")
-    public ResultInfo query(Integer bookId, Integer userId, Integer pageSize, Integer currentPage)
+    public ResultInfo query(Integer bookId,
+                            Integer userId,
+                            @NotNull Integer pageSize,
+                            @NotNull Integer currentPage)
     {
         // 查询指定电子书的所有评论
-        if (bookId != null && pageSize != null && currentPage != null)
+        if (bookId != null)
         {
             return ResultInfo.success(commentService.queryCommentsAndUsersByBookId(bookId, pageSize, currentPage));
         }
         // 查询指定用户的所有评论
-        else if (userId != null && pageSize != null && currentPage != null)
+        else if (userId != null)
         {
             // 登录校验
             if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
@@ -52,11 +59,9 @@ public class CommentController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/publish")
-    public ResultInfo publish(Integer bookId, String content)
+    public ResultInfo publish(@NotNull Integer bookId,
+                              @NotNull String content)
     {
-        // 参数校验
-        if (bookId == null || content == null) return ResultInfo.fail("参数错误");
-
         // 获取当前登录用户
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
@@ -77,18 +82,14 @@ public class CommentController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/delete")
-    public ResultInfo delete(Integer commentId)
+    public ResultInfo delete(@NotNull Integer commentId)
     {
-        // 参数校验
-        if (commentId == null) return ResultInfo.fail("参数错误");
-
         // 登录校验
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
         // 删除评论
         commentService.delete(commentId);
-
         return ResultInfo.success();
     }
 }

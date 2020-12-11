@@ -4,14 +4,17 @@ import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 
 @RestController
 @RequestMapping("/user")
+@Validated
 public class UserController extends BaseController
 {
     @Autowired
@@ -24,11 +27,9 @@ public class UserController extends BaseController
      * @return 结果
      */
     @RequestMapping("/login")
-    public ResultInfo login(String username, String password)
+    public ResultInfo login(@NotNull String username,
+                            @NotNull String password)
     {
-        // 参数校验
-        if (username == null || password == null) return ResultInfo.fail("参数错误");
-
         User user = userService.login(username, password);
         if (user == null) return ResultInfo.fail("用户名或密码错误");
 
@@ -66,11 +67,8 @@ public class UserController extends BaseController
      * @return 结果
      */
     @RequestMapping("/query")
-    public ResultInfo query(Integer userId)
+    public ResultInfo query(@NotNull Integer userId)
     {
-        // 参数校验
-        if (userId == null) return ResultInfo.fail("参数错误");
-
         return ResultInfo.success(userService.queryById(userId));
     }
 

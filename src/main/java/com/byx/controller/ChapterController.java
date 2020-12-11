@@ -3,14 +3,18 @@ package com.byx.controller;
 import com.byx.domain.ResultInfo;
 import com.byx.service.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 电子书章节控制器
  */
 @RestController
 @RequestMapping("/chapter")
+@Validated
 public class ChapterController extends BaseController
 {
     @Autowired
@@ -22,11 +26,8 @@ public class ChapterController extends BaseController
      * @return 章节数
      */
     @RequestMapping("/count")
-    public ResultInfo count(Integer bookId)
+    public ResultInfo count(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
         // 登录校验
         if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
 
@@ -40,11 +41,9 @@ public class ChapterController extends BaseController
      * @return {Text, Book}
      */
     @RequestMapping("/data")
-    public ResultInfo chapter(Integer bookId, Integer chapter)
+    public ResultInfo chapter(@NotNull Integer bookId,
+                              @NotNull Integer chapter)
     {
-        // 参数校验
-        if (bookId == null || chapter == null) return ResultInfo.fail("参数错误");
-
         // 登录校验
         if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
 
@@ -57,11 +56,8 @@ public class ChapterController extends BaseController
      * @return [Chapter, ...]
      */
     @RequestMapping("/contents")
-    public ResultInfo contents(Integer bookId)
+    public ResultInfo contents(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
         // 登录校验
         if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
 

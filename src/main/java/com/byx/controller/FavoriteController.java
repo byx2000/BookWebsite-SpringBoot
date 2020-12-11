@@ -6,9 +6,11 @@ import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
 import com.byx.service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/favorite")
+@Validated
 public class FavoriteController extends BaseController
 {
     @Autowired
@@ -28,11 +31,9 @@ public class FavoriteController extends BaseController
      * @return 分页数据，包含收藏数据和相应的电子书数据
      */
     @RequestMapping("/query")
-    public ResultInfo query(Integer pageSize, Integer currentPage)
+    public ResultInfo query(@NotNull Integer pageSize,
+                            @NotNull Integer currentPage)
     {
-        // 参数校验
-        if (pageSize == null || currentPage == null) return ResultInfo.fail("参数错误");
-
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
@@ -48,11 +49,8 @@ public class FavoriteController extends BaseController
      * @return true/false
      */
     @RequestMapping("/isFavorite")
-    public ResultInfo isFavorite(Integer bookId)
+    public ResultInfo isFavorite(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
         // 获取当前登录用户信息
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
@@ -89,18 +87,14 @@ public class FavoriteController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/cancel")
-    public ResultInfo cancel(Integer bookId)
+    public ResultInfo cancel(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (bookId == null) return ResultInfo.fail("参数错误");
-
         // 登录校验
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
         // 删除当前用户指定的收藏
         favoriteService.cancel(bookId, user.getId());
-
         return ResultInfo.success();
     }
 }

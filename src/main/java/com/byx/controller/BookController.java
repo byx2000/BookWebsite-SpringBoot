@@ -22,7 +22,9 @@ public class BookController extends BaseController
      * @return 结果
      */
     @RequestMapping("/query")
-    public ResultInfo query(BookQueryCondition bookQueryCondition, Integer pageSize, Integer currentPage)
+    public ResultInfo query(BookQueryCondition bookQueryCondition,
+                            Integer pageSize,
+                            Integer currentPage)
     {
         // 不带分页的查询
         if (pageSize == null || currentPage == null)
