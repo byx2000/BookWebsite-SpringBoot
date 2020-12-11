@@ -67,12 +67,17 @@ public class FavoriteServiceImpl implements IFavoriteService
     }
 
     @Override
-    public void add(Favorite favorite)
+    public void add(int bookId, int userId)
     {
         // 判断是否已经收藏
-        if (isFavorite(favorite.getBookId(), favorite.getUserId())) return;
-        // 设置当前时间
+        if (isFavorite(bookId, userId)) return;
+
+        // 设置Favorite
+        Favorite favorite = new Favorite();
+        favorite.setBookId(bookId);
+        favorite.setUserId(userId);
         favorite.setTime(DateUtils.now());
+
         // 保存
         favoriteDao.save(favorite);
     }

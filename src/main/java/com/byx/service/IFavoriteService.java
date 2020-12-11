@@ -1,6 +1,5 @@
 package com.byx.service;
 
-import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
 
 import java.util.List;
@@ -29,9 +28,10 @@ public interface IFavoriteService
 
     /**
      * 添加收藏
-     * @param favorite 收藏记录
+     * @param bookId 电子书id
+     * @param userId 用户id
      */
-    void add(Favorite favorite);
+    void add(int bookId, int userId);
 
     /**
      * 取消收藏

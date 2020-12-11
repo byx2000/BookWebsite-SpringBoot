@@ -1,6 +1,5 @@
 package com.byx.controller;
 
-import com.byx.domain.Favorite;
 import com.byx.domain.PageBean;
 import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
@@ -60,24 +59,18 @@ public class FavoriteController extends BaseController
 
     /**
      * 添加收藏
-     * @param favorite 收藏记录
+     * @param bookId 电子书id
      * @return 操作结果
      */
     @RequestMapping("/add")
-    public ResultInfo add(Favorite favorite)
+    public ResultInfo add(@NotNull Integer bookId)
     {
-        // 参数校验
-        if (favorite.getBookId() == null) return ResultInfo.fail("参数错误");
-
-        // 获取当前登录用户信息
+        // 登录校验
         User user = getCurrentUser();
         if (user == null) return ResultInfo.fail("当前未登录");
 
-        // 只允许操作当前用户的收藏
-        favorite.setUserId(user.getId());
-
         // 保存
-        favoriteService.add(favorite);
+        favoriteService.add(bookId, user.getId());
         return ResultInfo.success();
     }
 
