@@ -42,25 +42,17 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    public int register(User user)
+    public int register(String username, String password, String nickname)
     {
-        // 用户名为空
-        if (user.getUsername() == null)
-            throw new BookWebsiteException("用户名为空");
-
         // 查询用户是否已存在
-        if (userDao.count(new Query().addWhere("username == ?", user.getUsername())) > 0)
-            throw new BookWebsiteException("用户已存在：" + user.getUsername());
-
-        // 密码为空
-        if (user.getPassword() == null)
-            throw new BookWebsiteException("密码为空");
-
-        // 昵称为空
-        if (user.getNickname() == null)
-            throw new BookWebsiteException("昵称为空");
+        if (userDao.count(new Query().addWhere("username == ?", username)) > 0)
+            throw new BookWebsiteException("用户已存在：" + username);
 
         // 插入用户
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setNickname(nickname);
         return userDao.save(user);
     }
 }

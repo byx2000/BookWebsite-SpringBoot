@@ -24,8 +24,10 @@ public interface IUserService
 
     /**
      * 注册
-     * @param user 新用户
+     * @param username 用户名
+     * @param password 密码
+     * @param nickname 昵称
      * @return 新用户的id
      */
-    int register(User user);
+    int register(String username, String password, String nickname);
 }

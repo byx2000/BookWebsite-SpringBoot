@@ -74,15 +74,21 @@ public class UserController extends BaseController
 
     /**
      * 注册
-     * @param user 新用户
-     * @param avatar 头像图片
-     * @return 成功返回{true, msg}，失败返回{false, msg}
+     * @param username 用户名
+     * @param password 密码
+     * @param nickname 昵称
+     * @param avatar 头像
+     * @return 操作结果
+     * @throws Exception 保存头像时可能抛出IO异常
      */
     @RequestMapping("/register")
-    public ResultInfo register(User user, MultipartFile avatar) throws Exception
+    public ResultInfo register(@NotNull String username,
+                               @NotNull String password,
+                               @NotNull String nickname,
+                               @NotNull MultipartFile avatar) throws Exception
     {
         // 保存用户数据，并获取id
-        int id = userService.register(user);
+        int id = userService.register(username, password, nickname);
 
         // 保存用户头像
         File uploadPath = new File(getStaticResourcePath(), "upload/avatar");
