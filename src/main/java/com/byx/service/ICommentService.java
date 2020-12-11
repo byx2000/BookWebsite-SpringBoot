@@ -1,6 +1,5 @@
 package com.byx.service;
 
-import com.byx.domain.Comment;
 import com.byx.domain.PageBean;
 
 import java.util.List;
@@ -30,9 +29,11 @@ public interface ICommentService
 
     /**
      * 发表评论
-     * @param comment 评论数据
+     * @param bookId 电子书id
+     * @param userId 用户id
+     * @param content 评论内容
      */
-    void publish(Comment comment);
+    void publish(int bookId, int userId, String content);
 
     /**
      * 根据id删除评论

@@ -91,8 +91,12 @@ public class CommentServiceImpl implements ICommentService
     }
 
     @Override
-    public void publish(Comment comment)
+    public void publish(int bookId, int userId, String content)
     {
+        Comment comment = new Comment();
+        comment.setBookId(bookId);
+        comment.setUserId(userId);
+        comment.setContent(content);
         comment.setTime(DateUtils.now());
         commentDao.save(comment);
     }

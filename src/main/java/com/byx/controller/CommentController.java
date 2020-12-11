@@ -1,7 +1,6 @@
 package com.byx.controller;
 
 import com.byx.annotation.RequireLogin;
-import com.byx.domain.Comment;
 import com.byx.domain.ResultInfo;
 import com.byx.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +62,7 @@ public class CommentController extends BaseController
     public ResultInfo publish(@NotNull Integer bookId,
                               @NotNull String content)
     {
-        Comment comment = new Comment();
-        comment.setBookId(bookId);
-        comment.setUserId(getCurrentUser().getId());
-        comment.setContent(content);
-
-        // 保存
-        commentService.publish(comment);
+        commentService.publish(bookId, getCurrentUser().getId(), content);
         return ResultInfo.success();
     }
 
