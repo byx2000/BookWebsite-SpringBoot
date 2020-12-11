@@ -1,8 +1,8 @@
 package com.byx.controller;
 
+import com.byx.annotation.RequireLogin;
 import com.byx.domain.Comment;
 import com.byx.domain.ResultInfo;
-import com.byx.domain.User;
 import com.byx.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -59,16 +59,13 @@ public class CommentController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/publish")
+    @RequireLogin
     public ResultInfo publish(@NotNull Integer bookId,
                               @NotNull String content)
     {
-        // 获取当前登录用户
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
         Comment comment = new Comment();
         comment.setBookId(bookId);
-        comment.setUserId(user.getId());
+        comment.setUserId(getCurrentUser().getId());
         comment.setContent(content);
 
         // 保存
@@ -82,13 +79,9 @@ public class CommentController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/delete")
+    @RequireLogin
     public ResultInfo delete(@NotNull Integer commentId)
     {
-        // 登录校验
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        // 删除评论
         commentService.delete(commentId);
         return ResultInfo.success();
     }

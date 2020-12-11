@@ -6,15 +6,17 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolationException;
 
 /**
- * 异常处理切面
+ * 统一异常处理切面
  */
 @Component
 @Aspect
+@Order(1)
 public class ExceptionAspect
 {
     @Pointcut("execution(com.byx.domain.ResultInfo com.byx.controller.*.*(..))")
@@ -23,10 +25,10 @@ public class ExceptionAspect
     /**
      * 捕获controller层的异常
      * @param pjp 连接点
-     * @return 错误消息
+     * @return 错误消息或结果
      */
     @Around("pointcut()")
-    public ResultInfo catchControllerException(ProceedingJoinPoint pjp)
+    public ResultInfo handle(ProceedingJoinPoint pjp)
     {
         try
         {

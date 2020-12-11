@@ -1,7 +1,7 @@
 package com.byx.controller;
 
+import com.byx.annotation.RequireLogin;
 import com.byx.domain.ResultInfo;
-import com.byx.domain.User;
 import com.byx.service.IEvaluateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -33,31 +33,28 @@ public class EvaluateController extends BaseController
      * @return 成功返回{true, msg}，失败返回{false, msg}
      */
     @RequestMapping("")
+    @RequireLogin
     public ResultInfo evaluate(@NotNull Integer bookId,
                                @NotNull String cmd)
     {
-        // 获取当前登录用户信息
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
+        int userId = getCurrentUser().getId();
         switch (cmd)
         {
             case "like":
-                evaluateService.like(bookId, user.getId());
+                evaluateService.like(bookId, userId);
                 break;
             case "dislike":
-                evaluateService.dislike(bookId, user.getId());
+                evaluateService.dislike(bookId, userId);
                 break;
             case "cancelLike":
-                evaluateService.cancelLike(bookId, user.getId());
+                evaluateService.cancelLike(bookId, userId);
                 break;
             case "cancelDislike":
-                evaluateService.cancelDislike(bookId, user.getId());
+                evaluateService.cancelDislike(bookId, userId);
                 break;
             default:
                 return ResultInfo.fail("参数错误");
         }
-
         return ResultInfo.success();
     }
 
@@ -67,13 +64,10 @@ public class EvaluateController extends BaseController
      * @return 成功返回{true, msg}，失败返回{false, msg}
      */
     @RequestMapping("/isLike")
+    @RequireLogin
     public ResultInfo isLike(@NotNull Integer bookId)
     {
-        // 获取当前登录用户信息
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        return ResultInfo.success(evaluateService.isLike(bookId, user.getId()));
+        return ResultInfo.success(evaluateService.isLike(bookId, getCurrentUser().getId()));
     }
 
     /**
@@ -82,12 +76,9 @@ public class EvaluateController extends BaseController
      * @return 成功返回{true, msg}，失败返回{false, msg}
      */
     @RequestMapping("/isDislike")
+    @RequireLogin
     public ResultInfo isDislike(@NotNull Integer bookId)
     {
-        // 获取当前登录用户信息
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        return ResultInfo.success(evaluateService.isDislike(bookId, user.getId()));
+        return ResultInfo.success(evaluateService.isDislike(bookId, getCurrentUser().getId()));
     }
 }

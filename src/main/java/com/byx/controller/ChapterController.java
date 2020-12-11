@@ -1,5 +1,6 @@
 package com.byx.controller;
 
+import com.byx.annotation.RequireLogin;
 import com.byx.domain.ResultInfo;
 import com.byx.service.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,9 @@ public class ChapterController extends BaseController
      * @return 章节数
      */
     @RequestMapping("/count")
+    @RequireLogin
     public ResultInfo count(@NotNull Integer bookId)
     {
-        // 登录校验
-        if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
-
         return ResultInfo.success(chapterService.getChapterCount(bookId));
     }
 
@@ -41,12 +40,10 @@ public class ChapterController extends BaseController
      * @return {Text, Book}
      */
     @RequestMapping("/data")
+    @RequireLogin
     public ResultInfo chapter(@NotNull Integer bookId,
                               @NotNull Integer chapter)
     {
-        // 登录校验
-        if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
-
         return ResultInfo.success(chapterService.getChapterAndBook(bookId, chapter));
     }
 
@@ -56,11 +53,9 @@ public class ChapterController extends BaseController
      * @return [Chapter, ...]
      */
     @RequestMapping("/contents")
+    @RequireLogin
     public ResultInfo contents(@NotNull Integer bookId)
     {
-        // 登录校验
-        if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
-
         return ResultInfo.success(chapterService.getContents(bookId));
     }
 }

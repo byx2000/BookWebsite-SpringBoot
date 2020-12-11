@@ -1,8 +1,8 @@
 package com.byx.controller;
 
+import com.byx.annotation.RequireLogin;
 import com.byx.domain.PageBean;
 import com.byx.domain.ResultInfo;
-import com.byx.domain.User;
 import com.byx.service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,15 +30,12 @@ public class FavoriteController extends BaseController
      * @return 分页数据，包含收藏数据和相应的电子书数据
      */
     @RequestMapping("/query")
+    @RequireLogin
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        // 获取当前登录用户信息
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        // 获取收藏列表
-        PageBean<List<Object>> pageBean = favoriteService.queryFavoritesAndBooksByUserId(user.getId(), pageSize, currentPage);
+        PageBean<List<Object>> pageBean = favoriteService.queryFavoritesAndBooksByUserId(
+                getCurrentUser().getId(), pageSize, currentPage);
         return ResultInfo.success(pageBean);
     }
 
@@ -48,13 +45,10 @@ public class FavoriteController extends BaseController
      * @return true/false
      */
     @RequestMapping("/isFavorite")
+    @RequireLogin
     public ResultInfo isFavorite(@NotNull Integer bookId)
     {
-        // 获取当前登录用户信息
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        return ResultInfo.success(favoriteService.isFavorite(bookId, user.getId()));
+        return ResultInfo.success(favoriteService.isFavorite(bookId, getCurrentUser().getId()));
     }
 
     /**
@@ -63,14 +57,10 @@ public class FavoriteController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/add")
+    @RequireLogin
     public ResultInfo add(@NotNull Integer bookId)
     {
-        // 登录校验
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        // 保存
-        favoriteService.add(bookId, user.getId());
+        favoriteService.add(bookId, getCurrentUser().getId());
         return ResultInfo.success();
     }
 
@@ -80,14 +70,10 @@ public class FavoriteController extends BaseController
      * @return 操作结果
      */
     @RequestMapping("/cancel")
+    @RequireLogin
     public ResultInfo cancel(@NotNull Integer bookId)
     {
-        // 登录校验
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        // 删除当前用户指定的收藏
-        favoriteService.cancel(bookId, user.getId());
+        favoriteService.cancel(bookId, getCurrentUser().getId());
         return ResultInfo.success();
     }
 }

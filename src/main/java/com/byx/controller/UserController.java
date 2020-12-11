@@ -1,5 +1,6 @@
 package com.byx.controller;
 
+import com.byx.annotation.RequireLogin;
 import com.byx.domain.ResultInfo;
 import com.byx.domain.User;
 import com.byx.service.IUserService;
@@ -43,6 +44,7 @@ public class UserController extends BaseController
      * @return 结果
      */
     @RequestMapping("/logout")
+    @RequireLogin
     public ResultInfo logout()
     {
         invalidateSession();
@@ -54,11 +56,10 @@ public class UserController extends BaseController
      * @return 结果
      */
     @RequestMapping("/current")
+    @RequireLogin
     public ResultInfo current()
     {
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-        return ResultInfo.success(user);
+        return ResultInfo.success(getCurrentUser());
     }
 
     /**
