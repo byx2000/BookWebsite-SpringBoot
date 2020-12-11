@@ -41,24 +41,24 @@ public class BookDaoImpl extends BaseDao implements IBookDao
     @Override
     public void increaseLikeCount(int bookId)
     {
-        jdbcTemplate.update("UPDATE books SET likeCount = likeCount + 1 WHERE id == ?", bookId);
+        getJdbcTemplate().update("UPDATE books SET likeCount = likeCount + 1 WHERE id == ?", bookId);
     }
 
     @Override
     public void decreaseLikeCount(int bookId)
     {
-        jdbcTemplate.update("UPDATE books SET likeCount = likeCount - 1 WHERE id == ?", bookId);
+        getJdbcTemplate().update("UPDATE books SET likeCount = likeCount - 1 WHERE id == ?", bookId);
     }
 
     @Override
     public void increaseDislikeCount(int bookId)
     {
-        jdbcTemplate.update("UPDATE books SET dislikeCount = dislikeCount + 1 WHERE id == ?", bookId);
+        getJdbcTemplate().update("UPDATE books SET dislikeCount = dislikeCount + 1 WHERE id == ?", bookId);
     }
 
     @Override
     public void decreaseDislikeCount(int bookId)
     {
-        jdbcTemplate.update("UPDATE books SET dislikeCount = dislikeCount - 1 WHERE id == ?", bookId);
+        getJdbcTemplate().update("UPDATE books SET dislikeCount = dislikeCount - 1 WHERE id == ?", bookId);
     }
 }

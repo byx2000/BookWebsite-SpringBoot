@@ -16,7 +16,16 @@ import java.util.List;
 public abstract class BaseDao
 {
     @Autowired
-    protected JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
+
+    /**
+     * 获取JdbcTemplate
+     * @return JdbcTemplate
+     */
+    protected JdbcTemplate getJdbcTemplate()
+    {
+        return jdbcTemplate;
+    }
 
     /**
      * 获取表名（子类实现）
@@ -32,7 +41,7 @@ public abstract class BaseDao
     protected int count(Query query)
     {
         query.setTableName(getTableName()).setColumn("COUNT(*)");
-        Integer cnt = jdbcTemplate.queryForObject(query.getQueryClause(),
+        Integer cnt = getJdbcTemplate().queryForObject(query.getQueryClause(),
                 Integer.class,
                 query.getQueryParams().toArray());
         return cnt == null ? 0 : cnt;
@@ -48,7 +57,7 @@ public abstract class BaseDao
     protected <T> List<T> query(Query query, Class<T> entityClass)
     {
         query.setTableName(getTableName()).setColumn("*");
-        return jdbcTemplate.query(query.getQueryClause(),
+        return getJdbcTemplate().query(query.getQueryClause(),
                 new BeanPropertyRowMapper<>(entityClass),
                 query.getQueryParams().toArray());
     }
@@ -91,7 +100,7 @@ public abstract class BaseDao
      */
     protected int save(Object object)
     {
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(getJdbcTemplate());
         return (int) simpleJdbcInsert.withTableName(getTableName())
                 .usingGeneratedKeyColumns("id")
                 .executeAndReturnKey(new BeanPropertySqlParameterSource(object));
@@ -104,7 +113,7 @@ public abstract class BaseDao
     protected void delete(Query query)
     {
         query.setTableName(getTableName());
-        jdbcTemplate.update(query.getDeleteCaluse(),
+        getJdbcTemplate().update(query.getDeleteCaluse(),
                 query.getDeleteParams().toArray());
     }
 }

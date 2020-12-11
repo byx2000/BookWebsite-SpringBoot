@@ -40,7 +40,7 @@ public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
     @Override
     public void updateState(int evaluateId, int state)
     {
-        jdbcTemplate.update("UPDATE evaluates SET state = ? WHERE id == ?",
+        getJdbcTemplate().update("UPDATE evaluates SET state = ? WHERE id == ?",
                 state, evaluateId);
     }
 }
