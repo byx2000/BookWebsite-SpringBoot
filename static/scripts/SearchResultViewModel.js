@@ -59,9 +59,10 @@ $(function()
                     app.books = pageBean.data;
                     app.totalCount = pageBean.totalCount;
                     app.totalPage = pageBean.totalPage;
+                    app.pagePreview = pageBean.pagePreview;
 
                     // 计算要显示的页码
-                    app.pagePreview = [];
+                    /*app.pagePreview = [];
                     if (app.currentPage == 1)
                     {
                         for (let i = 1; i <= Math.min(app.totalPage, 3); ++i)
@@ -81,7 +82,7 @@ $(function()
                         app.pagePreview.push(app.currentPage - 1);
                         app.pagePreview.push(app.currentPage);
                         app.pagePreview.push(app.currentPage + 1);
-                    }
+                    }*/
                 }
             );
 

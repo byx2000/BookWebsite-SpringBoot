@@ -13,6 +13,7 @@ $(function()
             currentPage: 1,
             totalCount: 0,
             totalPage: 0,
+            pagePreview: [],
             users: [],
             recommends: [],
             commentText: "",
@@ -126,6 +127,7 @@ $(function()
                             app.commentsAndBooks = pageBean.data;
                             app.totalCount = pageBean.totalCount;
                             app.totalPage = pageBean.totalPage;
+                            app.pagePreview = pageBean.pagePreview;
                             app.currentPage--;
                         }
                     );
@@ -146,10 +148,29 @@ $(function()
                             app.commentsAndBooks = pageBean.data;
                             app.totalCount = pageBean.totalCount;
                             app.totalPage = pageBean.totalPage;
+                            app.pagePreview = pageBean.pagePreview;
                             app.currentPage++;
                         }
                     );
                 }
+            },
+            toPage: function(page)
+            {
+                queryComments(
+                    {
+                        bookId: this.bookId,
+                        pageSize: 5,
+                        currentPage: page
+                    },
+                    function(pageBean)
+                    {
+                        app.commentsAndBooks = pageBean.data;
+                        app.totalCount = pageBean.totalCount;
+                        app.totalPage = pageBean.totalPage;
+                        app.pagePreview = pageBean.pagePreview;
+                        app.currentPage = page;
+                    }
+                );
             }
         },
         mounted: function()
@@ -204,6 +225,7 @@ $(function()
                     app.commentsAndBooks = pageBean.data;
                     app.totalCount = pageBean.totalCount;
                     app.totalPage = pageBean.totalPage;
+                    app.pagePreview = pageBean.pagePreview;
                 }
             );
 

@@ -368,11 +368,23 @@
                     我的点赞
                 </div>
 
-                <!--页码切换-->
-                <div class="page_switch">
-                    <a class="last_page" v-on:click="lastPage">上一页</a>
-                    <p class="current_page">第 {{currentPage}} 页</p>
-                    <a class="next_page" v-on:click="nextPage">下一页</a>
+                <!--分页组件-->
+                <div class="page_switch" v-if="totalPage > 1">
+                    <a class="last_page" v-on:click="lastPage" v-if="currentPage > 1">上一页</a>
+                    <p class="ellipsis"
+                       v-if="pagePreview[0] > 1">
+                        ...
+                    </p>
+                    <a v-for="page in pagePreview" 
+                       v-bind:class="page == currentPage ? 'page_num_current' : 'page_num'"
+                       v-on:click="toPage(page)">
+                        {{page}}
+                    </a>
+                    <p class="ellipsis"
+                       v-if="pagePreview[pagePreview.length - 1] < totalPage">
+                        ...
+                    </p> 
+                    <a class="next_page" v-on:click="nextPage" v-if="currentPage < totalPage">下一页</a>
                 </div>
             </div>
         </div>

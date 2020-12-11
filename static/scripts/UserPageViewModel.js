@@ -13,6 +13,7 @@ $(function()
                 currentPage: 1,
                 totalPage: 0,
                 totalCount: 0,
+                pagePreview: [],
                 user: null,
                 commentsAndBooks: [],
                 favoritesAndBooks: [],
@@ -47,6 +48,10 @@ $(function()
                     {
                         this.jumpTo(this.currentPage + 1);
                     }
+                },
+                toPage: function(page)
+                {
+                    this.jumpTo(page);
                 },
                 deleteComment(commentId)
                 {
@@ -104,6 +109,7 @@ $(function()
                                     app.commentsAndBooks = pageBean.data;
                                     app.totalPage = pageBean.totalPage;
                                     app.totalCount = pageBean.totalCount;
+                                    app.pagePreview = pageBean.pagePreview;
                                 }
                             );
                         }
@@ -121,6 +127,7 @@ $(function()
                                     app.totalPage = pageBean.totalPage;
                                     app.totalCount = pageBean.totalCount;
                                     app.favoritesAndBooks = pageBean.data;
+                                    app.pagePreview = pageBean.pagePreview;
                                 }
                             );
                         }

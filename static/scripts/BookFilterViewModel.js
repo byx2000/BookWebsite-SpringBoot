@@ -82,7 +82,7 @@ $(function()
                 {
                     categoryId: categories[app.selectedCategoryIndex].id,
                     daysAgo: app.daysAgo[app.selectedUpdateTimeIndex],
-                    pageSize: 12,
+                    pageSize: 15,
                     currentPage: app.currentPage,
                     orderBy: app.orderBySubmit[app.selectedOrderByIndex]
                 }, 
@@ -91,29 +91,7 @@ $(function()
                     app.totalPage = pageBean.totalPage;
                     app.totalCount = pageBean.totalCount;
                     app.books = pageBean.data;
-
-                    // 计算要显示的页码
-                    app.pagePreview = [];
-                    if (app.currentPage == 1)
-                    {
-                        for (let i = 1; i <= Math.min(app.totalPage, 3); ++i)
-                        {
-                            app.pagePreview.push(i);
-                        }
-                    }
-                    else if (app.currentPage == app.totalPage)
-                    {
-                        for (let i = Math.max(1, app.totalPage - 2); i <= app.totalPage; ++i)
-                        {
-                            app.pagePreview.push(i);
-                        }
-                    }
-                    else
-                    {
-                        app.pagePreview.push(app.currentPage - 1);
-                        app.pagePreview.push(app.currentPage);
-                        app.pagePreview.push(app.currentPage + 1);
-                    }
+                    app.pagePreview = pageBean.pagePreview;
                 },
                 function(errMsg)
                 {
