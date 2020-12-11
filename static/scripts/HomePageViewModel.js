@@ -1,12 +1,15 @@
 $(function()
 {
-    let app_banner = new Vue(
+    let app = new Vue(
     {
-        el: "#banner",
+        el: "#holder",
         data:
         {
             books: [],
-            index: 0
+            index: 0,
+            categories: [],
+            maxScoreBooks: [],
+            randomBooks: []
         },
         methods:
         {
@@ -26,72 +29,36 @@ $(function()
         mounted: function()
         {
             // 随机获取4本电子书
-            queryBooks(
+            request(BOOK_QUERY_URL, { orderBy: "random", limit: 4 })
+                .then(books =>
                 {
-                    orderBy: "random",
-                    limit: 4
-                },
-                function (books)
-                {
-                    app_banner.books = books;
-                }
-            );
-        }
-    });
+                    app.books = books;
+                });
 
-    let app_category_random = new Vue(
-    {
-        el: "#category_random",
-        data:
-        {
-            categories: [],
-            maxScoreBooks: [],
-            randomBooks: []
-        },
-        methods:
-        {
-
-        },
-        mounted: function()
-        {
             // 获取所有类别
-            queryCategories({},
-            function(categories)
-            {
-                app_category_random.categories = categories;
-                app_category_random.maxScoreBooks = new Array(categories.length);
-                app_category_random.randomBooks = new Array(categories.length);
-
-                for (let i = 0; i < categories.length; ++i)
+            request(CATEGORY_QUERY_URL, {})
+                .then(categories =>
                 {
-                    // 获取每个类别得分最高的电子书
-                    queryBooks
-                    (
-                        {
-                            categoryId: categories[i].id,
-                            orderBy: "score",
-                            limit: 1
-                        }, 
-                        function(books)
-                        {
-                            app_category_random.maxScoreBooks.splice(i, 1, books[0]);
-                        }
-                    );
+                    app.categories = categories;
+                    app.maxScoreBooks = new Array(categories.length);
+                    app.randomBooks = new Array(categories.length);
 
-                    // 获取每个类别的随机6本电子书
-                    queryBooks(
-                        {
-                            categoryId: categories[i].id,
-                            limit: 6,
-                            orderBy: "random"
-                        },
-                        function (books)
-                        {
-                            app_category_random.randomBooks.splice(i, 1, books);
-                        }
-                    );
-                }
-            });
+                    for (let i = 0; i < categories.length; ++i)
+                    {
+                        // 获取每个类别得分最高的电子书
+                        request(BOOK_QUERY_URL, { categoryId: categories[i].id, orderBy: "score", limit: 1 })
+                            .then(books =>
+                            {
+                                app.maxScoreBooks.splice(i, 1, books[0]);
+                            });
+                        // 获取每个类别的随机6本电子书
+                        request(BOOK_QUERY_URL, { categoryId: categories[i].id, orderBy: "random", limit: 6 })
+                            .then(books =>
+                            {
+                                app.randomBooks.splice(i, 1, books);
+                            });
+                    }
+                });
         }
     });
 });

@@ -299,70 +299,72 @@
         <!--导航栏-->
         <div id="nav_holder"></div>
 
-        <!--banner-->
-        <div id="banner" v-if="books.length !== 0">
-            <a class="book_name" 
-               v-bind:href="'./book_detail.html?bookId=' + books[index].id">
-                <p>{{books[index].name}}</p>
-            </a>
-            <p class="book_description">{{books[index].description}}</p>
-            <div class="book_list">
-                <a class="prev" v-on:click="prev"></a>
-                <a v-for="(book, i) in books"
-                   v-bind:href="'./book_detail.html?bookId=' + books[i].id"
-                   v-on:mouseover="select(i)">
-                    <img v-bind:src="'./upload/cover/' + book.id + '.jpg'"
-                         v-bind:class="i === index ? 'img_selected' : 'img_normal'"/>
+        <div id="holder">
+            <!--banner-->
+            <div id="banner" v-if="books.length !== 0">
+                <a class="book_name" 
+                v-bind:href="'./book_detail.html?bookId=' + books[index].id">
+                    <p>{{books[index].name}}</p>
                 </a>
-                <a class="next" v-on:click="next"></a>
+                <p class="book_description">{{books[index].description}}</p>
+                <div class="book_list">
+                    <a class="prev" v-on:click="prev"></a>
+                    <a v-for="(book, i) in books"
+                    v-bind:href="'./book_detail.html?bookId=' + books[i].id"
+                    v-on:mouseover="select(i)">
+                        <img v-bind:src="'./upload/cover/' + book.id + '.jpg'"
+                            v-bind:class="i === index ? 'img_selected' : 'img_normal'"/>
+                    </a>
+                    <a class="next" v-on:click="next"></a>
+                </div>
+                <div class="circles">
+                    <a v-for="(book, i) in books"
+                    v-bind:class="i === index ? 'circle_selected' : 'circle_normal'"
+                    v-on:click="select(i)">
+                    </a>
+                </div>
             </div>
-            <div class="circles">
-                <a v-for="(book, i) in books"
-                   v-bind:class="i === index ? 'circle_selected' : 'circle_normal'"
-                   v-on:click="select(i)">
-                </a>
-            </div>
-        </div>
 
-        <!--内容区-->
-        <div id="content">
-            <!--发现-->
-            <div id="category_random">
-                <div v-for="(category, iCategory) in categories"
-                     v-if="categories !== null">
-                    <p class="category_name">{{category.name}}精选</p>
-                    <div class="category_content">
-                        <div class="label"></div>
-                        <div class="book_item_max_score"
-                             v-if="maxScoreBooks[iCategory] !== undefined">
-                            <div>
-                                <a class="book_name"
-                                   v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
-                                    <p>{{maxScoreBooks[iCategory].name}}</p>
-                                </a>
-                                <p class="book_author">作者: {{maxScoreBooks[iCategory].author}}</p>
-                                <p class="book_description">{{maxScoreBooks[iCategory].description}}</p>
-                            </div>
-                            <a v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
-                                <img class="book_cover" 
-                                     v-bind:src="'./upload/cover/' + maxScoreBooks[iCategory].id + '.jpg'"/>
-                            </a>
-                        </div>
-                        <div class="book_list_random">
-                            <div class="book_item"
-                                 v-for="(book, iBook) in randomBooks[iCategory]"
-                                 v-if="randomBooks[iCategory] !== undefined">
-                                 <div>
-                                     <a v-bind:href="'./book_detail.html?bookId=' + book.id">
-                                        <img class="book_cover" 
-                                             v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
-                                     </a>
+            <!--内容区-->
+            <div id="content">
+                <!--发现-->
+                <div id="category_random">
+                    <div v-for="(category, iCategory) in categories"
+                        v-if="categories !== null">
+                        <p class="category_name">{{category.name}}精选</p>
+                        <div class="category_content">
+                            <div class="label"></div>
+                            <div class="book_item_max_score"
+                                v-if="maxScoreBooks[iCategory] !== undefined">
+                                <div>
                                     <a class="book_name"
-                                       v-bind:href="'./book_detail.html?bookId=' + book.id">
-                                       {{book.name}}
+                                    v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
+                                        <p>{{maxScoreBooks[iCategory].name}}</p>
                                     </a>
-                                    <p class="book_author">作者: {{book.author}}</p>
-                                 </div>
+                                    <p class="book_author">作者: {{maxScoreBooks[iCategory].author}}</p>
+                                    <p class="book_description">{{maxScoreBooks[iCategory].description}}</p>
+                                </div>
+                                <a v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
+                                    <img class="book_cover" 
+                                        v-bind:src="'./upload/cover/' + maxScoreBooks[iCategory].id + '.jpg'"/>
+                                </a>
+                            </div>
+                            <div class="book_list_random">
+                                <div class="book_item"
+                                    v-for="(book, iBook) in randomBooks[iCategory]"
+                                    v-if="randomBooks[iCategory] !== undefined">
+                                    <div>
+                                        <a v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                            <img class="book_cover" 
+                                                v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
+                                        </a>
+                                        <a class="book_name"
+                                        v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                        {{book.name}}
+                                        </a>
+                                        <p class="book_author">作者: {{book.author}}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
