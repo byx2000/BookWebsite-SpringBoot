@@ -1,5 +1,7 @@
 package com.byx.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,6 +59,41 @@ public class PageBean<T>
     public void setData(List<T> data)
     {
         this.data = data;
+    }
+
+    public List<Integer> getPagePreview()
+    {
+        int maxPreviewCount = 5;
+        int start = Math.max(1, getCurrentPage() - 2);
+        int end = Math.min(getTotalPage(), getCurrentPage() + 2);
+
+        List<Integer> pages = new ArrayList<>();
+        for (int i = start; i <= end; ++i)
+        {
+            pages.add(i);
+        }
+
+        if (pages.size() < maxPreviewCount)
+        {
+            start--;
+            while (pages.size() < maxPreviewCount && start >= 1)
+            {
+                pages.add(start--);
+            }
+        }
+
+        if (pages.size() < maxPreviewCount)
+        {
+            end++;
+            while (pages.size() < maxPreviewCount && end <= getTotalPage())
+            {
+                pages.add(end++);
+            }
+        }
+
+        Collections.sort(pages);
+
+        return pages;
     }
 
     @Override
