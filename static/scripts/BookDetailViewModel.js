@@ -187,6 +187,15 @@ $(function()
                         app.pagePreview = pageBean.pagePreview;
                         app.currentPage = page;
                     });
+            },
+            // 跳转到评论编辑区
+            toCommentEdit: function()
+            {
+                // 让编辑框获取焦点
+                setTimeout(() =>
+                {
+                    $("#comment_edit").focus();
+                }, 50);
             }
         },
         mounted: function()

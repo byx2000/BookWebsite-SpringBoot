@@ -698,6 +698,8 @@
             </div>
             <!--评论和推荐-->
             <div class="comment_and_recommend">
+                <!--评论区开始标记-->
+                <a id="comments_start" ></a>
                 <!--评论列表-->
                 <div class="comment_list">
                     <div class="header">
@@ -707,9 +709,9 @@
                             <span>共{{totalCount}}条评论</span>
                             <span>共{{totalPage}}页</span>
                         </div>
-                        <a href="#bottom">我来说两句</a>
+                        <a href="#bottom" v-on:click="toCommentEdit">我来说两句</a>
                     </div>
-                    <!--评论列表项-->
+                    <!--评论列表项--> 
                     <div v-for="(commentAndBook, index) in commentsAndBooks" 
                          class="comment_item"
                          v-if="commentsAndBooks !== undefined && commentsAndBooks !== null && commentsAndBooks.length > 0">
@@ -725,21 +727,22 @@
                     </div>
                     <!--分页组件-->
                     <div class="page_switch" v-if="totalPage > 1">
-                        <a class="last_page" v-on:click="lastPage" v-if="currentPage > 1">上一页</a>
+                        <a class="last_page" v-on:click="lastPage" v-if="currentPage > 1" href="#comments_start">上一页</a>
                         <p class="ellipsis"
                            v-if="pagePreview[0] > 1">
                             ...
                         </p>
                         <a v-for="page in pagePreview" 
                            v-bind:class="page == currentPage ? 'page_num_current' : 'page_num'"
-                           v-on:click="toPage(page)">
+                           v-on:click="toPage(page)"
+                           href="#comments_start">
                             {{page}}
                         </a>
                         <p class="ellipsis"
                            v-if="pagePreview[pagePreview.length - 1] < totalPage">
                             ...
                         </p> 
-                        <a class="next_page" v-on:click="nextPage" v-if="currentPage < totalPage">下一页</a>
+                        <a class="next_page" v-on:click="nextPage" v-if="currentPage < totalPage" href="#comments_start">下一页</a>
                     </div>
                     <!--空白页-->
                     <div class="blank_view" v-if="totalCount === 0">
@@ -751,7 +754,7 @@
                     <!--编辑区-->
                     <div class="add_comment">
                         <p>发表评论</p>
-                        <textarea class="edit" placeholder="写点什么吧..." v-model="commentText"></textarea>
+                        <textarea id="comment_edit" class="edit" placeholder="写点什么吧..." v-model="commentText"></textarea>
                         <a class="commit" v-if="commentsAndBooks.length > 0" v-on:click="addComment">提交</a>
                         <a class="commit" v-if="commentsAndBooks.length === 0" v-on:click="addComment">抢沙发</a>
                     </div>
