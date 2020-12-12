@@ -19,6 +19,12 @@ public class BookmarkDaoImpl extends BaseDao implements IBookmarkDao
     }
 
     @Override
+    public int count(Query query)
+    {
+        return super.count(query);
+    }
+
+    @Override
     public PageBean<Bookmark> queryByPage(Query query, int pageSize, int currentPage)
     {
         return queryByPage(query, Bookmark.class, pageSize, currentPage);

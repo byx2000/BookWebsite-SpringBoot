@@ -51,14 +51,22 @@ $(function()
                 // 添加书签
                 addBookmark: function()
                 {
-                    this.isBookmark = true;
-                    this.isBookContentsShow = false;
+                    request(ADD_BOOKMARK_URL, { bookId: this.bookId, chapter: this.currentChapter })
+                        .then(() =>
+                        {
+                            app.isBookmark = true;
+                            app.isBookContentsShow = false;
+                        });
                 },
                 // 移除书签
                 removeBookmark: function()
                 {
-                    this.isBookmark = false;
-                    this.isBookContentsShow = false;
+                    request(REMOVE_BOOKMARK_URL, { bookId: this.bookId, chapter: this.currentChapter })
+                        .then(() =>
+                        {
+                            app.isBookmark = false;
+                            app.isBookContentsShow = false;
+                        });
                 }
             },
             mounted: function()
@@ -79,6 +87,13 @@ $(function()
                     .then(contents =>
                     {
                         app.contents = contents;
+                    });
+
+                // 判断当前章节是否已标记书签
+                request(IS_BOOKMARK_URL, { bookId: this.bookId, chapter: this.currentChapter })
+                    .then(isBookmark =>
+                    {
+                        app.isBookmark = isBookmark;
                     });
             }
         }

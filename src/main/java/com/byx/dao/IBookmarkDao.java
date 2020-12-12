@@ -10,6 +10,13 @@ import com.byx.query.Query;
 public interface IBookmarkDao
 {
     /**
+     * 查询结果总数
+     * @param query 查询条件
+     * @return 结果总数
+     */
+    int count(Query query);
+
+    /**
      * 分页查询
      * @param query 查询条件
      * @param pageSize 每页显示条数

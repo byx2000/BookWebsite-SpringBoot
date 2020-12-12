@@ -35,4 +35,33 @@ public class BookmarkController extends BaseController
         bookmarkService.add(getCurrentUser().getId(), bookId, chapter);
         return ResultInfo.success();
     }
+
+    /**
+     * 移除书签
+     * @param bookId 电子书id
+     * @param chapter 章节id
+     * @return 操作结果
+     */
+    @RequestMapping("/remove")
+    @RequireLogin
+    public ResultInfo remove(@NotNull Integer bookId,
+                             @NotNull Integer chapter)
+    {
+        bookmarkService.remove(getCurrentUser().getId(), bookId, chapter);
+        return ResultInfo.success();
+    }
+
+    /**
+     * 是否添加了书签
+     * @param bookId 电子书id
+     * @param chapter 章节id
+     * @return 如果已添加书签，返回true，否则返回false
+     */
+    @RequestMapping("/is_bookmark")
+    @RequireLogin
+    public ResultInfo isBookmark(@NotNull Integer bookId,
+                                 @NotNull Integer chapter)
+    {
+        return ResultInfo.success(bookmarkService.isBookmark(getCurrentUser().getId(), bookId, chapter));
+    }
 }

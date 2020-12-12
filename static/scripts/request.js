@@ -46,3 +46,6 @@ var LOGIN_URL = "user/login";
 var REGISTER_URL = "user/register";
 var GET_CHAPTER_URL = "chapter/data";
 var GET_CONTENTS_URL = "chapter/contents";
+var ADD_BOOKMARK_URL = "bookmark/add";
+var REMOVE_BOOKMARK_URL = "bookmark/remove";
+var IS_BOOKMARK_URL = "bookmark/is_bookmark";
