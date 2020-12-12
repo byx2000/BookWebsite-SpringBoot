@@ -29,7 +29,8 @@ function request(url, params, processData = true, contentType = "application/x-w
 // 后端url
 var BOOK_QUERY_URL = "book/query";
 var CATEGORY_QUERY_URL = "category/query";
-var COMMENT_QUERY_URL = "comment/query";
+var COMMENT_QUERY_OF_BOOK_URL = "comment/query_of_book";
+var COMMENT_QUERY_OF_USER_URL = "comment/query_of_user";
 var IS_FAVORITE_URL = "favorite/isFavorite";
 var IS_LIKE_URL = "evaluate/isLike";
 var IS_DISLIKE_URL = "evaluate/isDislike";

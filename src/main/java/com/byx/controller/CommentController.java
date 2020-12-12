@@ -19,36 +19,33 @@ public class CommentController extends BaseController
     private ICommentService commentService;
 
     /**
-     * 查询评论
+     * 查询指定电子书的所有评论及其对应的用户信息
      * @param bookId 电子书id
-     * @param userId 用户id
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
-     * @return 评论列表或分页数据
+     * @return 分页数据
      */
-    @RequestMapping("/query")
-    public ResultInfo query(Integer bookId,
-                            Integer userId,
+    @RequestMapping("query_of_book")
+    public ResultInfo query(@NotNull Integer bookId,
                             @NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        // 查询指定电子书的所有评论
-        if (bookId != null)
-        {
-            return ResultInfo.success(commentService.queryCommentsAndUsersByBookId(bookId, pageSize, currentPage));
-        }
-        // 查询指定用户的所有评论
-        else if (userId != null)
-        {
-            // 登录校验
-            if (getCurrentUser() == null) return ResultInfo.fail("当前未登录");
-            return ResultInfo.success(commentService.queryCommentsAndBooksByUserId(userId, pageSize, currentPage));
-        }
-        // 参数错误
-        else
-        {
-            return ResultInfo.fail("参数错误");
-        }
+        return ResultInfo.success(commentService.queryCommentsAndUsersByBookId(bookId, pageSize, currentPage));
+    }
+
+    /**
+     * 查询当前用户的所有评论及其对应的电子书信息
+     * @param pageSize 每页显示条数
+     * @param currentPage 当前页码
+     * @return 分页数据
+     */
+    @RequestMapping("query_of_user")
+    @RequireLogin
+    public ResultInfo query(@NotNull Integer pageSize,
+                            @NotNull Integer currentPage)
+    {
+        return ResultInfo.success(commentService.queryCommentsAndBooksByUserId(
+                getCurrentUser().getId(), pageSize, currentPage));
     }
 
     /**

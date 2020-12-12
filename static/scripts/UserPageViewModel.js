@@ -80,7 +80,7 @@ $(function()
             },
             mounted: function()
             {
-                // 获取标签页
+                // 从url获取标签页
                 let tabParam = getUrlParameter("tab");
                 if (tabParam === "my_comments")
                     this.selectedTabIndex = 0;
@@ -89,49 +89,45 @@ $(function()
                 else
                     this.selectedTabIndex = 2;
 
-                // 获取页码
+                // 从url获取页码
                 this.currentPage = Number(getUrlParameter("currentPage"));
+
+                // 获取当前用户信息
+                request(GET_CURRENT_USER_URL, {})
+                    .then(user =>
+                    {
+                        app.user = user;
+                    })
+                    .catch(() =>
+                    {
+                        // 若没有登陆，则跳转到登录页
+                        location.href = "./login.html";
+                    });
 
                 // 当前处于“我的评论”标签页
                 if (this.selectedTabIndex === 0)
                 {
-                    request(GET_CURRENT_USER_URL, {})
-                        .then(user =>
-                        {
-                            app.user = user;
-                            return request(COMMENT_QUERY_URL, { userId: user.id, pageSize: 10, currentPage: app.currentPage });
-                        })
+                    // 获取当前用户所有评论
+                    request(COMMENT_QUERY_OF_USER_URL, { pageSize: 10, currentPage: this.currentPage })
                         .then(pageBean =>
                         {
                             app.commentsAndBooks = pageBean.data;
                             app.totalPage = pageBean.totalPage;
                             app.totalCount = pageBean.totalCount;
                             app.pagePreview = pageBean.pagePreview;
-                        })
-                        .catch(() =>
-                        {
-                            location.href = "./login.html";
                         });
                 }
                 // 当前处于“我的收藏”标签页
                 else if (this.selectedTabIndex === 1)
                 {
-                    request(GET_CURRENT_USER_URL, {})
-                        .then(user =>
-                        {
-                            app.user = user;
-                            return request(FAVORITE_QUERY_URL, { userId: user.id, pageSize: 10, currentPage: app.currentPage });
-                        })
+                    // 获取当前用户所有收藏
+                    request(FAVORITE_QUERY_URL, { pageSize: 10, currentPage: this.currentPage })
                         .then(pageBean =>
                         {
                             app.favoritesAndBooks = pageBean.data;
                             app.totalPage = pageBean.totalPage;
                             app.totalCount = pageBean.totalCount;
                             app.pagePreview = pageBean.pagePreview;
-                        })
-                        .catch(() =>
-                        {
-                            location.href = "./login.html";
                         });
                 }
             }

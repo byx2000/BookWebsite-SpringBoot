@@ -148,7 +148,7 @@ $(function()
             {
                 if (this.currentPage > 1)
                 {
-                    request(COMMENT_QUERY_URL, { bookId: this.bookId, pageSize: 5, currentPage: app.currentPage - 1 })
+                    request(COMMENT_QUERY_OF_BOOK_URL, { bookId: this.bookId, pageSize: 5, currentPage: app.currentPage - 1 })
                         .then(pageBean =>
                         {
                             app.commentsAndBooks = pageBean.data;
@@ -164,7 +164,7 @@ $(function()
             {
                 if (this.currentPage < this.totalPage)
                 {
-                    request(COMMENT_QUERY_URL, { bookId: this.bookId, pageSize: 5, currentPage: app.currentPage + 1 })
+                    request(COMMENT_QUERY_OF_BOOK_URL, { bookId: this.bookId, pageSize: 5, currentPage: app.currentPage + 1 })
                         .then(pageBean =>
                         {
                             app.commentsAndBooks = pageBean.data;
@@ -178,7 +178,7 @@ $(function()
             // 跳转到指定页
             toPage: function(page)
             {
-                request(COMMENT_QUERY_URL, { bookId: this.bookId, pageSize: 5, currentPage: page })
+                request(COMMENT_QUERY_OF_BOOK_URL, { bookId: this.bookId, pageSize: 5, currentPage: page })
                     .then(pageBean =>
                     {
                         app.commentsAndBooks = pageBean.data;
@@ -212,7 +212,7 @@ $(function()
                 });
                 
             // 获取评论
-            request(COMMENT_QUERY_URL, { bookId: this.bookId, pageSize: 5, currentPage: this.currentPage })
+            request(COMMENT_QUERY_OF_BOOK_URL, { bookId: this.bookId, pageSize: 5, currentPage: this.currentPage })
                 .then(pageBean =>
                 {
                     app.commentsAndBooks = pageBean.data;
