@@ -1,34 +1,38 @@
 package com.byx.controller;
 
+import com.byx.annotation.RequireLogin;
 import com.byx.domain.ResultInfo;
-import com.byx.domain.User;
 import com.byx.service.IBookmarkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 书签控制器
  */
 @RestController
 @RequestMapping("/bookmark")
+@Validated
 public class BookmarkController extends BaseController
 {
     @Autowired
     private IBookmarkService bookmarkService;
 
+    /**
+     * 添加书签
+     * @param bookId 电子书id
+     * @param chapter 章节
+     * @return 操作结果
+     */
     @RequestMapping("/add")
-    public ResultInfo add(Integer bookId, Integer chapter)
+    @RequireLogin
+    public ResultInfo add(@NotNull Integer bookId,
+                          @NotNull Integer chapter)
     {
-        // 参数校验
-        if (bookId == null || chapter == null) return ResultInfo.fail("参数错误");
-
-        // 登录校验
-        User user = getCurrentUser();
-        if (user == null) return ResultInfo.fail("当前未登录");
-
-        // 添加书签
-        bookmarkService.addBookmark(user.getId(), bookId, chapter);
+        bookmarkService.add(getCurrentUser().getId(), bookId, chapter);
         return ResultInfo.success();
     }
 }

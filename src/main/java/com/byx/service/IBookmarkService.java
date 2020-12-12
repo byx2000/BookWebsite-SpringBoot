@@ -11,5 +11,5 @@ public interface IBookmarkService
      * @param bookId 电子书id
      * @param chapter 章节
      */
-    void addBookmark(int userId, int bookId, int chapter);
+    void add(int userId, int bookId, int chapter);
 }
