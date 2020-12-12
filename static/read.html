@@ -211,12 +211,14 @@
 </head>
 <body>
     <div id="content">
+        <!--显示/隐藏目录-->
         <a v-bind:class="isBookContentsShow ? 'book_contents_trigger_open' : 'book_contents_trigger_close'" 
            href="javascript:void(0);" 
            v-on:click="openOrCloseContents">
             <img class="book_contents_trigger_img" src="./images/content.png"/>
             <p class="book_contents_trigger_p">目录</p>
         </a>
+        <!--目录-->
         <div class="book_contents" v-if="isBookContentsShow">
             <div class="contents_item" v-if="contents !== null && contents !== undefined" v-for="(chapter, index) in contents">
                 <a v-bind:class="(currentChapter === chapter.chapter) ? 'book_contents_link_current' : 'book_contents_link_normal'" 
@@ -225,20 +227,20 @@
                 </a>
             </div>
         </div>
-        <div class="book_and_chapter_info" v-if="book !== null && chapterData !== null">
-            <p class="book_name">《{{book.name}}》</p>
-            <p class="chapter_info_small">第{{currentChapter}}章 - {{chapterData.name}}</p>
+        <div class="book_and_chapter_info" v-if="chapterAndBook !== null && chapterAndBook.length > 0">
+            <p class="book_name">《{{chapterAndBook[1].name}}》</p>
+            <p class="chapter_info_small">第{{currentChapter}}章 - {{chapterAndBook[0].name}}</p>
         </div>
-        <div class="chapter_info" v-if="chapterData !== null">
-            <p class="chapter_info_big">第{{currentChapter}}章 {{chapterData.name}}</p>
+        <div class="chapter_info" v-if="chapterAndBook !== null && chapterAndBook.length > 0">
+            <p class="chapter_info_big">第{{currentChapter}}章 {{chapterAndBook[0].name}}</p>
         </div>
         <div>
-        <pre class="book_text" v-if="chapterData !== null">
-{{chapterData.content}}</pre>
+        <pre class="book_text" v-if="chapterAndBook !== null && chapterAndBook.length > 0">
+{{chapterAndBook[0].content}}</pre>
         </div>
         <div class="page_switch">
             <a class="last_page" v-on:click="lastChapter">上一章</a>
-            <p class="current_page">{{currentChapter}} / {{chapterCount}}</p>
+            <p class="current_page">{{currentChapter}} / {{contents.length}}</p>
             <a class="next_page" v-on:click="nextChapter">下一章</a>
         </div>
     </div>

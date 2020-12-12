@@ -35,6 +35,7 @@ $(function()
             },
             methods:
             {
+                // 上一页
                 lastPage: function()
                 {
                     if (this.currentPage > 1)
@@ -42,6 +43,7 @@ $(function()
                         this.jumpTo(this.currentPage - 1);
                     }
                 },
+                // 下一页
                 nextPage: function()
                 {
                     if (this.currentPage < this.totalPage)
@@ -49,30 +51,31 @@ $(function()
                         this.jumpTo(this.currentPage + 1);
                     }
                 },
+                // 跳转到指定页
                 toPage: function(page)
                 {
                     this.jumpTo(page);
                 },
+                // 删除评论
                 deleteComment(commentId)
                 {
                     if (confirm("您确定要删除该条评论吗？"))
                     {
-                        deleteComment(commentId,
-                            function()
+                        request(DELETE_COMMENT_URL, { commentId: commentId })
+                            .then(() =>
                             {
                                 location.reload();
-                            }
-                        );
+                            });
                     }
                 },
+                // 取消收藏
                 unfavorite: function(bookId)
                 {
-                    cancelFavorite(bookId, 
-                        function()
+                    request(UNFAVORITE_URL, { bookId: bookId })
+                        .then(() =>
                         {
                             location.reload();
-                        }
-                    );
+                        });
                 }
             },
             mounted: function()
@@ -89,55 +92,48 @@ $(function()
                 // 获取页码
                 this.currentPage = Number(getUrlParameter("currentPage"));
 
-                // 获取当前用户信息
-                getCuurentUser(
-                    function(user) // 已登录
-                    {
-                        app.user = user;
-                        
-                        if (app.selectedTabIndex === 0) // 我的评论
+                // 当前处于“我的评论”标签页
+                if (this.selectedTabIndex === 0)
+                {
+                    request(GET_CURRENT_USER_URL, {})
+                        .then(user =>
                         {
-                            // 查询评论列表
-                            queryComments(
-                                {
-                                    userId: user.id,
-                                    pageSize: 10,
-                                    currentPage: app.currentPage
-                                },
-                                function (pageBean)
-                                {
-                                    app.commentsAndBooks = pageBean.data;
-                                    app.totalPage = pageBean.totalPage;
-                                    app.totalCount = pageBean.totalCount;
-                                    app.pagePreview = pageBean.pagePreview;
-                                }
-                            );
-                        }
-                        else if (app.selectedTabIndex === 1) // 我的收藏
+                            app.user = user;
+                            return request(COMMENT_QUERY_URL, { userId: user.id, pageSize: 10, currentPage: app.currentPage });
+                        })
+                        .then(pageBean =>
                         {
-                            // 查询收藏列表
-                            queryFavorites(
-                                {
-                                    userId: user.id,
-                                    pageSize: 10,
-                                    currentPage: app.currentPage
-                                },
-                                function (pageBean)
-                                {
-                                    app.totalPage = pageBean.totalPage;
-                                    app.totalCount = pageBean.totalCount;
-                                    app.favoritesAndBooks = pageBean.data;
-                                    app.pagePreview = pageBean.pagePreview;
-                                }
-                            );
-                        }
-                    },
-                    function() // 未登录
-                    {
-                        // 跳转到登录页面
-                        location.href = "./login.html";
-                    }
-                );
+                            app.commentsAndBooks = pageBean.data;
+                            app.totalPage = pageBean.totalPage;
+                            app.totalCount = pageBean.totalCount;
+                            app.pagePreview = pageBean.pagePreview;
+                        })
+                        .catch(() =>
+                        {
+                            location.href = "./login.html";
+                        });
+                }
+                // 当前处于“我的收藏”标签页
+                else if (this.selectedTabIndex === 1)
+                {
+                    request(GET_CURRENT_USER_URL, {})
+                        .then(user =>
+                        {
+                            app.user = user;
+                            return request(FAVORITE_QUERY_URL, { userId: user.id, pageSize: 10, currentPage: app.currentPage });
+                        })
+                        .then(pageBean =>
+                        {
+                            app.favoritesAndBooks = pageBean.data;
+                            app.totalPage = pageBean.totalPage;
+                            app.totalCount = pageBean.totalCount;
+                            app.pagePreview = pageBean.pagePreview;
+                        })
+                        .catch(() =>
+                        {
+                            location.href = "./login.html";
+                        });
+                }
             }
         }
     );

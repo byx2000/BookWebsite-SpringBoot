@@ -16,95 +16,63 @@ $(function()
         },
         mounted: function()
         {
-            // 获取评分总排名
-            queryBooks(
-                {
-                    orderBy: "score",
-                    pageSize: 5,
-                    currentPage: 1
-                },
-                function(pageBean)
-                {
-                    app.maxScoreRanks.push(pageBean.data);
-                }
-            );   
-            
-            // 获取热度总排名
-            queryBooks(
-                {
-                    orderBy: "heat",
-                    pageSize: 5,
-                    currentPage: 1
-                },
-                function(pageBean)
-                {
-                    app.maxHeatRanks.push(pageBean.data);
-                }
-            );  
-            
-            // 获取更新时间总排名
-            queryBooks(
-                {
-                    orderBy: "updateTime",
-                    pageSize: 5,
-                    currentPage: 1
-                },
-                function(pageBean)
-                {
-                    app.latestUpdateRanks.push(pageBean.data);
-                }
-            );  
-
             // 获取所有类别
-            queryCategories({},
-                function (categories)
+            request(CATEGORY_QUERY_URL, {})
+                .then(categories =>
                 {
-                    //alert(JSON.stringify(categories));
-                    for (let category of categories)
+                    app.maxScoreRanks = new Array(categories.length + 1);
+                    app.maxHeatRanks = new Array(categories.length + 1);
+                    app.latestUpdateRanks = new Array(categories.length + 1);
+
+                    // 获取评分总排名
+                    request(BOOK_QUERY_URL, { orderBy: "score", limit: 5 })
+                        .then(books =>
+                        {
+                            app.maxScoreRanks.splice(0, 1, books);
+                        });
+
+                    // 获取热度总排名
+                    request(BOOK_QUERY_URL, { orderBy: "heat", limit: 5 })
+                        .then(books =>
+                        {
+                            app.maxHeatRanks.splice(0, 1, books);
+                        });
+
+                    // 获取更新时间总排名
+                    request(BOOK_QUERY_URL, { orderBy: "updateTime", limit: 5 })
+                        .then(books =>
+                        {
+                            app.latestUpdateRanks.splice(0, 1, books);
+                        });
+
+                    // 获取每个类别的排行榜
+                    for (let i = 0; i < categories.length; ++i)
                     {
-                        app.rankNames.push(category.name);
-                        // 获取当前类别的排行榜
-                        queryBooks(
-                            {
-                                categoryId: category.id,
-                                orderBy: "score",
-                                pageSize: 5,
-                                currentPage: 1
-                            },
-                            function(pageBean)
-                            {
-                                app.maxScoreRanks.push(pageBean.data);
-                            }
-                        );  
+                        // 添加类别名
+                        app.rankNames.push(categories[i].name);
 
-                        queryBooks(
+                        // 评分排行榜
+                        request(BOOK_QUERY_URL, { categoryId: categories[i].id, orderBy: "score", limit: 5 })
+                            .then(books =>
                             {
-                                categoryId: category.id,
-                                orderBy: "heat",
-                                pageSize: 5,
-                                currentPage: 1
-                            },
-                            function(pageBean)
-                            {
-                                app.maxHeatRanks.push(pageBean.data);
-                            }
-                        );  
+                                app.maxScoreRanks.splice(i + 1, 1, books);
+                            });
 
-                        queryBooks(
+                        // 热度排行榜
+                        request(BOOK_QUERY_URL, { categoryId: categories[i].id, orderBy: "heat", limit: 5 })
+                            .then(books =>
                             {
-                                categoryId: category.id,
-                                orderBy: "updateTime",
-                                pageSize: 5,
-                                currentPage: 1
-                            },
-                            function(pageBean)
+                                app.maxHeatRanks.splice(i + 1, 1, books);
+                            });
+
+                        // 更新时间排行榜
+                        request(BOOK_QUERY_URL, { categoryId: categories[i].id, orderBy: "updateTime", limit: 5 })
+                            .then(books =>
                             {
-                                app.latestUpdateRanks.push(pageBean.data);
-                            }
-                        );  
+                                app.latestUpdateRanks.splice(i + 1, 1, books);
+                            });
                     }
-                }
-            );
+                });
         }
     });
 });

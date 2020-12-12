@@ -70,34 +70,27 @@ $(function()
             this.selectedOrderByIndex = Number(getUrlParameter("orderByIndex"));
             this.currentPage = Number(getUrlParameter("currentPage"));
 
-            //查询所有类别
-            queryCategories({}, 
-            function(categories)
-            {
-                // 保存类别信息列表
-                app.categories = categories;
-
-                // 查询电子书
-                queryBooks(
+            //查询所有类别、查询电子书
+            request(CATEGORY_QUERY_URL, {})
+                .then(categories =>
                 {
-                    categoryId: categories[app.selectedCategoryIndex].id,
-                    daysAgo: app.daysAgo[app.selectedUpdateTimeIndex],
-                    pageSize: 15,
-                    currentPage: app.currentPage,
-                    orderBy: app.orderBySubmit[app.selectedOrderByIndex]
-                }, 
-                function(pageBean)
+                    app.categories = categories;
+                    return request(BOOK_QUERY_URL, 
+                        {
+                            categoryId: categories[app.selectedCategoryIndex].id,
+                            daysAgo: app.daysAgo[app.selectedUpdateTimeIndex],
+                            pageSize: 15,
+                            currentPage: app.currentPage,
+                            orderBy: app.orderBySubmit[app.selectedOrderByIndex]
+                        });
+                })
+                .then(pageBean =>
                 {
                     app.totalPage = pageBean.totalPage;
                     app.totalCount = pageBean.totalCount;
                     app.books = pageBean.data;
                     app.pagePreview = pageBean.pagePreview;
-                },
-                function(errMsg)
-                {
-                    alert(errMsg);
                 });
-            });
         }
     });
 });

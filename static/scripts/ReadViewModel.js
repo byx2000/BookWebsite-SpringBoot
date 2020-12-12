@@ -7,9 +7,7 @@ $(function()
             {
                 bookId: 0,
                 currentChapter: 1,
-                chapterCount: 1,
-                book: null,
-                chapterData: null,
+                chapterAndBook: null,
                 isBookContentsShow: false,
                 contents: [],
                 jumpTo: function(chapter)
@@ -19,6 +17,7 @@ $(function()
             },
             methods:
             {
+                // 上一章
                 lastChapter: function()
                 {
                     if (this.currentChapter > 1)
@@ -26,13 +25,15 @@ $(function()
                         this.jumpTo(this.currentChapter - 1);
                     }
                 },
+                // 下一章
                 nextChapter: function()
                 {
-                    if (this.currentChapter < this.chapterCount)
+                    if (this.currentChapter < this.contents.length)
                     {
                         this.jumpTo(this.currentChapter + 1);
                     }
                 },
+                // 打开或关闭目录
                 openOrCloseContents: function()
                 {
                     this.isBookContentsShow = !this.isBookContentsShow;
@@ -40,33 +41,23 @@ $(function()
             },
             mounted: function()
             {
+                // 从url获取电子书id和当前章节
                 this.bookId = Number(getUrlParameter("bookId"));
                 this.currentChapter = Number(getUrlParameter("chapter"));
 
-                // 获取章节数量
-                getChapterCount(this.bookId,
-                    function(cnt)
+                // 获取章节数据和电子书数据
+                request(GET_CHAPTER_URL, { bookId: this.bookId, chapter: this.currentChapter })
+                    .then(chapterAndBook =>
                     {
-                        app.chapterCount = cnt;
-
-                        // 获取章节文本和电子书信息
-                        getChapter(app.bookId, app.currentChapter,
-                            function(result)
-                            {
-                                app.chapterData = result[0];
-                                app.book = result[1];
-                            }
-                        );
-                    }
-                );
+                        app.chapterAndBook = chapterAndBook;
+                    });
 
                 // 获取目录
-                getContents(this.bookId,
-                    function(contents)
+                request(GET_CONTENTS_URL, { bookId: this.bookId })
+                    .then(contents =>
                     {
                         app.contents = contents;
-                    }
-                );
+                    });
             }
         }
     );

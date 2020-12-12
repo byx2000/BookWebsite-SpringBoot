@@ -17,11 +17,6 @@ $(function()
         },
         methods: 
         {
-            // 点击标签
-            onTabClick: function(index)
-            {
-                this.selectedTabIndex = index;
-            },
             // 点击搜索按钮
             search: function()
             {
@@ -33,14 +28,11 @@ $(function()
             // 注销
             logout: function()
             {
-                logout(function()
-                {
-                    location.href = "./login.html";
-                },
-                function(errMsg)
-                {
-                    alert(errMsg);
-                });
+                request(LOGOUT_URL, {})
+                    .then(() =>
+                    {
+                        location.reload();
+                    });
             }
         },
         mounted: function()
@@ -64,15 +56,12 @@ $(function()
                 this.selectedTabIndex = 3;
 
             // 获取当前登录用户
-            getCuurentUser(
-            function(user) // 已登录
-            {
-                app.user = user;
-            },
-            function(errMsg) // 未登录
-            {
-                
-            });
+            request(GET_CURRENT_USER_URL, {})
+                .then(user =>
+                {
+                    app.user = user;
+                })
+                .catch(()=>{});
         }
     });
 });

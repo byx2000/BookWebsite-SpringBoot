@@ -14,8 +14,6 @@ $(function()
             {
                 fileChange: function(e)
                 {
-                    //alert(JSON.stringify(e));
-                    //alert(e.target.files[0]);
                     this.avatar = e.target.files[0];
                 },
                 register: function()
@@ -44,13 +42,21 @@ $(function()
                         return;
                     }
 
-                    //alert(this.username + "\n" + this.password + "\n" + this.nickname + "\n" + this.avatar);
-                    register(this.username, this.password, this.nickname, this.avatar,
-                        function()
+                    let formData = new FormData();
+                    formData.append("username", this.username);
+                    formData.append("password", this.password);
+                    formData.append("nickname", this.nickname);
+                    formData.append("avatar", this.avatar);
+                    request(REGISTER_URL, formData, false, false)
+                        .then(() =>
                         {
+                            // 注册成功后跳转到登录页面
                             location.href = "./login.html"
-                        }
-                    );
+                        })
+                        .catch(error =>
+                        {
+                            alert(error);
+                        });
                 }
             },
             mounted: function()
