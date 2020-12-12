@@ -37,6 +37,15 @@ $(function()
                 openOrCloseContents: function()
                 {
                     this.isBookContentsShow = !this.isBookContentsShow;
+
+                    // 滚动到当前章节
+                    if (this.isBookContentsShow)
+                    {
+                        setTimeout(() =>
+                        {
+                            $("#contents_item_" + String(app.currentChapter - 1))[0].scrollIntoView();
+                        }, 50);
+                    }
                 }
             },
             mounted: function()

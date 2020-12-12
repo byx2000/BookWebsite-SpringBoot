@@ -220,7 +220,10 @@
         </a>
         <!--目录-->
         <div class="book_contents" v-if="isBookContentsShow">
-            <div class="contents_item" v-if="contents !== null && contents !== undefined" v-for="(chapter, index) in contents">
+            <div class="contents_item" 
+                 v-bind:id="'contents_item_' + index"
+                 v-if="contents !== null && contents !== undefined" 
+                 v-for="(chapter, index) in contents">
                 <a v-bind:class="(currentChapter === chapter.chapter) ? 'book_contents_link_current' : 'book_contents_link_normal'" 
                    v-bind:href="'./read.html?bookId=' + bookId + '&chapter=' + chapter.chapter">
                     第{{chapter.chapter}}章 {{chapter.name}}
