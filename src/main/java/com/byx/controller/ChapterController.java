@@ -22,18 +22,6 @@ public class ChapterController extends BaseController
     private IChapterService chapterService;
 
     /**
-     * 获取章节数
-     * @param bookId 电子书id
-     * @return 章节数
-     */
-    @RequestMapping("/count")
-    @RequireLogin
-    public ResultInfo count(@NotNull Integer bookId)
-    {
-        return ResultInfo.success(chapterService.getChapterCount(bookId));
-    }
-
-    /**
      * 获取章节数据
      * @param bookId 电子书id
      * @param chapter 章节

@@ -10,13 +10,6 @@ import java.util.List;
 public interface IChapterService
 {
     /**
-     * 获取电子书章节数
-     * @param bookId 电子书id
-     * @return 章节数
-     */
-    int getChapterCount(int bookId);
-
-    /**H
      * 获取章节数据及其对应的电子书信息
      * @param bookId 电子书id
      * @param chapter 章节

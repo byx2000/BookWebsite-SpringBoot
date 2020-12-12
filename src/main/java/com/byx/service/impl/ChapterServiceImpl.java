@@ -28,13 +28,6 @@ public class ChapterServiceImpl implements IChapterService
 
     @Override
     @Transactional(readOnly = true)
-    public int getChapterCount(int bookId)
-    {
-        return chapterDao.count(new Query().addWhere("bookId == ?", bookId));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<Object> getChapterAndBook(int bookId, int chapter)
     {
         // 查询文本信息
@@ -48,6 +41,7 @@ public class ChapterServiceImpl implements IChapterService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Chapter> getContents(int bookId)
     {
         List<Chapter> chapters = chapterDao.query(new Query().addWhere("bookId == ?", bookId).addOrder("chapter"));
