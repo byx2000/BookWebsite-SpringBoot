@@ -158,7 +158,8 @@
         .book_contents_trigger_img
         {
             width: 24px;
-            height: 17px;
+            /* height: 17px; */
+            height: 24px;
         }
 
         .book_contents_trigger_p
@@ -207,6 +208,28 @@
         {
             color: #db4e4e;
         }
+
+        .add_bookmark, .remove_bookmark
+        {
+            position: fixed;
+            margin-left: -110px;
+            margin-top: 110px;
+            width: 48px;
+            height: 48px;
+            padding: 5px;
+            box-shadow: 0px 0px 6px #ccc1b6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #eedfd0;
+        }
+
+        .bookmark_img, .bookmark_full_img
+        {
+            width: 30px;
+            height: 30px;
+        }
     </style>
 </head>
 <body>
@@ -216,7 +239,7 @@
            href="javascript:void(0);" 
            v-on:click="openOrCloseContents">
             <img class="book_contents_trigger_img" src="./images/content.png"/>
-            <p class="book_contents_trigger_p">目录</p>
+            <!-- <p class="book_contents_trigger_p">目录</p> -->
         </a>
         <!--目录-->
         <div class="book_contents" v-if="isBookContentsShow">
@@ -230,6 +253,13 @@
                 </a>
             </div>
         </div>
+        <!--添加/移除书签-->
+        <a class="add_bookmark" v-if="!isBookmark" href="javascript:void(0);" v-on:click="addBookmark">
+            <img class="bookmark_img" src="./images/bookmark.png"/>
+        </a>
+        <a class="remove_bookmark" v-if="isBookmark" href="javascript:void(0);" v-on:click="removeBookmark">
+            <img class="bookmark_full_img" src="./images/bookmark_full.png"/>
+        </a>
         <div class="book_and_chapter_info" v-if="chapterAndBook !== null && chapterAndBook.length > 0">
             <p class="book_name">《{{chapterAndBook[1].name}}》</p>
             <p class="chapter_info_small">第{{currentChapter}}章 - {{chapterAndBook[0].name}}</p>

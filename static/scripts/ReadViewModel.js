@@ -10,6 +10,7 @@ $(function()
                 chapterAndBook: null,
                 isBookContentsShow: false,
                 contents: [],
+                isBookmark: false,
                 jumpTo: function(chapter)
                 {
                     location.href = "./read.html?bookId=" + this.bookId + "&chapter=" + chapter;
@@ -46,6 +47,18 @@ $(function()
                             $("#contents_item_" + String(app.currentChapter - 1))[0].scrollIntoView();
                         }, 50);
                     }
+                },
+                // 添加书签
+                addBookmark: function()
+                {
+                    this.isBookmark = true;
+                    this.isBookContentsShow = false;
+                },
+                // 移除书签
+                removeBookmark: function()
+                {
+                    this.isBookmark = false;
+                    this.isBookContentsShow = false;
                 }
             },
             mounted: function()
