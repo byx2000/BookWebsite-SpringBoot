@@ -64,4 +64,19 @@ public class BookmarkController extends BaseController
     {
         return ResultInfo.success(bookmarkService.isBookmark(getCurrentUser().getId(), bookId, chapter));
     }
+
+    /**
+     * 查询指定用户的书签列表及其对应的电子书信息
+     * @param pageSize 每页显示条数
+     * @param currentPage 当前页码
+     * @return 书签列表
+     */
+    @RequestMapping("/query")
+    @RequireLogin
+    public ResultInfo query(@NotNull Integer pageSize,
+                            @NotNull Integer currentPage)
+    {
+        return ResultInfo.success(bookmarkService.queryBookmarksAndBooksByUserId(
+                getCurrentUser().getId(), pageSize, currentPage));
+    }
 }
