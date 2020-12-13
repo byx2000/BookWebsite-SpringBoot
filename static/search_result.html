@@ -20,20 +20,8 @@
 
         .count p
         {
-            color: #383b43;
-            font-size: 18px;
             padding-bottom: 10px;
             border-bottom: 2px solid #f26552;
-        }
-
-        .bold
-        {
-            font-weight: bold;
-        }
-
-        .search_text
-        {
-            color: #f26552;
         }
 
         .book_list
@@ -46,7 +34,6 @@
         .list_item
         {
             width: 100%;
-            /*height: 208px;*/
             height: fit-content;
             display: flex;
             padding: 30px 0;
@@ -61,7 +48,6 @@
         .cover img
         {
             width: 104px;
-            /*height: 100%;*/
             height: 138px;
         }
 
@@ -77,77 +63,36 @@
             min-height: 138px;
         }
 
-        .name
+        .author_and_heat_and_score
         {
-            padding-bottom: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            display: flex;
         }
 
-        .name a
+        .search_book_author, .search_book_heat, .search_book_score
         {
-            color: #333333;
-            font-size: 18px;
             width: fit-content;
+            margin-right: 20px;
+            max-width: 30%;
         }
 
-        .name a:hover
-        {
-            cursor: pointer;
-            color: #f26552;
-        }
-
-        .author_and_score
-        {
-            display: flex;
-            padding-bottom: 20px;
-        }
-
-        .author, .like, .score
-        {
-            color: #999999;
-            font-size: 12px;
-            
-        }
-
-        .score, .like
-        {
-            margin-left: 20px;
-        }
-
-        .like
-        {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .like::before
+        .search_book_heat::before
         {
             content: "";
             display: inline-block;
             width: 14px;
             height: 14px;
             margin-right: 5px;
-            background: url(./images/like_gray.png);
+            background: url(./images/heat.png);
             background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center center;
         }
 
-        .description
+        .search_book_description
         {
-            color: #666666;
-            font-size: 12px;
             height: 60px;
             line-height: 20px;
-            text-align: justify;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
         }
 
         .page_switch
@@ -178,71 +123,21 @@
             padding: 30px;
         }
 
-        .header
-        {
-            display: flex;
-            justify-content: space-between;
-        }
+        /*热门搜索*/
 
-        .header p
-        {
-            color: #383b43;
-            font-size: 18px;
-        }
-
-        .header a
-        {
-            font-size: 12px;
-            color: #999999;
-            display: flex;
-            align-items: center;
-        }
-
-        .header a::before
-        {
-            content: "";
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            margin-right: 5px;
-            background: url(./images/refresh-gray.png);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-
-        .header a:hover
-        {
-            color: #f26552;
-            cursor: pointer;
-        }
-
-        .header a:hover::before
-        {
-            content: "";
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            margin-right: 5px;
-            background: url(./images/refresh-red.png);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-
-        .guess_list_item
+        .hot_list_item
         {
             display: flex;
             margin-top: 28px;
         }
 
-        .g_cover
+        .hot_book_cover
         {
             width: 104px;
             height: 138px;
         }
 
-        .g_detail
+        .hot_book_detail
         {
             display: flex;
             flex-direction: column;
@@ -251,53 +146,12 @@
             flex: 1;
         }
 
-        .g_name, .g_author, .g_heat, .g_like, .g_score
+        .hot_book_author, .hot_book_heat, .hot_book_like, .hot_book_score
         {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin: 5px 0;
         }
 
-        .g_name a
-        {
-            color: #333333;
-            font-size: 14px;
-            margin-bottom: 7px;
-        }
-
-        .g_name a:hover
-        {
-            color: #f26552;
-            cursor: pointer;
-        }
-
-        .g_author, .g_heat, .g_like, .g_score
-        {
-            color: #999999;
-            font-size: 12px;
-            line-height: 26px;
-        }
-
-        .g_like, .g_heat
-        {
-            display: flex;
-            align-items: center;
-        }
-
-        .g_like::before
-        {
-            content: "";
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            margin-right: 5px;
-            background: url(./images/like_gray.png);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-
-        .g_heat::before
+        .hot_book_heat::before
         {
             content: "";
             display: inline-block;
@@ -310,10 +164,23 @@
             background-position: center center;
         }
 
+        .hot_book_like::before
+        {
+            content: "";
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+            background: url(./images/like.png);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        /*空视图*/
+
         .empty_view>p:first-child
         {
-            font-size: 18px;
-            color: #383b43;
             margin-top: 30px;
             padding-bottom: 10px;
         }
@@ -327,20 +194,9 @@
 
         .hots a
         {
-            width: 25%;
-            font-size: 14px;
-            color: #666666;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            width: 33%;
             margin: 10px 0;
             padding-right: 10px;
-        }
-
-        .hots a:hover
-        {
-            cursor: pointer;
-            color: #f26552;
         }
     </style>
 </head>
@@ -354,13 +210,15 @@
             <div class="search_result">
                 <!--结果条数统计-->
                 <div v-if="books.length > 0" class="count">
-                    <p>
-                        找到 <span class="bold">{{totalCount}}</span> 条包含“<span class="search_text bold">{{keyword}}</span>”的作品，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
+                    <p class="medium_font_size primary_color">
+                        找到 <span class="bold">{{totalCount}}</span> 条包含“<span class="red_color bold">{{keyword}}</span>”的作品，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
                     </p>
                 </div>
                 <!--无结果提示-->
                 <div v-if="books.length === 0" class="count">
-                    <p>没有找到包含“<span class="search_text bold">{{keyword}}</span>”的作品</p>
+                    <p class="medium_font_size primary_color">
+                        没有找到包含“<span class="red_color bold">{{keyword}}</span>”的作品
+                    </p>
                 </div>
                 <!--搜索结果列表-->
                 <div class="book_list">
@@ -371,28 +229,36 @@
                             </a>
                         </div>
                         <div class="detail">
-                            <p class="name">
-                                <a v-bind:href="'./book_detail.html?bookId=' + book.id">
-                                    {{book.name}}
-                                </a>
-                            </p>
-                            <div class="author_and_score">
-                                <p class="author">作者：{{book.author}}</p>
-                                <p class="like">{{book.likeCount}}</p>
-                                <p class="score">评分：{{book.score.toFixed(1)}}</p>
+                            <a class="medium_font_size primary_color ellipses_text_singleline link" 
+                               v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                {{book.name}}
+                            </a>
+                            <div class="author_and_heat_and_score">
+                                <p class="search_book_author smaller_font_size detail_color ellipses_text_singleline">
+                                    作者：{{book.author}}
+                                </p>
+                                <p class="search_book_heat smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                                    {{book.likeCount}}
+                                </p>
+                                <p class="search_book_score smaller_font_size detail_color ellipses_text_singleline">
+                                    评分：{{book.score.toFixed(1)}}
+                                </p>
                             </div>
-                            <p class="description">{{book.description}}</p>
+                            <p class="search_book_description smaller_font_size normal_color ellipses_text_multiline">
+                                {{book.description}}
+                            </p>
                         </div>
                     </div>
+                    <!--空视图-->
                     <div v-if="books.length === 0" class="empty_view">
-                        <p>热门电子书</p>
+                        <p class="medium_font_size red_color">热门电子书</p>
                         <div class="hots">
-                            <a v-for="book in suggestions"
+                            <a class="small_font_size primary_color ellipses_text_singleline link" 
+                               v-for="book in suggestions"
                                v-bind:href="'./book_detail.html?bookId=' + book.id">
                                 {{book.name}}
                             </a>
                         </div>
-                        
                     </div>
                 </div>
                 <!--分页组件-->
@@ -414,28 +280,31 @@
                     <a class="next_page" v-on:click="nextPage" v-if="currentPage < totalPage">下一页</a>
                 </div>
             </div>
-            <!--搜索建议-->
-            <div class="suggestions">
-                <div class="header">
-                    <p>热门搜索</p>
-                </div>
-                <div class="guess_list">
-                    <div class="guess_list_item" v-for="book in suggestions.slice(0, 4)">
-                        <a v-bind:href="'./book_detail.html?bookId=' + book.id">
-                            <img class="g_cover" 
-                                 v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
+            <!--热门搜索-->
+            <div v-if="books.length > 0" class="suggestions">
+                <p class="medium_font_size primary_color">热门搜索</p>
+                <div class="hot_list_item" v-for="book in suggestions.slice(0, 4)">
+                    <a v-bind:href="'./book_detail.html?bookId=' + book.id">
+                        <img class="hot_book_cover" 
+                                v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
+                    </a>
+                    <div class="hot_book_detail">
+                        <a class="hot_book_name small_font_size primary_color ellipses_text_singleline link"
+                            v-bind:href="'./book_detail.html?bookId=' + book.id">
+                            {{book.name}}
                         </a>
-                        <div class="g_detail">
-                            <p class="g_name">
-                                <a v-bind:href="'./book_detail.html?bookId=' + book.id">
-                                    {{book.name}}
-                                </a>
-                            </p>
-                            <p class="g_author">{{book.author}}</p>
-                            <p class="g_heat">{{book.heat}}</p>
-                            <p class="g_like">{{book.likeCount}}</p>
-                            <p class="g_score">评分：{{book.score.toFixed(1)}}</p>
-                        </div>
+                        <p class="hot_book_author smaller_font_size detail_color ellipses_text_singleline">
+                            作者：{{book.author}}
+                        </p>
+                        <p class="hot_book_heat smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                            {{book.heat}}
+                        </p>
+                        <p class="hot_book_like smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                            {{book.likeCount}}
+                        </p>
+                        <p class="hot_book_score smaller_font_size detail_color ellipses_text_singleline">
+                            评分：{{book.score.toFixed(1)}}
+                        </p>
                     </div>
                 </div>
             </div>
