@@ -79,6 +79,16 @@ a
     font-weight: bold;
 }
 
+.singleline
+{
+    white-space: nowrap;
+}
+
+.justify
+{
+    text-align: justify;
+}
+
 .ellipses_text_singleline
 {
     width: 100%;

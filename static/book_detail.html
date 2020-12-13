@@ -12,6 +12,8 @@
         <script src="./scripts/parameter.js"></script>
         <script src="./scripts/BookDetailViewModel.js"></script>
         <style>
+            /*电子书详情*/
+
             .book_info
             {
                 background-color: white;
@@ -26,7 +28,6 @@
                 border-right: 1px solid #f0f0f0;
                 display: flex;
                 justify-content: center;
-                /*align-items: center;*/
                 position: relative;
             }
 
@@ -56,7 +57,6 @@
 
             .book_detail
             {
-                /*width: 100%;*/
                 flex: 1;
                 width: 0;
             }
@@ -82,34 +82,9 @@
                 margin-left: 20px;
             }
 
-            .label
-            {
-                width: 36px;
-                font-size: 12px;
-                color: #9e9e9e;
-                display: flex;
-                align-items: center;
-            }
-
-            .book_score
-            {
-                width: 30px;
-                display: flex;
-                align-items: center;
-            }
-
             .book_name
             {
-                width: 600px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .book_name, .book_score
-            {
-                color: #212121;
-                font-size: 20px;
+                flex-grow: 1;
             }
 
             .book_detail_row1_row2
@@ -122,6 +97,8 @@
             .book_detail_row1_row2_col1
             {
                 display: flex;
+                flex-grow: 1;
+                width: 0;
             }
 
             .book_detail_row1_row2_col2
@@ -129,31 +106,11 @@
                 display: flex;
             }
 
-            .book_author, .book_word_count, .book_update_time
+             .book_author, .book_word_count, .book_update_time
             {
-                color: #9e9e9e;
-                font-size: 12px;
-                margin-right: 12px;
-                line-height: 35px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .book_author
-            {
-                width: 100px;
-            }
-
-            .book_word_count
-            {
-                width: 100px;
-            }
-
-            .book_like_count
-            {
-                color: #9e9e9e;
-                font-size: 12px;
+                margin-right: 20px;
+                max-width: 30%;
+                width: fit-content;
             }
 
             .book_detail_row2
@@ -164,10 +121,7 @@
 
             .book_description
             {
-                color: #9e9e9e;
-                font-size: 12px;
-                line-height: 20px;
-                text-align: justify;
+                line-height: 22px;
             }
 
             .book_detail_row3
@@ -251,13 +205,10 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: #9e9e9e;
-                font-size: 14px;
             }
 
             .like_link:hover, .dislike_link:hover, .cancel_like_link:hover, .cancel_dislike_link:hover
             {
-                /* box-shadow: 0px 0px 5px #888888; */
                 cursor: pointer;
             }
 
@@ -269,11 +220,6 @@
                 width: 20px;
                 height: 20px;
             }
-
-            /*.like_link
-            {
-                background-color: #da473a;
-            }*/
 
             .like_link::before
             {
@@ -290,11 +236,6 @@
                 background-repeat: no-repeat;
                 background-position: center center;
             }
-
-            /*.dislike_link
-            {
-                background-color: #9e9e9e;
-            }*/
 
             .dislike_link::before
             {
@@ -337,35 +278,13 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                /*padding: 34px 40px 34px 40px;*/
                 padding: 34px 0;
                 border-bottom: 1px solid #f0f0f0;
             }
 
-            .comment_list .header span:first-child
-            {
-                font-size: 16px;
-                color: #212121;
-            }
-
-            .comment_list .header span:nth-child(2)
+            .seperator
             {
                 margin: 0 8px;
-                font-size: 16px;
-                color: #f0f0f0;
-            }
-
-            .comment_list .header span:nth-child(3)
-            {
-                font-size: 12px;
-                color: #919191;
-            }
-
-            .comment_list .header span:nth-child(4)
-            {
-                margin-left: 8px;
-                font-size: 12px;
-                color: #919191;
             }
 
             .comment_list .header a
@@ -400,7 +319,6 @@
             {
                 display: flex;
                 margin: 32px 0;
-                /*padding: 0 40px;*/
             }
 
             .avatar
@@ -418,23 +336,6 @@
                 border-bottom: 1px solid #f0f0f0;
             }
 
-            /*.comment_item:last-child .comment_detail
-            {
-                border-bottom: none;
-            }*/
-
-            .username
-            {
-                font-size: 14px;
-                color: #6b6b6b;
-            }
-
-            .time
-            {
-                font-size: 12px;
-                color: #9e9e9e;
-            }
-
             .username_and_time
             {
                 display: flex;
@@ -444,11 +345,9 @@
 
             .content
             {
-                font-size: 14px;
-                color: #9e9e9e;
                 padding-top: 7px;
-                text-align: justify;
                 margin-bottom: 13px;
+                line-height: 22px;
             }
 
             .similar_recommend
@@ -490,7 +389,7 @@
                 margin-bottom: 10px;
             }
 
-            .similar_recommend .book_name
+            /* .similar_recommend .book_name
             {
                 display: block;
                 font-size: 14px;
@@ -505,9 +404,9 @@
             {
                 color: #f26552;
                 cursor: pointer;
-            }
+            } */
 
-            .similar_recommend .book_author, .similar_recommend .book_heat
+            /* .similar_recommend .book_author, .similar_recommend .book_heat
             {
                 font-size: 12px;
                 color: #9e9e9e;
@@ -522,9 +421,16 @@
             {
                 display: flex;
                 align-items: center;
+            } */
+
+            /*.similar_recommend .book_heat::before*/
+
+            .recommend_book_author
+            {
+                margin: 5px 0;
             }
 
-            .similar_recommend .book_heat::before
+            .recommend_book_heat::before
             {
                 content: "";
                 display: inline-block;
@@ -627,12 +533,6 @@
                 margin-top: 15px;
             }
 
-            /*.add_comment .commit p
-            {
-                font-size: 14px;
-                color: white;
-            }*/
-
             .add_comment .commit:hover
             {
                 cursor: pointer;
@@ -665,31 +565,42 @@
                 <div class="book_detail">
                     <div class="book_detail_row1">
                         <div class="book_detail_row1_row1">
-                            <p class="book_name">{{book.name}}</p>
+                            <p class="book_name large_font_size primary_color ellipses_text_singleline">
+                                {{book.name}}
+                            </p>
                             <div class="book_detail_row1_row1_col2">
-                                <p class="label">评分：</p>
-                                <p class="book_score">{{book.score.toFixed(1)}}</p>
+                                <p class="label smaller_font_size detail_color vertical_center singleline">评分：</p>
+                                <p class="book_score large_font_size primary_color">
+                                    {{book.score.toFixed(1)}}
+                                </p>
                             </div>
                         </div>
                         <div class="book_detail_row1_row2">
-                            <div class="book_detail_row1_row2_col1">
-                                <p class="book_author">作者：{{book.author}}</p>
-                                <p class="book_word_count">字数：{{book.wordCount}}</p>
-                                <p class="book_update_time">更新时间：{{book.updateTime}}</p>
+                            <div class="book_detail_row1_row2_col1 vertical_center">
+                                <p class="book_author small_font_size detail_color ellipses_text_singleline">
+                                    作者：{{book.author}}
+                                </p>
+                                <p class="book_word_count small_font_size detail_color ellipses_text_singleline">
+                                    字数：{{book.wordCount}}
+                                </p>
+                                <p class="book_update_time small_font_size detail_color ellipses_text_singleline">
+                                    更新时间：{{book.updateTime.substring(0, 10)}}
+                                </p>
                             </div>
                             <div class="book_detail_row1_row2_col2">
-                                <a class="like_link" v-on:click="like" v-if="!isLike">{{book.likeCount}}</a>
-                                <a class="cancel_like_link" v-on:click="cancelLike" v-if="isLike">{{book.likeCount}}</a>
-                                <a class="dislike_link" v-on:click="dislike" v-if="!isDislike">{{book.dislikeCount}}</a>
-                                <a class="cancel_dislike_link" v-on:click="cancelDislike" v-if="isDislike">{{book.dislikeCount}}</a>
+                                <a class="like_link small_font_size detail_color" v-on:click="like" v-if="!isLike">{{book.likeCount}}</a>
+                                <a class="cancel_like_link small_font_size detail_color" v-on:click="cancelLike" v-if="isLike">{{book.likeCount}}</a>
+                                <a class="dislike_link small_font_size detail_color" v-on:click="dislike" v-if="!isDislike">{{book.dislikeCount}}</a>
+                                <a class="cancel_dislike_link small_font_size detail_color" v-on:click="cancelDislike" v-if="isDislike">{{book.dislikeCount}}</a>
                             </div>
                         </div>
                     </div>
                     <div class="book_detail_row2">
-                        <p class="book_description">{{book.description}}</p>
+                        <p class="book_description small_font_size detail_color justify">
+                            {{book.description}}
+                        </p>
                     </div>
                     <div class="book_detail_row3">
-                        <!-- <a class="read_link" v-bind:href="'./read.html?bookId=' + book.id + '&chapter=1'">阅读</a> -->
                         <a class="read_link" v-on:click="read">阅读</a>
                         <a class="favorite_link" v-if="!isFavorite" v-on:click="favorite">收藏</a>
                         <a class="unfavorite_link" v-if="isFavorite" v-on:click="unfavorite">取消收藏</a>
@@ -704,10 +615,10 @@
                 <div class="comment_list">
                     <div class="header">
                         <div>
-                            <span>评论区</span>
-                            <span>|</span>
-                            <span>共{{totalCount}}条评论</span>
-                            <span>共{{totalPage}}页</span>
+                            <span class="medium_font_size primary_color">评论区</span>
+                            <span class="seperator medium_font_size detail_color">|</span>
+                            <span class="small_font_size detail_color">共{{totalCount}}条评论</span>
+                            <span class="small_font_size detail_color">共{{totalPage}}页</span>
                         </div>
                         <a href="#bottom" v-on:click="toCommentEdit">我来说两句</a>
                     </div>
@@ -719,10 +630,16 @@
                                 v-bind:src="'./upload/avatar/' + commentAndBook[1].id + '.jpg'"/>
                         <div class="comment_detail">
                             <div class="username_and_time">
-                                <p class="username">{{commentAndBook[1].nickname}}</p>
-                                <p class="time">{{commentAndBook[0].time.substring(0, 11)}}</p>
+                                <p class="username small_font_size primary_color">
+                                    {{commentAndBook[1].nickname}}
+                                </p>
+                                <p class="time smaller_font_size detail_color">
+                                    {{commentAndBook[0].time.substring(0, 11)}}
+                                </p>
                             </div>
-                            <p class="content">{{commentAndBook[0].content}}</p>
+                            <p class="content small_font_size detail_color justify">
+                                {{commentAndBook[0].content}}
+                            </p>
                         </div>                        
                     </div>
                     <!--分页组件-->
@@ -761,18 +678,22 @@
                 </div>
                 <!--同类推荐-->
                 <div class="similar_recommend">
-                    <p class="header">同类推荐</p>
+                    <p class="header medium_font_size primary_color">同类推荐</p>
                     <div class="recommend_items_container">
                         <div v-for="book in recommends" class="recommend_item">
                             <a v-bind:href="'./book_detail.html?bookId=' + book.id">
                                 <img class="book_cover" v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
                             </a>
-                            <a class="book_name" 
+                            <a class="small_font_size primary_color link ellipses_text_singleline" 
                                v-bind:href="'./book_detail.html?bookId=' + book.id">
                                 {{book.name}}
                             </a>
-                            <p class="book_author">{{book.author}}</p>
-                            <p class="book_heat">{{book.heat}}</p>
+                            <p class="recommend_book_author smaller_font_size detail_color ellipses_text_singleline">
+                                作者：{{book.author}}
+                            </p>
+                            <p class="recommend_book_heat smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                                {{book.heat}}
+                            </p>
                         </div>
                     </div>
                 </div>
