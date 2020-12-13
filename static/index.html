@@ -10,7 +10,9 @@
         <script src="./scripts/load_nav.js"></script>
         <script src="./scripts/HomePageViewModel.js"></script>
         <style>
-            #banner
+            /*banner*/
+
+            .banner
             {
                 width: 100%;
                 background: url(./images/banner_background.gif);
@@ -23,39 +25,20 @@
                 align-items: center;
             }
 
-            #banner .book_name
+            .banner_book_name
             {
-                font-size: 24px;
-                color: white;
-                margin-bottom: 10px;
+                max-width: 450px;
+                width: fit-content;
             }
 
-            #banner .book_name p
+            .banner_book_description
             {
-                max-width: 400px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-
-            #banner .book_name:hover
-            {
-                color: #f26552;
-                cursor: pointer;
-            }
-
-            #banner .book_description
-            {
-                font-size: 16px;
-                color: white;
                 opacity: 0.3;
                 max-width: 516px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+                margin-top: 10px;
             }
 
-            #banner .book_list
+            .banner_book_list
             {
                 width: 1000px;
                 display: flex;
@@ -64,67 +47,51 @@
                 padding: 26px 0;
             }
 
-            #banner .book_list .prev, #banner .book_list .next
+            .banner_book_cover_normal
+            {
+                width: 117px;
+                height: 156px;
+            }
+
+            .banner_book_cover_selected
+            {
+                width: 126px;
+                height: 168px;
+            }
+
+            .banner_prev, .banner_next
             {
                 width: 25px;
                 height: 25px;
                 opacity: 0.6;
             }
 
-            #banner .book_list .prev:hover, #banner .book_list .next:hover
+            .banner_prev:hover, .banner_next:hover
             {
                 opacity: 1;
                 cursor: pointer;
             }
 
-            #banner .book_list .prev
+            .banner_prev
             {
                 margin-right: 150px;
                 background: url(./images/decorate2.png);
                 background-position: 0 -16px;
             }
 
-            #banner .book_list .next
+            .banner_next
             {
                 margin-left: 150px;
                 background: url(./images/decorate2.png);
                 background-position: 0 -42px;
             }
 
-            #banner .book_list img
-            {
-                margin: 0 18px;
-            }
-
-            #banner .book_list img:hover
-            {
-                cursor: pointer;
-            }
-
-            #banner .book_list .img_normal
-            {
-                width: 117px;
-                height: 156px;
-            }
-
-            /*#banner .book_list .img_normal:hover
-            {
-                width: 126px;
-                height: 168px;
-            }*/
-
-            #banner .book_list .img_selected
-            {
-                width: 126px;
-                height: 168px;
-            }
-
-            #banner .circles
+            .banner_circles
             {
                 display: flex;
             }
 
-            #banner .circles a
+            .banner_circles a
             {
                 width: 8px;
                 height: 8px;
@@ -132,51 +99,41 @@
                 margin: 0 3px;
             }
 
-            #banner .circles a:hover
+            .banner_circles a:hover
             {
                 cursor: pointer;
             }
 
-            #banner .circles .circle_normal
+            .banner_circles .banner_circle_normal
             {
                 background-color: #778d98;
             }
 
-            #banner .circles .circle_selected
+            .banner_circles .banner_circle_selected
             {
                 background-color: #d2d2d2;
             }
 
-            #category_random .category_name
-            {
-                font-size: 26px;
-                color: #212121;
-                width: fit-content;
-                margin: 44px auto 44px auto;
-            }
+            /*类别*/
 
-            #category_random .category_content
+            .category_content
             {
                 background-color: white;
                 display: flex;
                 height: 500px;
-                position: relative;
             }
 
-            #category_random .category_content .label
+            .category_name
             {
-                width: 63px;
-                height: 63px;
-                /*background-color: red;*/
-                position: absolute;
-                background: url(./images/decorate2.png);
-                background-position: -26px 0;
-            }
+                width: fit-content;
+                margin: 44px auto 44px auto;
+            }  
 
-            #category_random .book_item_max_score
+            /*得分最高的电子书*/
+
+            .max_score_book_item
             {
                 width: 403px;
-                /*height: 564px;*/
                 padding: 45px 56px;
                 border-right: 1px solid #f0f0f0;
                 display: flex;
@@ -184,114 +141,76 @@
                 justify-content: space-between;
             }
 
-            #category_random .book_item_max_score .book_name
+            .max_score_book_author
             {
-                font-size: 20px;
-                color: #212121;
-               
-            }
-
-            #category_random .book_item_max_score .book_name p
-            {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-
-            #category_random .book_item_max_score .book_name:hover
-            {
-                color: #f26552;
-                cursor: pointer;
-            }
-
-            #category_random .book_item_max_score .book_author
-            {
-                font-size: 12px;
-                color: #9e9e9e;
                 margin-top: 10px;
                 margin-bottom: 20px;
             }
 
-            #category_random .book_item_max_score .book_description
+            .max_score_book_description
             {
-                font-size: 12px;
-                color: #9e9e9e;
                 height: 80px;
                 line-height: 20px;
-                text-align: justify;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
                 -webkit-line-clamp: 4;
-                -webkit-box-orient: vertical;
             }
 
-
-            #category_random .book_item_max_score a
+            .max_score_book_cover_link
             {
-                width: 156px;
-                height: 208px;
                 align-self: flex-end;
             }
 
-            #category_random .book_list_random
+            .max_score_book_cover
+            {
+                width: 156px;
+                height: 208px;
+            }
+
+            /*随机电子书列表*/
+
+            .random_book_list
             {
                 flex: 1;
                 display: flex;
                 flex-wrap: wrap;
             }
 
-            #category_random .book_item
+            .random_book_item
             {
                 flex: 0 0 33.3%;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                /*padding-left: 60px;*/
                 border-right: 1px solid #f0f0f0;
                 border-bottom: 1px solid #f0f0f0;
             }
 
-            #category_random .book_item:nth-child(3n)
+            .random_book_item:nth-child(3n)
             {
                 border-right: none;
             }
 
-            #category_random .book_item .book_cover
+            .random_book_item_content
+            {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .random_book_cover
             {
                 width: 102px;
                 height: 136px;
                 margin-bottom: 5px;
             }
 
-            #category_random .book_item .book_name
+            .random_book_name
             {
-                display: block;
-                font-size: 14px;
-                color: #212121;
+                max-width: 102px;
                 line-height: 24px;
+            }
+
+            .random_book_author
+            {
                 max-width: 102px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-
-            #category_random .book_item .book_name:hover
-            {
-                color: #f26552;
-                cursor: pointer;
-            }
-
-            #category_random .book_item .book_author
-            {
-                font-size: 12px;
-                color: #9e9e9e;
                 line-height: 20px;
-                max-width: 102px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
             }
         </style>
     </head>
@@ -301,26 +220,28 @@
 
         <div id="holder">
             <!--banner-->
-            <div id="banner" v-if="books.length !== 0">
-                <a class="book_name" 
-                v-bind:href="'./book_detail.html?bookId=' + books[index].id">
-                    <p>{{books[index].name}}</p>
+            <div class="banner" v-if="books.length !== 0">
+                <a class="banner_book_name larger_font_size white_color ellipses_text_singleline link"
+                   v-bind:href="'./book_detail.html?bookId=' + books[index].id">
+                    {{books[index].name}}
                 </a>
-                <p class="book_description">{{books[index].description}}</p>
-                <div class="book_list">
-                    <a class="prev" v-on:click="prev"></a>
+                <p class="banner_book_description medium_font-size white_color ellipses_text_singleline">
+                    {{books[index].description}}
+                </p>
+                <div class="banner_book_list">
+                    <a class="banner_prev" v-on:click="prev"></a>
                     <a v-for="(book, i) in books"
-                    v-bind:href="'./book_detail.html?bookId=' + books[i].id"
-                    v-on:mouseover="select(i)">
+                       v-bind:href="'./book_detail.html?bookId=' + books[i].id"
+                       v-on:mouseover="select(i)">
                         <img v-bind:src="'./upload/cover/' + book.id + '.jpg'"
-                            v-bind:class="i === index ? 'img_selected' : 'img_normal'"/>
+                             v-bind:class="i === index ? 'banner_book_cover_selected' : 'banner_book_cover_normal'"/>
                     </a>
-                    <a class="next" v-on:click="next"></a>
+                    <a class="banner_next" v-on:click="next"></a>
                 </div>
-                <div class="circles">
+                <div class="banner_circles">
                     <a v-for="(book, i) in books"
-                    v-bind:class="i === index ? 'circle_selected' : 'circle_normal'"
-                    v-on:click="select(i)">
+                       v-bind:class="i === index ? 'banner_circle_selected' : 'banner_circle_normal'"
+                       v-on:click="select(i)">
                     </a>
                 </div>
             </div>
@@ -331,38 +252,48 @@
                 <div id="category_random">
                     <div v-for="(category, iCategory) in categories"
                         v-if="categories !== null">
-                        <p class="category_name">{{category.name}}精选</p>
+                        <p class="category_name larger_font_size primary_color">{{category.name}}精选</p>
                         <div class="category_content">
                             <div class="label"></div>
-                            <div class="book_item_max_score"
+                            <!--得分最高的电子书-->
+                            <div class="max_score_book_item"
                                 v-if="maxScoreBooks[iCategory] !== undefined">
-                                <div>
-                                    <a class="book_name"
-                                    v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
-                                        <p>{{maxScoreBooks[iCategory].name}}</p>
+                                <div class="max_score_book_info">
+                                    <a class="max_score_book_name large_font_size primary_color ellipses_text_singleline link"
+                                       v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
+                                        {{maxScoreBooks[iCategory].name}}
                                     </a>
-                                    <p class="book_author">作者: {{maxScoreBooks[iCategory].author}}</p>
-                                    <p class="book_description">{{maxScoreBooks[iCategory].description}}</p>
+                                    <p class="max_score_book_author smaller_font_size detail_color">
+                                        作者: {{maxScoreBooks[iCategory].author}}
+                                    </p>
+                                    <p class="max_score_book_description smaller_font_size detail_color ellipses_text_multiline">
+                                        {{maxScoreBooks[iCategory].description}}
+                                    </p>
                                 </div>
-                                <a v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
-                                    <img class="book_cover" 
-                                        v-bind:src="'./upload/cover/' + maxScoreBooks[iCategory].id + '.jpg'"/>
+                                <a class="max_score_book_cover_link"
+                                   v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
+                                    <img class="max_score_book_cover" 
+                                         v-bind:src="'./upload/cover/' + maxScoreBooks[iCategory].id + '.jpg'"/>
                                 </a>
                             </div>
-                            <div class="book_list_random">
-                                <div class="book_item"
+                            <!--随机电子书列表-->
+                            <div class="random_book_list">
+                                <div class="random_book_item center_content"
                                     v-for="(book, iBook) in randomBooks[iCategory]"
                                     v-if="randomBooks[iCategory] !== undefined">
-                                    <div>
-                                        <a v-bind:href="'./book_detail.html?bookId=' + book.id">
-                                            <img class="book_cover" 
-                                                v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
+                                    <div class="random_book_item_content">
+                                        <a class="random_book_cover_link" 
+                                           v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                            <img class="random_book_cover" 
+                                                 v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
                                         </a>
-                                        <a class="book_name"
-                                        v-bind:href="'./book_detail.html?bookId=' + book.id">
-                                        {{book.name}}
+                                        <a class="random_book_name small_font_size primary_color ellipses_text_singleline link"
+                                           v-bind:href="'./book_detail.html?bookId=' + book.id">
+                                            {{book.name}}
                                         </a>
-                                        <p class="book_author">作者: {{book.author}}</p>
+                                        <p class="random_book_author smaller_font_size detail_color ellipses_text_singleline">
+                                            作者: {{book.author}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

@@ -746,7 +746,7 @@
                     </div>
                     <!--空白页-->
                     <div class="blank_view" v-if="totalCount === 0">
-                        <a class="new_comment" href="#bottom">
+                        <a class="new_comment" href="#bottom" v-on:click="toCommentEdit">
                             <img src="./images/edit.png"/>
                         </a>
                         <p>快来说两句，抢沙发</p>
