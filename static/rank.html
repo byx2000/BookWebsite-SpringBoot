@@ -12,30 +12,8 @@
         <style>
             .rank_class
             {
-                font-size: 26px;
-                color: #212121;
-                width: fit-content;
-                margin: 0 auto;
                 margin-bottom: 10px;
                 margin-top: 40px;
-            }
-
-            .rank_decorate
-            {
-                font-size: 12px;
-                color: #9e9e9e;
-                line-height: 12px;
-                width: fit-content;
-                margin: 0 auto;
-            }
-
-            .line
-            {
-                display: inline-block;
-                width: 21px;
-                height: 1px;
-                background: #9e9e9e;
-                margin-bottom: 3px;
             }
 
             .rank_content
@@ -43,7 +21,7 @@
                 background-color: #fff;
                 margin-top: 36px;
                 display: flex;
-                padding: 38px 24px 24px 24px;
+                padding: 38px 0 24px 0;
             }
 
             .max_score_rank
@@ -51,7 +29,8 @@
                 flex: 0 0 33.3%;
                 width: 0;
                 border-right: 1px solid #f0f0f0;
-                padding-right: 24px;
+                padding-left: 30px;
+                padding-right: 30px;
             }
 
             .most_popular_rank
@@ -59,21 +38,20 @@
                 flex: 0 0 33.3%;
                 width: 0;
                 border-right: 1px solid #f0f0f0;
-                padding-left: 24px;
-                padding-right: 24px;
+                padding-left: 30px;
+                padding-right: 30px;
             }
 
             .latest_update_rank
             {
                 flex: 0 0 33.3%;
                 width: 0;
-                padding-left: 24px;
+                padding-left: 30px;
+                padding-right: 30px;
             }
 
             .rank_name1, .rank_name2, .rank_name3
             {
-                font-size: 18px;
-                color: #212121;
                 padding-left: 10px;
                 margin-bottom: 15px;
             }
@@ -109,8 +87,6 @@
             .no
             {
                 width: 10px;
-                font-size: 12px;
-                color: #9e9e9e;
                 margin-right: 16px;
             }
 
@@ -128,37 +104,6 @@
                 flex-direction: column;
                 justify-content: space-between;
                 margin-left: 18px;
-            }
-
-            .book_name
-            {
-                font-size: 14px;
-                color: #212121;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-
-            .book_name:hover
-            {
-                cursor: pointer;
-                color: #f26552;
-            }
-
-            .book_author, .book_score, .book_description, .book_popular, .book_update_time
-            {
-                font-size: 12px;
-                color: #9e9e9e;
-                display: flex;
-                align-items: center;
-            }
-
-            .book_author
-            {
-                display: inline-block;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
             }
 
             .book_popular::before
@@ -185,13 +130,9 @@
 
             .book_description
             {
-                height: 48px;
-                line-height: 16px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
+                height: 60px;
+                line-height: 20px;
                 -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
             }
         </style>
     </head>
@@ -200,68 +141,100 @@
         <div id="content">
             <div id="rank">
                 <div v-for="(rankName, iRank) in rankNames">
-                    <p class="rank_class">{{rankName}}排行榜</p>
+                    <p class="rank_class larger_font_size primary_color center_content">
+                        {{rankName}}排行榜
+                    </p>
                     <div class="rank_content">
                         <!--最高得分排行榜-->
                         <div class="max_score_rank">
-                            <p class="rank_name1">最高得分</p>
+                            <p class="rank_name1 medium_font_size primary_color">
+                                最高得分
+                            </p>
                             <div class="book_item" 
                                  v-for="(book, iBook) in maxScoreRanks[iRank]">
-                                <p class="no">{{iBook + 1}}</p>
+                                <p class="no smaller_font_size detail_color">
+                                    {{iBook + 1}}
+                                </p>
                                 <a v-bind:href="'./book_detail.html?bookId=' + book.id">
                                     <img class="book_cover" 
                                          v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
                                 </a>
                                 <div class="book_detail">
-                                    <a class="book_name"
+                                    <a class="book_name small_font_size primary_color ellipses_text_singleline link"
                                        v-bind:href="'./book_detail.html?bookId=' + book.id">
                                         {{book.name}}
                                     </a>
-                                    <p class="book_author">{{book.author}}</p>
-                                    <p class="book_score">评分：{{book.score.toFixed(1)}}</p>
-                                    <p class="book_description">{{book.description}}</p>
+                                    <p class="book_author smaller_font_size detail_color ellipses_text_singleline">
+                                        {{book.author}}
+                                    </p>
+                                    <p class="book_score smaller_font_size detail_color ellipses_text_singleline">
+                                        评分：{{book.score.toFixed(1)}}
+                                    </p>
+                                    <p class="book_description smaller_font_size detail_color ellipses_text_multiline">
+                                        {{book.description}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <!--最高热度排行榜-->
                         <div class="most_popular_rank">
-                            <p class="rank_name2">最高人气</p>
+                            <p class="rank_name2 medium_font_size primary_color">
+                                最高人气
+                            </p>
                             <div class="book_item" 
                                  v-for="(book, iBook) in maxHeatRanks[iRank]">
-                                <p class="no">{{iBook + 1}}</p>
+                                <p class="no smaller_font_size detail_color">
+                                    {{iBook + 1}}
+                                </p>
                                 <a v-bind:href="'./book_detail.html?bookId=' + book.id">
                                     <img class="book_cover" 
                                          v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
                                 </a>
                                 <div class="book_detail">
-                                    <a class="book_name"
+                                    <a class="book_name small_font_size primary_color ellipses_text_singleline link"
                                        v-bind:href="'./book_detail.html?bookId=' + book.id">
                                         {{book.name}}
                                     </a>
-                                    <p class="book_author">{{book.author}}</p>
-                                    <p class="book_popular">{{book.heat}}</p>
-                                    <p class="book_description">{{book.description}}</p>
+                                    <p class="book_author smaller_font_size detail_color ellipses_text_singleline">
+                                        {{book.author}}
+                                    </p>
+                                    <p class="book_popular smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                                        {{book.heat}}
+                                    </p>
+                                    <p class="book_description smaller_font_size detail_color ellipses_text_multiline">
+                                        {{book.description}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <!--最近更新排行榜-->
                         <div class="latest_update_rank">
-                            <p class="rank_name3">最近更新</p>
+                            <p class="rank_name3 medium_font_size primary_color">
+                                最近更新
+                            </p>
                             <div class="book_item" 
                                  v-for="(book, iBook) in latestUpdateRanks[iRank]">
-                                <p class="no">{{iBook + 1}}</p>
+                                <p class="no smaller_font_size detail_color">
+                                    {{iBook + 1}}
+                                </p>
                                 <a v-bind:href="'./book_detail.html?bookId=' + book.id">
                                     <img class="book_cover" 
                                          v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
                                 </a>
                                 <div class="book_detail">
-                                    <a class="book_name"
+                                    <a class="book_name small_font_size primary_color ellipses_text_singleline link"
                                        v-bind:href="'./book_detail.html?bookId=' + book.id">
                                         {{book.name}}
                                     </a>
-                                    <p class="book_author">{{book.author}}</p>
-                                    <p class="book_update_time">{{book.updateTime.substring(0, 10)}}</p>
-                                    <p class="book_description">{{book.description}}</p>
+                                    <p class="book_author smaller_font_size detail_color ellipses_text_singleline">
+                                        {{book.author}}
+                                    </p>
+                                    <p class="book_update_time smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                                        {{book.updateTime.substring(0, 10)}}
+                                    </p>
+                                    <p class="book_description smaller_font_size detail_color ellipses_text_multiline">
+                                        {{book.description}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
