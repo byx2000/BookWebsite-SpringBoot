@@ -12,6 +12,8 @@
         <script src="./scripts/parameter.js"></script>
         <script src="./scripts/BookFilterViewModel.js"></script>
         <style>
+            /*条件过滤组件*/
+
             .filter
             {
                 background-color: white;
@@ -22,7 +24,7 @@
             .filter_label
             {
                 font-size: 12px;
-                color: rgb(204, 204, 204);;
+                color: #999999;
             }
 
             .filter_tag_list
@@ -80,7 +82,7 @@
             .tag_normal
             {
                 background-color: white;
-                color: rgb(158, 158, 158);
+                color: #999999;
                 border: 1px solid white;
             }
 
@@ -92,11 +94,12 @@
                 color: white;
             }
 
+            /*电子书列表*/
+
             .book_list
             {
                 background-color: white;
                 width: 100%;
-                /*margin-top: 40px;*/
                 padding: 30px 35px;
                 display: flex;
                 flex-wrap: wrap;
@@ -127,39 +130,8 @@
                 flex: 1;
             }
 
-            .book_name
-            {
-                margin: 0;
-                padding: 0;
-                color: black;
-                font-size: 14px;
-                border-bottom: 1px solid #f0f0f0;
-                padding-bottom: 10px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .book_name:hover
-            {
-                color: #f26552;
-            }
-
-            .book_author
-            {
-                margin: 0;
-                color: #9e9e9e;
-                font-size: 12px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
             .book_like_count
             {
-                margin: 0;
-                color: #9e9e9e;
-                font-size: 12px;
                 background: url(./images/like_gray.png);
                 background-size: 16px 100%;
                 background-repeat: no-repeat;
@@ -169,50 +141,28 @@
 
             .book_description
             {
-                margin: 0;
                 height: 60px;
                 line-height: 20px;
-                color: #9e9e9e;
-                font-size: 12px;
-                text-align: justify;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
                 -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
             }
+
+            /*统计数据*/
 
             .statistic
             {
                 background: transparent;
                 display: flex;
                 justify-content: flex-start;
-                padding-top: 23px;
-                padding-bottom: 6px;
+                padding-top: 30px;
+                padding-bottom: 10px;
             }
 
             .total_count, .total_page, .current_page
             {
-                font-size: 12px;
-                color: #9e9e9e;
-                line-height: 36px;
-                text-align: center;
-            }
-
-            .total_count
-            {
                 margin-right: 20px;
             }
 
-            .total_page
-            {
-                margin-right: 20px;
-            }
-
-            .current_page
-            {
-                padding: 0;
-            }
+            /*分页组件*/
 
             .page_switch
             {
@@ -279,9 +229,15 @@
 
                 <!--统计信息-->
                 <div class="statistic">
-                    <p class="total_count">共 {{totalCount}} 条数据</p>
-                    <p class="total_page">共 {{totalPage}} 页</p>
-                    <p class="current_page">当前第 {{currentPage}} 页</p>
+                    <p class="total_count medium_font_size primary_color">
+                        共 <span class="bold">{{totalCount}}</span> 条数据
+                    </p>
+                    <p class="total_page medium_font_size primary_color">
+                        共 <span class="bold">{{totalPage}}</span> 页
+                    </p>
+                    <p class="current_page medium_font_size primary_color">
+                        当前第 <span class="bold">{{currentPage}}</span> 页
+                    </p>
                 </div>
 
                 <!--图书列表-->
@@ -291,10 +247,19 @@
                             <img class="book_cover" v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
                         </a>
                         <div class="book_detail">
-                            <a class="book_name" v-bind:href="'./book_detail.html?bookId=' + book.id">{{book.name}}</a>
-                            <p class="book_author">{{book.author}}</p>
-                            <p class="book_like_count">{{book.likeCount}}</p>
-                            <p class="book_description">{{book.description}}</p>
+                            <a class="book_name small_font_size primary_color ellipses_text_singleline link" 
+                               v-bind:href="'./book_detail.html?bookId=' + book.id">
+                               {{book.name}}
+                            </a>
+                            <p class="book_author smaller_font_size detail_color ellipses_text_singleline">
+                                {{book.author}}
+                            </p>
+                            <p class="book_like_count smaller_font_size detail_color ellipses_text_singleline">
+                                {{book.likeCount}}
+                            </p>
+                            <p class="book_description smaller_font_size detail_color ellipses_text_multiline">
+                                {{book.description}}
+                            </p>
                         </div>
                     </div>
                 </div>

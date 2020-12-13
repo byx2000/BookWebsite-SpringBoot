@@ -59,14 +59,24 @@ a
     color: #212121;
 }
 
+.normal_color
+{
+    color: #666666;
+}
+
 .detail_color
 {
-    color: #9e9e9e;
+    color: #999999;
 }
 
 .white_color
 {
     color: white;
+}
+
+.bold
+{
+    font-weight: bold;
 }
 
 .ellipses_text_singleline
