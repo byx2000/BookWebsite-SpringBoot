@@ -19,6 +19,7 @@
                 background-color: white;
                 width: 100%;
                 padding: 18px 46px;
+                margin-bottom: 40px;
             }
 
             .filter_label
@@ -153,7 +154,6 @@
                 background: transparent;
                 display: flex;
                 justify-content: flex-start;
-                padding-top: 30px;
                 padding-bottom: 10px;
             }
 
@@ -169,6 +169,25 @@
                 margin-top: 22px;
                 display: flex;
                 justify-content: center;
+            }
+
+            /*空视图*/
+            .empty_view
+            {
+                background-color: white;
+                padding: 50px 0;
+            }
+
+            .empty_img
+            {
+                height: 150px;
+            }
+
+            .empty_text
+            {
+                margin-top: 20px;
+                font-size: 20px;
+                color: #999999;
             }
         </style>
     </head>
@@ -228,20 +247,20 @@
                 </div>
 
                 <!--统计信息-->
-                <div class="statistic">
-                    <p class="total_count medium_font_size primary_color">
+                <div class="statistic" v-if="totalPage > 1">
+                    <p class="total_count smaller_font_size detail_color">
                         共 <span class="bold">{{totalCount}}</span> 条数据
                     </p>
-                    <p class="total_page medium_font_size primary_color">
+                    <p class="total_page smaller_font_size detail_color">
                         共 <span class="bold">{{totalPage}}</span> 页
                     </p>
-                    <p class="current_page medium_font_size primary_color">
+                    <p class="current_page smaller_font_size detail_color">
                         当前第 <span class="bold">{{currentPage}}</span> 页
                     </p>
                 </div>
 
                 <!--图书列表-->
-                <div class="book_list">
+                <div class="book_list" v-if="books.length > 0">
                     <div class="book_info" v-for="book in books">
                         <a v-bind:href="'./book_detail.html?bookId=' + book.id">
                             <img class="book_cover" v-bind:src="'./upload/cover/' + book.id + '.jpg'"/>
@@ -261,6 +280,14 @@
                                 {{book.description}}
                             </p>
                         </div>
+                    </div>
+                </div>
+
+                <!--空白视图-->
+                <div class="empty_view center_content" v-if="books.length === 0">
+                    <div>
+                        <img class="empty_img center_content" src="./images/empty.png"/>
+                        <p class="empty_text center_content">暂时没有内容</p>
                     </div>
                 </div>
 
