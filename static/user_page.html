@@ -231,6 +231,21 @@
                 height: 60px;
                 -webkit-line-clamp: 3;
             }
+
+            /*空视图*/
+            .empty_view
+            {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .empty_text
+            {
+                margin-top: 20px;
+            }
         </style>
     </head>
     <body>
@@ -260,7 +275,8 @@
                 <!--评论-->
                 <div class="my_comments"
                     v-if="selectedTabIndex === 0">
-                    <p class="count medium_font_size primary_color">
+                    <p class="count medium_font_size primary_color"
+                       v-if="totalPage >= 1">
                         共 <span class="bold">{{totalCount}}</span> 条评论，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
                     </p>
                     <!--评论列表项-->
@@ -281,12 +297,18 @@
                         </p>
                         <a class="delete_comment button" v-on:click="deleteComment(commentAndBook[0].id)">删除评论</a>
                     </div>
+                    <!--评论空视图-->
+                    <div class="empty_view" v-if="totalCount === 0">
+                        <img class="empty_img" src="./images/no_comment.png"/>
+                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">您还未发表任何评论</p>
+                    </div>
                 </div>
 
                 <!--收藏-->
                 <div class="my_favorites"
                     v-if="selectedTabIndex === 1">
-                    <p class="count medium_font_size primary_color">
+                    <p class="count medium_font_size primary_color"
+                       v-if="totalPage >= 1">
                         共 <span class="bold">{{totalCount}}</span> 条收藏，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
                     </p>
                     <!--收藏列表项-->
@@ -316,6 +338,11 @@
                                 {{favoriteAndBook[1].description}}
                             </p>
                         </div>
+                    </div>
+                    <!--收藏空视图-->
+                    <div class="empty_view" v-if="totalCount === 0">
+                        <img class="empty_img" src="./images/no_favorite.png"/>
+                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">您还没有收藏任何电子书</p>
                     </div>
                 </div>
 
