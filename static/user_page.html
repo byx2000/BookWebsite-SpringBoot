@@ -22,6 +22,7 @@
 
             #content .user_info
             {
+                width: 223px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -79,10 +80,9 @@
 
             .tab_content
             {
-                /* background-color: white; */
                 margin-left: 30px;
-                /* padding: 30px; */
-                flex: 1;
+                flex-grow: 1;
+                width: 0;
             }
 
             .my_comments, .my_favorites, .my_likes
@@ -113,57 +113,33 @@
             {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 11px;
+                align-items: center;
+                margin-bottom: 15px;
             }
 
-            .book_name
+            .comment_book_name
             {
-                font-size: 16px;
-                color: #000000;
-                max-width: 450px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .book_name:hover
-            {
-                cursor: pointer;
-                color: #f26552;
-            }
-
-            .comment_time
-            {
-                font-size: 12px;
-                color: #9e9e9e;
+                flex-grow: 1;
+                margin-right: 30px;
             }
 
             .comment_content
             {
-                font-size: 14px;
-                color: #9e9e9e;
-                text-align: justify;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                /*height: 60px;
-                line-height: 20px;*/
-                margin-bottom: 11px;
+                line-height: 22px;
+                margin-bottom: 15px;
             }
 
-            .delete
+            .favorite_book_name
             {
-                align-self: flex-end;
-                width: 70px;
-                height: 30px;
-                background-color: #f26552;
+                flex-grow: 1;
+                margin-right: 30px;
+            }
+
+            .delete_comment
+            {
                 color: white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 14px;
+                background-color: #f26552;
+                align-self: flex-end;
             }
 
             .delete:hover
@@ -173,16 +149,9 @@
 
             .count
             {
-                color: #383b43;
-                font-size: 18px;
                 padding-bottom: 10px;
                 border-bottom: 2px solid #f26552;
                 margin-bottom: 32px;
-            }
-
-            .strong
-            {
-                font-weight: bold;
             }
 
             .page_switch
@@ -208,7 +177,7 @@
                 border-bottom: none;
             }
 
-            .book_cover
+            .favorite_book_cover
             {
                 width: 104px;
                 height: 138px;
@@ -216,7 +185,8 @@
 
             .book_detail
             {
-                width: 100%;
+                flex-grow: 1;
+                width: 0;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -227,47 +197,27 @@
             {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 10px;
-            }
-
-            .book_name
-            {
-                display: inline-block;
-                font-size: 18px;
-                color: #333333;
-                max-width: 400px;
-            }
-
-            .favorite_time
-            {
-                font-size: 12px;
-                color: #999999;
+                align-items: center;
+                margin-bottom: 15px;
             }
 
             .name_and_cancel
             {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 margin-bottom: 10px;
             }
 
-            .book_author
+            .favorite_book_author
             {
-                font-size: 12px;
-                color: #999999;
+                margin-right: 30px;
             }
 
             .cancel_favorite
             {
-                display: inline-block;
-                font-size: 14px;
                 color: white;
-                width: 80px;
-                height: 30px;
                 background-color: #f26552;
-                display: flex;
-                justify-content: center;
-                align-items: center;
             }
 
             .cancel_favorite:hover
@@ -275,18 +225,11 @@
                 cursor: pointer;
             }
 
-            .book_description
+            .favorite_book_description
             {
-                font-size: 12px;
-                color: #666666;
-                text-align: justify;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
                 line-height: 20px;
                 height: 60px;
+                -webkit-line-clamp: 3;
             }
         </style>
     </head>
@@ -317,50 +260,61 @@
                 <!--评论-->
                 <div class="my_comments"
                     v-if="selectedTabIndex === 0">
-                    <p class="count">
-                        共 <span class="strong">{{totalCount}}</span> 条评论，共 <span class="strong">{{totalPage}}</span> 页，当前第 <span class="strong">{{currentPage}}</span> 页
+                    <p class="count medium_font_size primary_color">
+                        共 <span class="bold">{{totalCount}}</span> 条评论，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
                     </p>
                     <!--评论列表项-->
                     <div class="comment_item"
                             v-for="(commentAndBook, index) in commentsAndBooks">
                         <div class="name_and_content">
-                            <a class="book_name"
+                            <a class="comment_book_name medium_font_size primary_color ellipses_text_singleline link"
                                 v-if="commentAndBook[1] !== null && commentAndBook[1] !== undefined"
                                 v-bind:href="'./book_detail.html?bookId=' + commentAndBook[1].id">
                                 {{commentAndBook[1].name}}
                             </a>
-                            <p class="comment_time">发表时间：{{commentAndBook[0].time}}</p>
+                            <p class="comment_time small_font_size detail_color singleline">
+                                发表时间：{{commentAndBook[0].time}}
+                            </p>
                         </div>
-                        <p class="comment_content">{{commentAndBook[0].content}}</p>
-                        <a class="delete" v-on:click="deleteComment(commentAndBook[0].id)">删除</a>
+                        <p class="comment_content small_font_size normal_color justify">
+                            {{commentAndBook[0].content}}
+                        </p>
+                        <a class="delete_comment button" v-on:click="deleteComment(commentAndBook[0].id)">删除评论</a>
                     </div>
                 </div>
 
                 <!--收藏-->
                 <div class="my_favorites"
                     v-if="selectedTabIndex === 1">
-                    <p class="count">
-                        共 <span class="strong">{{totalCount}}</span> 条收藏，共 <span class="strong">{{totalPage}}</span> 页，当前第 <span class="strong">{{currentPage}}</span> 页
+                    <p class="count medium_font_size primary_color">
+                        共 <span class="bold">{{totalCount}}</span> 条收藏，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
                     </p>
                     <!--收藏列表项-->
                     <div class="favorite_item" v-for="(favoriteAndBook, index) in favoritesAndBooks">
                         <a v-bind:href="'./book_detail.html?bookId=' + favoriteAndBook[1].id">
-                            <img class="book_cover" v-bind:src="'./upload/cover/' + favoriteAndBook[1].id + '.jpg'"/>
+                            <img class="favorite_book_cover" v-bind:src="'./upload/cover/' + favoriteAndBook[1].id + '.jpg'"/>
                         </a>
                         <div class="book_detail">
                             <div>
                                 <div class="name_and_time">
-                                    <a class="book_name" v-bind:href="'./book_detail.html?bookId=' + favoriteAndBook[1].id">
+                                    <a class="favorite_book_name medium_font_size primary_color ellipses_text_singleline link" 
+                                       v-bind:href="'./book_detail.html?bookId=' + favoriteAndBook[1].id">
                                         {{favoriteAndBook[1].name}}
                                     </a>
-                                    <p class="favorite_time">收藏时间：{{favoriteAndBook[0].time.substring(0, 11)}}</p>
+                                    <p class="favorite_time small_font_size detail_color singleline">
+                                        收藏时间：{{favoriteAndBook[0].time.substring(0, 11)}}
+                                    </p>
                                 </div>
                                 <div class="name_and_cancel">
-                                    <p class="book_author">作者：{{favoriteAndBook[1].author}}</p>
-                                    <a class="cancel_favorite" v-on:click="unfavorite(favoriteAndBook[1].id)">取消收藏</a>
+                                    <p class="favorite_book_author small_font_size detail_color ellipses_text_singleline">
+                                        作者：{{favoriteAndBook[1].author}}
+                                    </p>
+                                    <a class="cancel_favorite button" v-on:click="unfavorite(favoriteAndBook[1].id)">取消收藏</a>
                                 </div>
                             </div>
-                            <p class="book_description">{{favoriteAndBook[1].description}}</p>
+                            <p class="favorite_book_description small_font_size normal_color ellipses_text_multiline">
+                                {{favoriteAndBook[1].description}}
+                            </p>
                         </div>
                     </div>
                 </div>

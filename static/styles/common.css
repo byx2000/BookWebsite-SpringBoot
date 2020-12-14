@@ -123,3 +123,22 @@ a
     display: flex;
     align-items: center;
 }
+
+.button
+{
+    width: fit-content;
+    height: fit-content;
+    display: inline-block;
+    font-size: 14px;
+    padding: 7px 10px;
+    white-space: nowrap;
+    background-color: #f26552;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover
+{
+    cursor: pointer;
+}
