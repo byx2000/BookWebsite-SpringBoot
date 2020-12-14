@@ -174,20 +174,16 @@
             /*空视图*/
             .empty_view
             {
-                background-color: white;
-                padding: 50px 0;
-            }
-
-            .empty_img
-            {
-                height: 150px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
             .empty_text
             {
                 margin-top: 20px;
-                font-size: 20px;
-                color: #999999;
             }
         </style>
     </head>
@@ -284,11 +280,9 @@
                 </div>
 
                 <!--空白视图-->
-                <div class="empty_view center_content" v-if="books.length === 0">
-                    <div>
-                        <img class="empty_img center_content" src="./images/empty.png"/>
-                        <p class="empty_text center_content">暂时没有内容</p>
-                    </div>
+                <div class="empty_view" v-if="totalCount === 0">
+                    <img class="empty_img" src="./images/no_book.png"/>
+                    <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">暂时没有内容</p>
                 </div>
 
                 <!--分页组件-->
