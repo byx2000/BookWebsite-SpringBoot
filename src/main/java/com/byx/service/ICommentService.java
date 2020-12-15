@@ -21,11 +21,13 @@ public interface ICommentService
     /**
      * 查找用户的所有评论及其对应的电子书信息
      * @param userId 用户id
+     * @param bookName 书名搜索关键词
+     * @param commentContent 评论内容搜索关键词
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据，每个列表项格式为[Comment, Book]
      */
-    PageBean<List<Object>> queryCommentsOfUser(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, int pageSize, int currentPage);
 
     /**
      * 发表评论

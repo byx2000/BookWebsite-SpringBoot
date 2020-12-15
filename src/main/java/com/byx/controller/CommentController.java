@@ -37,15 +37,21 @@ public class CommentController extends BaseController
      * 查询当前用户的所有评论及其对应的电子书信息
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
+     * @param bookName 书名搜索关键词
+     * @param commentContent 评论内容搜索关键词
      * @return 分页数据
      */
     @RequestMapping("query_of_user")
     @RequireLogin
     public ResultInfo query(@NotNull Integer pageSize,
-                            @NotNull Integer currentPage)
+                            @NotNull Integer currentPage,
+                            String bookName,
+                            String commentContent)
     {
+        if (bookName == null) bookName = "";
+        if (commentContent == null) commentContent = "";
         return ResultInfo.success(commentService.queryCommentsOfUser(
-                getCurrentUser().getId(), pageSize, currentPage));
+                getCurrentUser().getId(), bookName, commentContent, pageSize, currentPage));
     }
 
     /**
