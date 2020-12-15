@@ -26,7 +26,6 @@
             flex: 1;
             display: flex;
             justify-content: center;
-            /*align-items: center;*/
         }
 
         #login
@@ -38,6 +37,7 @@
 
         .logo
         {
+            width: 100%;
             margin-bottom: 50px;
         }
 
@@ -103,16 +103,55 @@
         .login_button:hover
         {
             background-color: #0b98bd;
+            cursor: pointer;
         }
 
         .file_choose_holder
         {
+            display: flex;
+            align-items: center;
             margin-bottom: 20px;
+            font-size: 14px;
+            color: #333333;
         }
 
-        .file_choose
+        .file_choose_button
         {
-            width: 200px;
+            background-color: #90c31f;
+            width: 80px;
+            height: 35px;
+            overflow: hidden;
+            color: white;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .file_choose_button:hover
+        {
+            cursor: pointer;
+        }
+
+        .file_choose_button input
+        {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        #choose_avatar_preview
+        {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+
+        #choose_avatar_preview:not([src])
+        {
+            opacity: 0;
         }
     </style>
 </head>
@@ -130,7 +169,12 @@
                 <input class="nickname" type="text" placeholder="请输入昵称" v-model="nickname"/>
             </div>
             <div class="file_choose_holder">
-                头像：<input class="file_choose" type="file" accept="image/jpeg" name="avatar" value="选择图片" v-on:change="fileChange($event)"/>
+                用户头像：
+                <label class="file_choose_button">
+                    <span>选择图片</span>
+                    <input type="file" accept="image/jpeg" name="avatar" value="选择图片" v-on:change="fileChange($event)"/>
+                </label>
+                <img id="choose_avatar_preview"/>
             </div>
             <input class="login_button" type="submit" value="注册" v-on:click="register"/>
         </div>

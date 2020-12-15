@@ -12,10 +12,23 @@ $(function()
             },
             methods:
             {
+                // 文件选择改变时触发
                 fileChange: function(e)
                 {
-                    this.avatar = e.target.files[0];
+                    if (e.target.files.length > 0)
+                    {
+                        this.avatar = e.target.files[0];
+
+                        // 设置预览图
+                        let reads= new FileReader();
+                        reads.readAsDataURL(this.avatar);
+                        reads.onload = function()
+                        {
+                            document.getElementById("choose_avatar_preview").src = this.result;
+                        };
+                    }
                 },
+                // 点击登录按钮
                 register: function()
                 {
                     if (this.username.trim() === "")
