@@ -5,10 +5,10 @@ $(function()
             el: "#content",
             data:
             {
-                tabNames: ["我的评论", "我的收藏", "我的点赞"],
+                tabNames: ["我的评论", "我的收藏", "我的书签"],
                 tabLinks: ["./user_page.html?tab=my_comments&currentPage=1", 
                            "./user_page.html?tab=my_favorites&currentPage=1", 
-                           "./user_page.html?tab=my_likes&currentPage=1"],
+                           "./user_page.html?tab=my_bookmarks&currentPage=1"],
                 selectedTabIndex: 0,
                 currentPage: 1,
                 totalPage: 0,
@@ -17,6 +17,7 @@ $(function()
                 user: null,
                 commentsAndBooks: [],
                 favoritesAndBooks: [],
+                bookmarksAndBooks: [],
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -26,7 +27,7 @@ $(function()
                     else if (this.selectedTabIndex === 1)
                         url += "my_favorites";
                     else
-                        url += "my_likes";
+                        url += "my_bookmarks";
                     
                     url += "&currentPage=" + String(page);
 
@@ -125,6 +126,20 @@ $(function()
                         .then(pageBean =>
                         {
                             app.favoritesAndBooks = pageBean.data;
+                            app.totalPage = pageBean.totalPage;
+                            app.totalCount = pageBean.totalCount;
+                            app.pagePreview = pageBean.pagePreview;
+                        });
+                }
+                // 当前处于“我的书签”标签页
+                else
+                {
+                    // 获取当前用户的所有书签
+                    request(BOOKMARK_QUERY_URL, { pageSize: 10, currentPage: this.currentPage })
+                        .then(pageBean =>
+                        {
+                            console.log(JSON.stringify(pageBean.data, null, 2));
+                            app.bookmarksAndBooks = pageBean.data;
                             app.totalPage = pageBean.totalPage;
                             app.totalCount = pageBean.totalCount;
                             app.pagePreview = pageBean.pagePreview;

@@ -85,20 +85,19 @@
                 width: 0;
             }
 
-            .my_comments, .my_favorites, .my_likes
+            .my_comments, .my_favorites, .my_bookmarks
             {
                 background-color: white;
                 padding: 30px;
-                margin-bottom: 32px;
+                /* margin-bottom: 32px; */
             }
 
             .comment_item
             {
                 width: 100%;
-                margin-bottom: 32px;
                 display: flex;
                 flex-direction: column;
-                padding-bottom: 10px;
+                padding: 28px 0;
                 border-bottom: 1px solid #f0f0f0;
             }
 
@@ -151,12 +150,13 @@
             {
                 padding-bottom: 10px;
                 border-bottom: 2px solid #f26552;
-                margin-bottom: 32px;
+                /* margin-bottom: 32px; */
             }
 
             .page_switch
             {
                 justify-content: center;
+                margin-top: 32px;
             }
 
             .favorite_item
@@ -245,6 +245,67 @@
             {
                 margin-top: 20px;
             }
+
+            /*书签*/
+            .bookmark_item
+            {
+                display: flex;
+                padding: 28px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .bookmark_item:last-child
+            {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            
+            .bookmark_book_cover
+            {
+                width: 104px;
+                height: 138px;
+            }
+
+            .bookmark_book_detail
+            {
+                flex-grow: 1;
+                width: 0;
+                margin-left: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bookmark_book_name
+            {
+                margin-bottom: 15px;
+            }
+
+            .bookmark_chapter_and_delete
+            {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            .bookmark_book_chapter
+            {
+                margin-right: 30px;
+            }
+
+            .bookmark_delete
+            {
+                background-color: #f26552;
+                color: white;
+            }
+
+            .bookmark_book_description
+            {
+                line-height: 20px;
+                height: 60px;
+                -webkit-line-clamp: 3;
+            }
         </style>
     </head>
     <body>
@@ -274,6 +335,7 @@
                 <!--评论-->
                 <div class="my_comments"
                     v-if="selectedTabIndex === 0">
+                    <!--统计信息-->
                     <p class="count medium_font_size primary_color"
                        v-if="totalPage >= 1">
                         共 <span class="bold">{{totalCount}}</span> 条评论，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
@@ -306,6 +368,7 @@
                 <!--收藏-->
                 <div class="my_favorites"
                     v-if="selectedTabIndex === 1">
+                    <!--统计信息-->
                     <p class="count medium_font_size primary_color"
                        v-if="totalPage >= 1">
                         共 <span class="bold">{{totalCount}}</span> 条收藏，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
@@ -345,10 +408,39 @@
                     </div>
                 </div>
 
-                <!--点赞-->
-                <div class="my_likes"
+                <!--书签-->
+                <div class="my_bookmarks"
                     v-if="selectedTabIndex === 2">
-                    我的点赞
+                    <!--统计信息-->
+                    <p class="count medium_font_size primary_color"
+                       v-if="totalPage >= 1">
+                        共 <span class="bold">{{totalCount}}</span> 条书签，共 <span class="bold">{{totalPage}}</span> 页，当前第 <span class="bold">{{currentPage}}</span> 页
+                    </p>
+                    <!--书签空视图-->
+                    <div class="empty_view" v-if="totalCount === 0">
+                        <img class="empty_img" src="./images/no_bookmark.png"/>
+                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">您还未添加任何书签</p>
+                    </div>
+                    <!--书签列表项-->
+                    <div class="bookmark_item" v-for="(bookmarkAndBook, index) in bookmarksAndBooks">
+                        <a v-bind:href="'./book_detail.html?bookId=' + bookmarkAndBook[1].id">
+                            <img class="bookmark_book_cover" v-bind:src="'./upload/cover/' + bookmarkAndBook[1].id + '.jpg'"/>
+                        </a>
+                        <div class="bookmark_book_detail">
+                            <a class="bookmark_book_name medium_font_size primary_color link ellipses_text_singleline">
+                                {{bookmarkAndBook[1].name}}
+                            </a>
+                            <div class="bookmark_chapter_and_delete">
+                                <p class="bookmark_book_chapter small_font_size detail_color ellipses_text_singleline">
+                                    第{{bookmarkAndBook[0].chapter}}章
+                                </p>
+                                <a class="bookmark_delete button">删除书签</a>
+                            </div>
+                            <p class="bookmark_book_description small_font_size normal_color ellipses_text_multiline">
+                                {{bookmarkAndBook[1].description}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <!--分页组件-->

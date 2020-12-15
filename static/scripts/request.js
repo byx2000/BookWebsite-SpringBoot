@@ -49,3 +49,4 @@ var GET_CONTENTS_URL = "chapter/contents";
 var ADD_BOOKMARK_URL = "bookmark/add";
 var REMOVE_BOOKMARK_URL = "bookmark/remove";
 var IS_BOOKMARK_URL = "bookmark/is_bookmark";
+var BOOKMARK_QUERY_URL = "bookmark/query";
