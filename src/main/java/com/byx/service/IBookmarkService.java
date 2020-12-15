@@ -38,5 +38,5 @@ public interface IBookmarkService
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    PageBean<List<Object>> queryBookmarksAndBooksAndChaptersByUserId(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryBookmarksOfUser(int userId, int pageSize, int currentPage);
 }

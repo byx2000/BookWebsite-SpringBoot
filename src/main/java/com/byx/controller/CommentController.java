@@ -30,7 +30,7 @@ public class CommentController extends BaseController
                             @NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        return ResultInfo.success(commentService.queryCommentsAndUsersByBookId(bookId, pageSize, currentPage));
+        return ResultInfo.success(commentService.queryCommentsOfBook(bookId, pageSize, currentPage));
     }
 
     /**
@@ -44,7 +44,7 @@ public class CommentController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        return ResultInfo.success(commentService.queryCommentsAndBooksByUserId(
+        return ResultInfo.success(commentService.queryCommentsOfUser(
                 getCurrentUser().getId(), pageSize, currentPage));
     }
 

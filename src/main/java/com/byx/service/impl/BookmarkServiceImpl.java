@@ -66,7 +66,7 @@ public class BookmarkServiceImpl implements IBookmarkService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryBookmarksAndBooksAndChaptersByUserId(int userId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryBookmarksOfUser(int userId, int pageSize, int currentPage)
     {
         // 获取书签列表
         PageBean<Bookmark> bookmarkPageBean = bookmarkDao.queryByPage(

@@ -34,7 +34,7 @@ public class FavoriteController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        PageBean<List<Object>> pageBean = favoriteService.queryFavoritesAndBooksByUserId(
+        PageBean<List<Object>> pageBean = favoriteService.queryFavoritesOfUser(
                 getCurrentUser().getId(), pageSize, currentPage);
         return ResultInfo.success(pageBean);
     }

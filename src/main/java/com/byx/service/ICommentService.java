@@ -16,7 +16,7 @@ public interface ICommentService
      * @param currentPage 当前页码
      * @return 分页数据，每个列表项格式为[Comment, User]
      */
-    PageBean<List<Object>> queryCommentsAndUsersByBookId(int bookId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryCommentsOfBook(int bookId, int pageSize, int currentPage);
 
     /**
      * 查找用户的所有评论及其对应的电子书信息
@@ -25,7 +25,7 @@ public interface ICommentService
      * @param currentPage 当前页码
      * @return 分页数据，每个列表项格式为[Comment, Book]
      */
-    PageBean<List<Object>> queryCommentsAndBooksByUserId(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryCommentsOfUser(int userId, int pageSize, int currentPage);
 
     /**
      * 发表评论

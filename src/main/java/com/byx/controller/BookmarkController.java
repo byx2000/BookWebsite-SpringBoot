@@ -70,7 +70,7 @@ public class BookmarkController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        return ResultInfo.success(bookmarkService.queryBookmarksAndBooksAndChaptersByUserId(
+        return ResultInfo.success(bookmarkService.queryBookmarksOfUser(
                 getCurrentUser().getId(), pageSize, currentPage));
     }
 }

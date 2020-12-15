@@ -36,7 +36,7 @@ public class CommentServiceImpl implements ICommentService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryCommentsAndUsersByBookId(int bookId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryCommentsOfBook(int bookId, int pageSize, int currentPage)
     {
         // 查询评论
         PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("bookId == ?", bookId)
@@ -65,7 +65,7 @@ public class CommentServiceImpl implements ICommentService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryCommentsAndBooksByUserId(int userId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryCommentsOfUser(int userId, int pageSize, int currentPage)
     {
         // 查询评论
         PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("userId == ?", userId)
