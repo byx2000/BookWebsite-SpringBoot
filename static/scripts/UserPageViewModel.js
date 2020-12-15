@@ -18,12 +18,19 @@ $(function()
                 commentsAndBooks: [],
                 favoritesAndBooks: [],
                 bookmarksAndBooksAndChapters: [],
+                bookNameKeyword: "",
+                commentContentKeyword: "",
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
 
                     if (this.selectedTabIndex === 0)
+                    {
                         url += "my_comments";
+                        url += "&bookName=" + this.bookNameKeyword;
+                        url += "&commentContent=" + this.commentContentKeyword;
+                    }
+                        
                     else if (this.selectedTabIndex === 1)
                         url += "my_favorites";
                     else
@@ -94,6 +101,11 @@ $(function()
                                 location.reload();
                             });
                     }
+                },
+                searchComment: function()
+                {
+                    // alert(this.bookNameKeyword + "\n" + this.commentContentKeyword);
+                    this.jumpTo(1);
                 }
             },
             mounted: function()
@@ -109,6 +121,12 @@ $(function()
 
                 // 从url获取页码
                 this.currentPage = Number(getUrlParameter("currentPage"));
+
+                // 从url获取搜索词
+                this.bookNameKeyword = getUrlParameter("bookName");
+                if (this.bookNameKeyword === null) this.bookNameKeyword = "";
+                this.commentContentKeyword = getUrlParameter("commentContent");
+                if (this.commentContentKeyword === null) this.commentContentKeyword = "";
 
                 // 获取当前用户信息
                 request(GET_CURRENT_USER_URL, {})
@@ -126,7 +144,13 @@ $(function()
                 if (this.selectedTabIndex === 0)
                 {
                     // 获取当前用户所有评论
-                    request(COMMENT_QUERY_OF_USER_URL, { pageSize: 10, currentPage: this.currentPage })
+                    request(COMMENT_QUERY_OF_USER_URL, 
+                        { 
+                            pageSize: 10, 
+                            currentPage: this.currentPage, 
+                            bookName: this.bookNameKeyword, 
+                            commentContent: this.commentContentKeyword 
+                        })
                         .then(pageBean =>
                         {
                             app.commentsAndBooks = pageBean.data;

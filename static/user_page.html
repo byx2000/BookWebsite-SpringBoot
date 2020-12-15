@@ -314,6 +314,26 @@
                 height: 60px;
                 -webkit-line-clamp: 3;
             }
+
+            /*搜索组件*/
+            .search_region
+            {
+                display: flex;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+
+            .keyword_edit
+            {
+                margin-right: 15px;
+            }
+
+            .search_button
+            {
+                color: white;
+                background-color: #009de1;
+                height: 35px;
+            }
         </style>
     </head>
     <body>
@@ -343,6 +363,12 @@
                 <!--评论-->
                 <div class="my_comments"
                     v-if="selectedTabIndex === 0">
+                    <!--搜索组件-->
+                    <div class="search_region">
+                        <input class="keyword_edit edit" placeholder="书名" type="text" v-model="bookNameKeyword" v-on:keyup.enter="searchComment"/>
+                        <input class="keyword_edit edit" placeholder="评论内容" type="text" v-model="commentContentKeyword" v-on:keyup.enter="searchComment"/>
+                        <a class="search_button button" v-on:click="searchComment">搜索评论</a>
+                    </div>
                     <!--统计信息-->
                     <p class="count medium_font_size primary_color"
                        v-if="totalPage >= 1">
@@ -369,7 +395,7 @@
                     <!--评论空视图-->
                     <div class="empty_view" v-if="totalCount === 0">
                         <img class="empty_img" src="./images/no_comment.png"/>
-                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">您还未发表任何评论</p>
+                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">没有评论数据</p>
                     </div>
                 </div>
 
