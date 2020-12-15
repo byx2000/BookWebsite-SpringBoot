@@ -276,9 +276,18 @@
                 justify-content: space-between;
             }
 
+            .bookmark_book_name_and_time
+            {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
             .bookmark_book_name
             {
-                margin-bottom: 15px;
+                flex-grow: 1;
+                margin-right: 30px;
             }
 
             .bookmark_chapter_and_delete
@@ -300,7 +309,7 @@
                 color: white;
             }
 
-            .bookmark_book_description
+            .bookmark_chapter_content
             {
                 line-height: 20px;
                 height: 60px;
@@ -422,22 +431,33 @@
                         <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">您还未添加任何书签</p>
                     </div>
                     <!--书签列表项-->
-                    <div class="bookmark_item" v-for="(bookmarkAndBook, index) in bookmarksAndBooks">
-                        <a v-bind:href="'./book_detail.html?bookId=' + bookmarkAndBook[1].id">
-                            <img class="bookmark_book_cover" v-bind:src="'./upload/cover/' + bookmarkAndBook[1].id + '.jpg'"/>
+                    <div class="bookmark_item" v-for="(bookmarkAndBookAndChapter, index) in bookmarksAndBooksAndChapters">
+                        <a v-on:click="toRead(bookmarkAndBookAndChapter[1].id, bookmarkAndBookAndChapter[2].chapter)"
+                           class="link">
+                            <img class="bookmark_book_cover" v-bind:src="'./upload/cover/' + bookmarkAndBookAndChapter[1].id + '.jpg'"/>
                         </a>
                         <div class="bookmark_book_detail">
-                            <a class="bookmark_book_name medium_font_size primary_color link ellipses_text_singleline">
-                                {{bookmarkAndBook[1].name}}
-                            </a>
+                            <div class="bookmark_book_name_and_time">
+                                <a v-on:click="toRead(bookmarkAndBookAndChapter[1].id, bookmarkAndBookAndChapter[2].chapter)"
+                                   class="bookmark_book_name medium_font_size primary_color link ellipses_text_singleline">
+                                    {{bookmarkAndBookAndChapter[1].name}}
+                                </a>
+                                <p class="small_font_size detail_color singleline">
+                                    添加时间：{{bookmarkAndBookAndChapter[0].time.substring(0, 11)}}
+                                </p>
+                            </div>
+                            
                             <div class="bookmark_chapter_and_delete">
                                 <p class="bookmark_book_chapter small_font_size detail_color ellipses_text_singleline">
-                                    第{{bookmarkAndBook[0].chapter}}章
+                                    第{{bookmarkAndBookAndChapter[2].chapter}}章 {{bookmarkAndBookAndChapter[2].name}}
                                 </p>
-                                <a class="bookmark_delete button">删除书签</a>
+                                <a class="bookmark_delete button"
+                                   v-on:click="deleteBookmark(bookmarkAndBookAndChapter[2].id)">
+                                    删除书签
+                                </a>
                             </div>
-                            <p class="bookmark_book_description small_font_size normal_color ellipses_text_multiline">
-                                {{bookmarkAndBook[1].description}}
+                            <p class="bookmark_chapter_content small_font_size normal_color ellipses_text_multiline">
+                                {{bookmarkAndBookAndChapter[2].content}}
                             </p>
                         </div>
                     </div>

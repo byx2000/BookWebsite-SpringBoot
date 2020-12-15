@@ -17,7 +17,7 @@ $(function()
                 user: null,
                 commentsAndBooks: [],
                 favoritesAndBooks: [],
-                bookmarksAndBooks: [],
+                bookmarksAndBooksAndChapters: [],
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -77,6 +77,23 @@ $(function()
                         {
                             location.reload();
                         });
+                },
+                // 跳转到阅读页
+                toRead: function(bookId, chapter)
+                {
+                    window.open("./read.html?bookId=" + bookId + "&chapter=" + chapter);
+                },
+                // 删除书签
+                deleteBookmark: function(chapterId)
+                {
+                    if (confirm("您确定要删除该书签吗？"))
+                    {
+                        request(REMOVE_BOOKMARK_URL, { chapterId: chapterId })
+                            .then(() =>
+                            {
+                                location.reload();
+                            });
+                    }
                 }
             },
             mounted: function()
@@ -138,8 +155,7 @@ $(function()
                     request(BOOKMARK_QUERY_URL, { pageSize: 10, currentPage: this.currentPage })
                         .then(pageBean =>
                         {
-                            console.log(JSON.stringify(pageBean.data, null, 2));
-                            app.bookmarksAndBooks = pageBean.data;
+                            app.bookmarksAndBooksAndChapters = pageBean.data;
                             app.totalPage = pageBean.totalPage;
                             app.totalCount = pageBean.totalCount;
                             app.pagePreview = pageBean.pagePreview;

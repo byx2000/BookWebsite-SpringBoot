@@ -70,7 +70,8 @@ public class BookmarkServiceImpl implements IBookmarkService
     {
         // 获取书签列表
         PageBean<Bookmark> bookmarkPageBean = bookmarkDao.queryByPage(
-                new Query().addWhere("userId == ?", userId), pageSize, currentPage);
+                new Query().addWhere("userId == ?", userId).addOrder("time", true),
+                pageSize, currentPage);
 
         // 获取书签对应的电子书信息和章节信息
         List<List<Object>> result = new ArrayList<>();
