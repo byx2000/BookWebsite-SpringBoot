@@ -51,7 +51,7 @@ $(function()
                 // 添加书签
                 addBookmark: function()
                 {
-                    request(ADD_BOOKMARK_URL, { bookId: this.bookId, chapter: this.currentChapter })
+                    request(ADD_BOOKMARK_URL, { chapterId: this.chapterAndBook[0].id })
                         .then(() =>
                         {
                             app.isBookmark = true;
@@ -61,7 +61,7 @@ $(function()
                 // 移除书签
                 removeBookmark: function()
                 {
-                    request(REMOVE_BOOKMARK_URL, { bookId: this.bookId, chapter: this.currentChapter })
+                    request(REMOVE_BOOKMARK_URL, { chapterId: this.chapterAndBook[0].id })
                         .then(() =>
                         {
                             app.isBookmark = false;
@@ -80,6 +80,11 @@ $(function()
                     .then(chapterAndBook =>
                     {
                         app.chapterAndBook = chapterAndBook;
+                        return request(IS_BOOKMARK_URL, { chapterId: chapterAndBook[0].id });
+                    })
+                    .then(isBookmark =>
+                    {
+                        app.isBookmark = isBookmark;
                     });
 
                 // 获取目录
@@ -87,13 +92,6 @@ $(function()
                     .then(contents =>
                     {
                         app.contents = contents;
-                    });
-
-                // 判断当前章节是否已标记书签
-                request(IS_BOOKMARK_URL, { bookId: this.bookId, chapter: this.currentChapter })
-                    .then(isBookmark =>
-                    {
-                        app.isBookmark = isBookmark;
                     });
             }
         }

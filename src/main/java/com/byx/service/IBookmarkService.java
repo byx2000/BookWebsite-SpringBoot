@@ -12,34 +12,31 @@ public interface IBookmarkService
     /**
      * 添加书签
      * @param userId 用户id
-     * @param bookId 电子书id
-     * @param chapter 章节
+     * @param chapterId 章节id
      */
-    void add(int userId, int bookId, int chapter);
+    void add(int userId, int chapterId);
 
     /**
      * 移除书签
      * @param userId 用户id
-     * @param bookId 电子书id
-     * @param chapter 章节
+     * @param chapterId 章节id
      */
-    void remove(int userId, int bookId, int chapter);
+    void remove(int userId, int chapterId);
 
     /**
      * 判断是否添加了书签
      * @param userId 用户id
-     * @param bookId 电子书id
-     * @param chapter 章节
+     * @param chapterId 章节id
      * @return true/false
      */
-    boolean isBookmark(int userId, int bookId, int chapter);
+    boolean isBookmark(int userId, int chapterId);
 
     /**
-     * 获取指定用户的书签列表及其对应的电子书信息
+     * 获取指定用户的书签列表及其对应的电子书和章节信息
      * @param userId 用户id
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    PageBean<List<Object>> queryBookmarksAndBooksByUserId(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryBookmarksAndBooksAndChaptersByUserId(int userId, int pageSize, int currentPage);
 }

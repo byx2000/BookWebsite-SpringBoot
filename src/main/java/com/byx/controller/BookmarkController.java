@@ -23,46 +23,40 @@ public class BookmarkController extends BaseController
 
     /**
      * 添加书签
-     * @param bookId 电子书id
-     * @param chapter 章节
+     * @param chapterId 章节id
      * @return 操作结果
      */
     @RequestMapping("/add")
     @RequireLogin
-    public ResultInfo add(@NotNull Integer bookId,
-                          @NotNull Integer chapter)
+    public ResultInfo add(@NotNull Integer chapterId)
     {
-        bookmarkService.add(getCurrentUser().getId(), bookId, chapter);
+        bookmarkService.add(getCurrentUser().getId(), chapterId);
         return ResultInfo.success();
     }
 
     /**
      * 移除书签
-     * @param bookId 电子书id
-     * @param chapter 章节id
+     * @param chapterId 章节id
      * @return 操作结果
      */
     @RequestMapping("/remove")
     @RequireLogin
-    public ResultInfo remove(@NotNull Integer bookId,
-                             @NotNull Integer chapter)
+    public ResultInfo remove(@NotNull Integer chapterId)
     {
-        bookmarkService.remove(getCurrentUser().getId(), bookId, chapter);
+        bookmarkService.remove(getCurrentUser().getId(), chapterId);
         return ResultInfo.success();
     }
 
     /**
      * 是否添加了书签
-     * @param bookId 电子书id
-     * @param chapter 章节id
+     * @param chapterId 章节id
      * @return 如果已添加书签，返回true，否则返回false
      */
     @RequestMapping("/is_bookmark")
     @RequireLogin
-    public ResultInfo isBookmark(@NotNull Integer bookId,
-                                 @NotNull Integer chapter)
+    public ResultInfo isBookmark(@NotNull Integer chapterId)
     {
-        return ResultInfo.success(bookmarkService.isBookmark(getCurrentUser().getId(), bookId, chapter));
+        return ResultInfo.success(bookmarkService.isBookmark(getCurrentUser().getId(), chapterId));
     }
 
     /**
@@ -76,7 +70,7 @@ public class BookmarkController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage)
     {
-        return ResultInfo.success(bookmarkService.queryBookmarksAndBooksByUserId(
+        return ResultInfo.success(bookmarkService.queryBookmarksAndBooksAndChaptersByUserId(
                 getCurrentUser().getId(), pageSize, currentPage));
     }
 }

@@ -7,8 +7,7 @@ public class Bookmark
 {
     private Integer id;
     private Integer userId;
-    private Integer bookId;
-    private Integer chapter;
+    private Integer chapterId;
     private String time;
 
     public Integer getId()
@@ -31,24 +30,14 @@ public class Bookmark
         this.userId = userId;
     }
 
-    public Integer getBookId()
+    public Integer getChapterId()
     {
-        return bookId;
+        return chapterId;
     }
 
-    public void setBookId(Integer bookId)
+    public void setChapterId(Integer chapterId)
     {
-        this.bookId = bookId;
-    }
-
-    public Integer getChapter()
-    {
-        return chapter;
-    }
-
-    public void setChapter(Integer chapter)
-    {
-        this.chapter = chapter;
+        this.chapterId = chapterId;
     }
 
     public String getTime()
@@ -67,8 +56,7 @@ public class Bookmark
         return "Bookmark{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", bookId=" + bookId +
-                ", chapter=" + chapter +
+                ", chapterId=" + chapterId +
                 ", time='" + time + '\'' +
                 '}';
     }
