@@ -38,6 +38,7 @@
 
         .logo
         {
+            width: 100%;
             margin-bottom: 50px;
         }
 
@@ -57,7 +58,8 @@
             font-size: 14px;
             color: #666666;
             background-color: white;
-            text-indent: 35px;
+            padding-left: 35px;
+            padding-right: 10px;
         }
 
         .username
@@ -95,6 +97,26 @@
         .login_button:hover
         {
             background-color: #0b98bd;
+            cursor: pointer;
+        }
+
+        .register_link, .home_link
+        {
+            font-size: 1px;
+            color: #333333;
+            margin-top: 15px;
+            align-self: center;
+        }
+
+        .home_link
+        {
+            margin-top: 5px;
+        }
+
+        .register_link:hover, .home_link:hover
+        {
+            color: #0000ff;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -109,6 +131,8 @@
                 <input class="password" type="password" placeholder="请输入密码" v-model="password"/>
             </div>
             <input class="login_button" type="button" value="登录" v-on:click="login"/>
+            <a class="register_link" href="./register.html">没有账号？去注册</a>
+            <a class="home_link" href="./index.html">返回主页</a>
         </div>
     </div>
 </body>
