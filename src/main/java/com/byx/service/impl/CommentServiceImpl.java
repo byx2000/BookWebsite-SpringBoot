@@ -65,14 +65,14 @@ public class CommentServiceImpl implements ICommentService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, boolean isDesc, int pageSize, int currentPage)
     {
         // 查询评论
         Query commentQuery = new Query()
                 .addWhere("userId == ?", userId)
                 .addWhere("(SELECT name FROM books WHERE books.id == comments.bookId) LIKE ?", "%" + bookName + "%")
                 .addWhere("content LIKE ?", "%" + commentContent + "%")
-                .addOrder("time", true);
+                .addOrder("time", isDesc);
         PageBean<Comment> commentPageBean = commentDao.queryByPage(commentQuery, pageSize, currentPage);
 
         // 查询评论对应的电子书

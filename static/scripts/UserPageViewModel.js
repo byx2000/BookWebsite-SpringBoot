@@ -22,6 +22,7 @@ $(function()
                 commentContentKeyword: "",
                 authorKeyword: "",
                 chapterNameKeyword: "",
+                timeOrder: "按时间降序排序",
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -31,6 +32,7 @@ $(function()
                         url += "my_comments";
                         url += "&bookName=" + this.bookNameKeyword;
                         url += "&commentContent=" + this.commentContentKeyword;
+                        url += "&timeOrder=" + this.timeOrder;
                     }
                         
                     else if (this.selectedTabIndex === 1)
@@ -126,6 +128,11 @@ $(function()
                 searchBookmark: function()
                 {
                     this.jumpTo(1);
+                },
+                //时间排序选项改变
+                changeTimeOrder: function()
+                {
+                    this.jumpTo(1);
                 }
             },
             mounted: function()
@@ -139,6 +146,8 @@ $(function()
                     if (this.bookNameKeyword === null) this.bookNameKeyword = "";
                     this.commentContentKeyword = getUrlParameter("commentContent");
                     if (this.commentContentKeyword === null) this.commentContentKeyword = "";
+                    this.timeOrder = getUrlParameter("timeOrder");
+                    if (this.timeOrder === null) this.timeOrder = "按时间降序排序";
                 }
                 else if (tabParam === "my_favorites")
                 {
@@ -181,7 +190,8 @@ $(function()
                             pageSize: 10, 
                             currentPage: this.currentPage, 
                             bookName: this.bookNameKeyword, 
-                            commentContent: this.commentContentKeyword 
+                            commentContent: this.commentContentKeyword,
+                            isDesc: this.timeOrder === "按时间升序排序" ? false : true
                         })
                         .then(pageBean =>
                         {

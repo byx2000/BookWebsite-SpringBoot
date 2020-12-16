@@ -23,11 +23,12 @@ public interface ICommentService
      * @param userId 用户id
      * @param bookName 书名搜索关键词
      * @param commentContent 评论内容搜索关键词
+     * @param isDesc 是否按照时间降序排序
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据，每个列表项格式为[Comment, Book]
      */
-    PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, int pageSize, int currentPage);
+    PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, boolean isDesc, int pageSize, int currentPage);
 
     /**
      * 发表评论

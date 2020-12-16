@@ -38,6 +38,7 @@ public class CommentController extends BaseController
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @param bookName 书名搜索关键词
+     * @param isDesc 是否按照时间降序排序
      * @param commentContent 评论内容搜索关键词
      * @return 分页数据
      */
@@ -46,12 +47,14 @@ public class CommentController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage,
                             String bookName,
-                            String commentContent)
+                            String commentContent,
+                            Boolean isDesc)
     {
         if (bookName == null) bookName = "";
         if (commentContent == null) commentContent = "";
+        if (isDesc == null) isDesc = true;
         return ResultInfo.success(commentService.queryCommentsOfUser(
-                getCurrentUser().getId(), bookName, commentContent, pageSize, currentPage));
+                getCurrentUser().getId(), bookName, commentContent, isDesc, pageSize, currentPage));
     }
 
     /**

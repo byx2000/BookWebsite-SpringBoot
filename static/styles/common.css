@@ -164,3 +164,20 @@ input::-webkit-input-placeholder
 {
     border: 1px solid #9b9b9b;
 }
+
+.dropdown
+{
+    width: 200px;
+    height: 35px;
+    outline: none;
+    border: 1px solid #d0d0d0;
+    font-size: 14px;
+    color: #333333;
+    background-color: #fff;
+    padding: 0 10px;
+}
+
+.dropdown:focus
+{
+    border: 1px solid #9b9b9b;
+}
