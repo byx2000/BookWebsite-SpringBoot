@@ -449,6 +449,12 @@
                 <!--书签-->
                 <div class="my_bookmarks"
                     v-if="selectedTabIndex === 2">
+                    <!--搜索组件-->
+                    <div class="search_region">
+                        <input class="keyword_edit edit" placeholder="书名" type="text" v-model="bookNameKeyword" v-on:keyup.enter="searchBookmark"/>
+                        <input class="keyword_edit edit" placeholder="章节名" type="text" v-model="chapterNameKeyword" v-on:keyup.enter="searchBookmark"/>
+                        <a class="search_button button" v-on:click="searchBookmark">搜索书签</a>
+                    </div>
                     <!--统计信息-->
                     <p class="count medium_font_size primary_color"
                        v-if="totalPage >= 1">
@@ -457,7 +463,7 @@
                     <!--书签空视图-->
                     <div class="empty_view" v-if="totalCount === 0">
                         <img class="empty_img" src="./images/no_bookmark.png"/>
-                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">您还未添加任何书签</p>
+                        <p class="empty_text medium_font_size normal_color" class="medium_font_size normal_color">没有书签数据</p>
                     </div>
                     <!--书签列表项-->
                     <div class="bookmark_item" v-for="(bookmarkAndBookAndChapter, index) in bookmarksAndBooksAndChapters">

@@ -21,6 +21,7 @@ $(function()
                 bookNameKeyword: "",
                 commentContentKeyword: "",
                 authorKeyword: "",
+                chapterNameKeyword: "",
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -39,8 +40,12 @@ $(function()
                         url += "&author=" + this.authorKeyword;
                     }
                     else
+                    {
                         url += "my_bookmarks";
-                    
+                        url += "&bookName=" + this.bookNameKeyword;
+                        url += "&chapterName=" + this.chapterNameKeyword;
+                    }
+                        
                     url += "&currentPage=" + String(page);
 
                     location.href = url;
@@ -115,7 +120,11 @@ $(function()
                 // 搜索收藏
                 searchFavoirte: function()
                 {
-                    //alert(this.bookNameKeyword + "\n" + this.authorKeyword);
+                    this.jumpTo(1);
+                },
+                // 搜索书签
+                searchBookmark: function()
+                {
                     this.jumpTo(1);
                 }
             },
@@ -140,18 +149,16 @@ $(function()
                     if (this.authorKeyword === null) this.authorKeyword = "";
                 }
                 else
+                {
                     this.selectedTabIndex = 2;
+                    this.bookNameKeyword = getUrlParameter("bookName");
+                    if (this.bookNameKeyword === null) this.bookNameKeyword = "";
+                    this.chapterNameKeyword = getUrlParameter("chapterName");
+                    if (this.chapterNameKeyword === null) this.chapterNameKeyword = "";
+                }
 
                 // 从url获取页码
                 this.currentPage = Number(getUrlParameter("currentPage"));
-
-                // 从url获取搜索词
-                // this.bookNameKeyword = getUrlParameter("bookName");
-                // if (this.bookNameKeyword === null) this.bookNameKeyword = "";
-                // this.commentContentKeyword = getUrlParameter("commentContent");
-                // if (this.commentContentKeyword === null) this.commentContentKeyword = "";
-                // this.authorKeyword = getUrlParameter("author");
-                // if (this.authorKeyword === null) this.authorKeyword = "";
 
                 // 获取当前用户信息
                 request(GET_CURRENT_USER_URL, {})
@@ -207,7 +214,13 @@ $(function()
                 else
                 {
                     // 获取当前用户的所有书签
-                    request(BOOKMARK_QUERY_URL, { pageSize: 10, currentPage: this.currentPage })
+                    request(BOOKMARK_QUERY_URL, 
+                        { 
+                            pageSize: 10,
+                            currentPage: this.currentPage,
+                            bookName: this.bookNameKeyword, 
+                            chapterName: this.chapterNameKeyword
+                        })
                         .then(pageBean =>
                         {
                             app.bookmarksAndBooksAndChapters = pageBean.data;
