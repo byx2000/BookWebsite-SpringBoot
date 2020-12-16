@@ -198,6 +198,13 @@
             margin: 10px 0;
             padding-right: 10px;
         }
+
+        /*选择排序依据*/
+        .order_method_choose_region
+        {
+            display: flex;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -206,6 +213,17 @@
 
     <!--内容区-->
     <div id="content">
+        <!--选择排序依据-->
+        <div class="order_method_choose_region" v-if="books.length > 0">
+            <label>
+                <span class="small_font_size normal_color">排序依据：</span>
+                <select class="order_method_choose dropdown" v-model="orderMethod" v-on:change="orderMethodChanged">
+                    <option>默认</option>
+                    <option>按评分排序</option>
+                    <option>按热度排序</option>
+                </select>
+            </label>
+        </div>
         <div class="left_and_right">
             <div class="search_result">
                 <!--结果条数统计-->
@@ -238,7 +256,7 @@
                                     作者：{{book.author}}
                                 </p>
                                 <p class="search_book_heat smaller_font_size detail_color ellipses_text_singleline vertical_center">
-                                    {{book.likeCount}}
+                                    {{book.heat}}
                                 </p>
                                 <p class="search_book_score smaller_font_size detail_color ellipses_text_singleline">
                                     评分：{{book.score.toFixed(1)}}

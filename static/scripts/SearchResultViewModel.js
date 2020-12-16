@@ -12,9 +12,10 @@ $(function()
             totalCount: 0,
             pagePreview: [],
             suggestions: [],
+            orderMethod: "默认",
             jumpTo: function(page)
             {
-                location.href = "./search_result.html?keyword=" + this.keyword + "&currentPage=" + page;
+                location.href = "./search_result.html?keyword=" + this.keyword + "&currentPage=" + page + "&orderMethod=" + this.orderMethod;
             }
         },
         methods:
@@ -39,6 +40,11 @@ $(function()
             toPage: function(page)
             {
                 this.jumpTo(page);
+            },
+            // 排序选项改变
+            orderMethodChanged: function()
+            {
+                this.jumpTo(1);
             }
         },
         mounted: function()
@@ -47,8 +53,18 @@ $(function()
             this.keyword = getUrlParameter("keyword");
             this.currentPage = Number(getUrlParameter("currentPage"));
 
+            // 从url获取排序依据
+            this.orderMethod = getUrlParameter("orderMethod");
+            if (this.orderMethod === null) this.orderMethod = "默认";
+
             // 获取搜索结果
-            request(BOOK_QUERY_URL, { keyword: this.keyword, pageSize: 10, currentPage: this.currentPage })
+            request(BOOK_QUERY_URL, 
+                { 
+                    keyword: this.keyword, 
+                    pageSize: 10, 
+                    currentPage: this.currentPage,
+                    orderBy: this.orderMethod === "按热度排序" ? "heat" : (this.orderMethod === "按评分排序" ? "score" : "default")
+                })
                 .then(pageBean =>
                 {
                     app.books = pageBean.data;
