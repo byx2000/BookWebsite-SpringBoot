@@ -31,14 +31,14 @@ public class FavoriteServiceImpl implements IFavoriteService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryFavoritesOfUser(int userId, String bookName, String author, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryFavoritesOfUser(int userId, String bookName, String author, boolean isDesc, int pageSize, int currentPage)
     {
         // 查询收藏记录
         Query favoriteQuery = new Query()
                 .addWhere("userId == ?", userId)
                 .addWhere("(SELECT name FROM books WHERE books.id == favorites.bookId) LIKE ?", "%" + bookName + "%")
                 .addWhere("(SELECT author FROM books WHERE books.id == favorites.bookId) LIKE ?", "%" + author + "%")
-                .addOrder("time", true);
+                .addOrder("time", isDesc);
         PageBean<Favorite> favoritePageBean = favoriteDao.queryByPage(favoriteQuery, pageSize, currentPage);
 
         // 查询每条收藏记录对应的电子书信息

@@ -29,6 +29,7 @@ public class FavoriteController extends BaseController
      * @param currentPage 当前页码
      * @param bookName 书名搜索关键词
      * @param author 作者搜索关键词
+     * @param isDesc 是否按照时间降序排序
      * @return 分页数据，包含收藏数据和相应的电子书数据
      */
     @RequestMapping("/query")
@@ -36,12 +37,14 @@ public class FavoriteController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage,
                             String bookName,
-                            String author)
+                            String author,
+                            Boolean isDesc)
     {
         if (bookName == null) bookName = "";
         if (author == null) author = "";
+        if (isDesc == null) isDesc = true;
         PageBean<List<Object>> pageBean = favoriteService.queryFavoritesOfUser(
-                getCurrentUser().getId(), bookName, author, pageSize, currentPage);
+                getCurrentUser().getId(), bookName, author, isDesc, pageSize, currentPage);
         return ResultInfo.success(pageBean);
     }
 

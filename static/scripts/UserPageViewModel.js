@@ -40,6 +40,7 @@ $(function()
                         url += "my_favorites";
                         url += "&bookName=" + this.bookNameKeyword;
                         url += "&author=" + this.authorKeyword;
+                        url += "&timeOrder=" + this.timeOrder;
                     }
                     else
                     {
@@ -156,6 +157,8 @@ $(function()
                     if (this.bookNameKeyword === null) this.bookNameKeyword = "";
                     this.authorKeyword = getUrlParameter("author");
                     if (this.authorKeyword === null) this.authorKeyword = "";
+                    this.timeOrder = getUrlParameter("timeOrder");
+                    if (this.timeOrder === null) this.timeOrder = "按时间降序排序";
                 }
                 else
                 {
@@ -210,7 +213,8 @@ $(function()
                             pageSize: 10, 
                             currentPage: this.currentPage,
                             bookName: this.bookNameKeyword, 
-                            author: this.authorKeyword
+                            author: this.authorKeyword,
+                            isDesc: this.timeOrder === "按时间升序排序" ? false : true
                         })
                         .then(pageBean =>
                         {

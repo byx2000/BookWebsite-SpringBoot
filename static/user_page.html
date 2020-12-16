@@ -432,8 +432,14 @@
                     v-if="selectedTabIndex === 1">
                     <!--搜索组件-->
                     <div class="search_region">
-                        <input class="keyword_edit edit" placeholder="书名" type="text" v-model="bookNameKeyword" v-on:keyup.enter="searchFavoirte"/>
-                        <input class="keyword_edit edit" placeholder="作者" type="text" v-model="authorKeyword" v-on:keyup.enter="searchFavoirte"/>
+                        <div class="search_condition">
+                            <input class="keyword_edit edit" placeholder="书名" type="text" v-model="bookNameKeyword" v-on:keyup.enter="searchFavoirte"/>
+                            <input class="keyword_edit edit" placeholder="作者" type="text" v-model="authorKeyword" v-on:keyup.enter="searchFavoirte"/>
+                            <select class="time_choose dropdown" v-model="timeOrder" v-on:change="changeTimeOrder">
+                                <option>按时间降序排序</option>
+                                <option>按时间升序排序</option>
+                            </select>
+                        </div>
                         <a class="search_button button" v-on:click="searchFavoirte">搜索收藏</a>
                     </div>
                     <!--统计信息-->
