@@ -20,6 +20,7 @@ $(function()
                 bookmarksAndBooksAndChapters: [],
                 bookNameKeyword: "",
                 commentContentKeyword: "",
+                authorKeyword: "",
                 jumpTo: function(page)
                 {
                     let url = "./user_page.html?tab=";
@@ -32,7 +33,11 @@ $(function()
                     }
                         
                     else if (this.selectedTabIndex === 1)
+                    {
                         url += "my_favorites";
+                        url += "&bookName=" + this.bookNameKeyword;
+                        url += "&author=" + this.authorKeyword;
+                    }
                     else
                         url += "my_bookmarks";
                     
@@ -102,9 +107,15 @@ $(function()
                             });
                     }
                 },
+                // 搜索评论
                 searchComment: function()
                 {
-                    // alert(this.bookNameKeyword + "\n" + this.commentContentKeyword);
+                    this.jumpTo(1);
+                },
+                // 搜索收藏
+                searchFavoirte: function()
+                {
+                    //alert(this.bookNameKeyword + "\n" + this.authorKeyword);
                     this.jumpTo(1);
                 }
             },
@@ -113,9 +124,21 @@ $(function()
                 // 从url获取标签页
                 let tabParam = getUrlParameter("tab");
                 if (tabParam === "my_comments")
+                {
                     this.selectedTabIndex = 0;
+                    this.bookNameKeyword = getUrlParameter("bookName");
+                    if (this.bookNameKeyword === null) this.bookNameKeyword = "";
+                    this.commentContentKeyword = getUrlParameter("commentContent");
+                    if (this.commentContentKeyword === null) this.commentContentKeyword = "";
+                }
                 else if (tabParam === "my_favorites")
+                {
                     this.selectedTabIndex = 1;
+                    this.bookNameKeyword = getUrlParameter("bookName");
+                    if (this.bookNameKeyword === null) this.bookNameKeyword = "";
+                    this.authorKeyword = getUrlParameter("author");
+                    if (this.authorKeyword === null) this.authorKeyword = "";
+                }
                 else
                     this.selectedTabIndex = 2;
 
@@ -123,10 +146,12 @@ $(function()
                 this.currentPage = Number(getUrlParameter("currentPage"));
 
                 // 从url获取搜索词
-                this.bookNameKeyword = getUrlParameter("bookName");
-                if (this.bookNameKeyword === null) this.bookNameKeyword = "";
-                this.commentContentKeyword = getUrlParameter("commentContent");
-                if (this.commentContentKeyword === null) this.commentContentKeyword = "";
+                // this.bookNameKeyword = getUrlParameter("bookName");
+                // if (this.bookNameKeyword === null) this.bookNameKeyword = "";
+                // this.commentContentKeyword = getUrlParameter("commentContent");
+                // if (this.commentContentKeyword === null) this.commentContentKeyword = "";
+                // this.authorKeyword = getUrlParameter("author");
+                // if (this.authorKeyword === null) this.authorKeyword = "";
 
                 // 获取当前用户信息
                 request(GET_CURRENT_USER_URL, {})
@@ -163,7 +188,13 @@ $(function()
                 else if (this.selectedTabIndex === 1)
                 {
                     // 获取当前用户所有收藏
-                    request(FAVORITE_QUERY_URL, { pageSize: 10, currentPage: this.currentPage })
+                    request(FAVORITE_QUERY_URL, 
+                        { 
+                            pageSize: 10, 
+                            currentPage: this.currentPage,
+                            bookName: this.bookNameKeyword, 
+                            author: this.authorKeyword
+                        })
                         .then(pageBean =>
                         {
                             app.favoritesAndBooks = pageBean.data;
