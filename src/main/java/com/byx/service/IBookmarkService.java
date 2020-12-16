@@ -40,5 +40,5 @@ public interface IBookmarkService
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    PageBean<List<Object>> queryBookmarksOfUser(int userId, String bookName, String chapterName, int pageSize, int currentPage);
+    PageBean<List<Object>> queryBookmarksOfUser(int userId, String bookName, String chapterName, boolean isDesc, int pageSize, int currentPage);
 }

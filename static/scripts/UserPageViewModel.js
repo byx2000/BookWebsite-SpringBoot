@@ -47,6 +47,7 @@ $(function()
                         url += "my_bookmarks";
                         url += "&bookName=" + this.bookNameKeyword;
                         url += "&chapterName=" + this.chapterNameKeyword;
+                        url += "&timeOrder=" + this.timeOrder;
                     }
                         
                     url += "&currentPage=" + String(page);
@@ -167,6 +168,8 @@ $(function()
                     if (this.bookNameKeyword === null) this.bookNameKeyword = "";
                     this.chapterNameKeyword = getUrlParameter("chapterName");
                     if (this.chapterNameKeyword === null) this.chapterNameKeyword = "";
+                    this.timeOrder = getUrlParameter("timeOrder");
+                    if (this.timeOrder === null) this.timeOrder = "按时间降序排序";
                 }
 
                 // 从url获取页码
@@ -233,7 +236,8 @@ $(function()
                             pageSize: 10,
                             currentPage: this.currentPage,
                             bookName: this.bookNameKeyword, 
-                            chapterName: this.chapterNameKeyword
+                            chapterName: this.chapterNameKeyword,
+                            isDesc: this.timeOrder === "按时间升序排序" ? false : true
                         })
                         .then(pageBean =>
                         {

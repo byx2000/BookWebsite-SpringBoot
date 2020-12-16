@@ -72,11 +72,13 @@ public class BookmarkController extends BaseController
     public ResultInfo query(@NotNull Integer pageSize,
                             @NotNull Integer currentPage,
                             String bookName,
-                            String chapterName)
+                            String chapterName,
+                            Boolean isDesc)
     {
         if (bookName == null) bookName = "";
         if (chapterName == null) chapterName = "";
+        if (isDesc == null) isDesc = true;
         return ResultInfo.success(bookmarkService.queryBookmarksOfUser(
-                getCurrentUser().getId(), bookName, chapterName, pageSize, currentPage));
+                getCurrentUser().getId(), bookName, chapterName, isDesc, pageSize, currentPage));
     }
 }
