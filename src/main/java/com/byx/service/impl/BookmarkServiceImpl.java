@@ -66,12 +66,15 @@ public class BookmarkServiceImpl implements IBookmarkService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryBookmarksOfUser(int userId, int pageSize, int currentPage)
+    public PageBean<List<Object>> queryBookmarksOfUser(int userId, String bookName, String chapterName, int pageSize, int currentPage)
     {
         // 获取书签列表
-        PageBean<Bookmark> bookmarkPageBean = bookmarkDao.queryByPage(
-                new Query().addWhere("userId == ?", userId).addOrder("time", true),
-                pageSize, currentPage);
+        Query bookmarkQuery = new Query()
+                .addWhere("userId == ?", userId)
+                .addWhere("(SELECT name FROM books WHERE books.id == (SELECT bookId FROM chapters WHERE chapters.id ==  bookmarks.chapterId)) LIKE ?", "%" + bookName + "%")
+                .addWhere("(SELECT name FROM chapters WHERE chapters.id == bookmarks.chapterId) LIKE ?", "%" + chapterName + "%")
+                .addOrder("time", true);
+        PageBean<Bookmark> bookmarkPageBean = bookmarkDao.queryByPage(bookmarkQuery, pageSize, currentPage);
 
         // 获取书签对应的电子书信息和章节信息
         List<List<Object>> result = new ArrayList<>();

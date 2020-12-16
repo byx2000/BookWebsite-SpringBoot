@@ -34,9 +34,11 @@ public interface IBookmarkService
     /**
      * 获取指定用户的书签列表及其对应的电子书和章节信息
      * @param userId 用户id
+     * @param bookName 书名搜索关键词
+     * @param chapterName 章节名搜索关键词
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据
      */
-    PageBean<List<Object>> queryBookmarksOfUser(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryBookmarksOfUser(int userId, String bookName, String chapterName, int pageSize, int currentPage);
 }

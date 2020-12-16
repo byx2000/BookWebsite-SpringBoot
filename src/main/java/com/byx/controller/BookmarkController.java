@@ -63,14 +63,20 @@ public class BookmarkController extends BaseController
      * 查询指定用户的书签列表及其对应的电子书信息
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
+     * @param bookName 书名搜索关键词
+     * @param chapterName 章节名搜索关键词
      * @return 书签列表
      */
     @RequestMapping("/query")
     @RequireLogin
     public ResultInfo query(@NotNull Integer pageSize,
-                            @NotNull Integer currentPage)
+                            @NotNull Integer currentPage,
+                            String bookName,
+                            String chapterName)
     {
+        if (bookName == null) bookName = "";
+        if (chapterName == null) chapterName = "";
         return ResultInfo.success(bookmarkService.queryBookmarksOfUser(
-                getCurrentUser().getId(), pageSize, currentPage));
+                getCurrentUser().getId(), bookName, chapterName, pageSize, currentPage));
     }
 }
