@@ -27,15 +27,21 @@ public class FavoriteController extends BaseController
      * 分页查询当前用户收藏记录
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
+     * @param bookName 书名搜索关键词
+     * @param author 作者搜索关键词
      * @return 分页数据，包含收藏数据和相应的电子书数据
      */
     @RequestMapping("/query")
     @RequireLogin
     public ResultInfo query(@NotNull Integer pageSize,
-                            @NotNull Integer currentPage)
+                            @NotNull Integer currentPage,
+                            String bookName,
+                            String author)
     {
+        if (bookName == null) bookName = "";
+        if (author == null) author = "";
         PageBean<List<Object>> pageBean = favoriteService.queryFavoritesOfUser(
-                getCurrentUser().getId(), pageSize, currentPage);
+                getCurrentUser().getId(), bookName, author, pageSize, currentPage);
         return ResultInfo.success(pageBean);
     }
 

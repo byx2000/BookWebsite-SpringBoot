@@ -12,11 +12,13 @@ public interface IFavoriteService
     /**
      * 分页查询收藏和电子书
      * @param userId 用户id
+     * @param bookName 书名搜索关键词
+     * @param author 作者搜索关键词
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @return 返回指定id用户的收藏列表，列表项格式为[Favorite, Book]
      */
-    PageBean<List<Object>> queryFavoritesOfUser(int userId, int pageSize, int currentPage);
+    PageBean<List<Object>> queryFavoritesOfUser(int userId, String bookName, String author, int pageSize, int currentPage);
 
     /**
      * 判断指定用户是否收藏指定电子书
