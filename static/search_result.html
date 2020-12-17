@@ -107,6 +107,7 @@
         {
             display: flex;
             justify-content: space-between;
+            height: fit-content;
         }
 
         .search_result
@@ -119,7 +120,6 @@
         {
             width: 270px;
             height: fit-content;
-            height: 100%;
             background-color: white;
             margin-left: 20px;
             padding: 30px;
@@ -254,17 +254,17 @@
                                 {{book.name}}
                             </a>
                             <div class="author_and_heat_and_score">
-                                <p class="search_book_author smaller_font_size detail_color ellipses_text_singleline">
+                                <p class="search_book_author small_font_size detail_color ellipses_text_singleline">
                                     作者：{{book.author}}
                                 </p>
-                                <p class="search_book_heat smaller_font_size detail_color ellipses_text_singleline vertical_center">
+                                <p class="search_book_heat small_font_size detail_color ellipses_text_singleline vertical_center">
                                     {{book.heat}}
                                 </p>
-                                <p class="search_book_score smaller_font_size detail_color ellipses_text_singleline">
+                                <p class="search_book_score small_font_size detail_color ellipses_text_singleline">
                                     评分：{{book.score.toFixed(1)}}
                                 </p>
                             </div>
-                            <p class="search_book_description smaller_font_size normal_color ellipses_text_multiline">
+                            <p class="search_book_description small_font_size normal_color ellipses_text_multiline">
                                 {{book.description}}
                             </p>
                         </div>
