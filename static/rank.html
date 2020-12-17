@@ -8,6 +8,7 @@
         <script src="./scripts/vue.js"></script>
         <script src="./scripts/request.js"></script>
         <script src="./scripts/load_nav.js"></script>
+        <script src="./scripts/load_foot.js"></script>
         <script src="./scripts/RankViewModel.js"></script>
         <style>
             .rank_class
@@ -137,7 +138,10 @@
         </style>
     </head>
     <body>
+        <!--导航条-->
         <div id="nav_holder"></div>
+
+        <!--内容区-->
         <div id="content">
             <div id="rank">
                 <div v-for="(rankName, iRank) in rankNames">
@@ -242,5 +246,8 @@
                 </div>
             </div>
         </div>
+
+        <!--页脚-->
+        <div id="foot_holder"></div>
     </body>
 </html>

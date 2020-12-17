@@ -9,6 +9,7 @@
         <script src="./scripts/vue.js"></script>
         <script src="./scripts/request.js"></script>
         <script src="./scripts/load_nav.js"></script>
+        <script src="./scripts/load_foot.js"></script>
         <script src="./scripts/parameter.js"></script>
         <script src="./scripts/BookDetailViewModel.js"></script>
         <style>
@@ -649,6 +650,8 @@
                         </p>
                     </div>
                     <!--编辑区-->
+                    <!--编辑区标记-->
+                    <a id="bottom" ></a>
                     <div class="add_comment">
                         <p>发表评论</p>
                         <textarea id="comment_edit" class="edit" placeholder="写点什么吧..." v-model="commentText"></textarea>
@@ -679,7 +682,8 @@
                 </div>
             </div>
         </div>
-        <!--页底标记-->
-        <a id="bottom" ></a>
+
+        <!--页脚-->
+        <div id="foot_holder"></div>
     </body>
 </html>
