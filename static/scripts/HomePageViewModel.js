@@ -24,6 +24,15 @@ $(function()
             select: function(index)
             {
                 this.index = index;
+            },
+            // 换一批
+            changeRandomBooks: function(iCategory)
+            {
+                request(BOOK_QUERY_URL, { categoryId: this.categories[iCategory].id, orderBy: "random", limit: 6 })
+                    .then(books =>
+                    {
+                        app.randomBooks.splice(iCategory, 1, books);
+                    });
             }
         },
         mounted: function()

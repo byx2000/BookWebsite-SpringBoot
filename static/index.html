@@ -131,6 +131,15 @@
 
             /*得分最高的电子书*/
 
+            .label
+            {
+                width: 63px;
+                height: 63px;
+                position: absolute;
+                background: url(./images/decorate2.png);
+                background-position: -26px 0;
+            }
+
             .max_score_book_item
             {
                 width: 403px;
@@ -139,6 +148,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                position: relative;
             }
 
             .max_score_book_author
@@ -167,8 +177,44 @@
 
             /*随机电子书列表*/
 
+            .change
+            {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                line-height: 20px;
+                color: #999999;
+            }
+
+            .change::before
+            {
+                display: inline-block;
+                content: "";
+                width: 15px;
+                height: 15px;
+                background: url(./images/refresh-gray.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 5px;
+            }
+
+            .change:hover::before
+            {
+                display: inline-block;
+                content: "";
+                width: 15px;
+                height: 15px;
+                background: url(./images/refresh-red.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 5px;
+            }
+
             .random_book_list
             {
+                position: relative;
                 flex: 1;
                 display: flex;
                 flex-wrap: wrap;
@@ -252,12 +298,16 @@
                 <div id="category_random">
                     <div v-for="(category, iCategory) in categories"
                         v-if="categories !== null">
-                        <p class="category_name larger_font_size primary_color">{{category.name}}精选</p>
+                        <p class="category_name larger_font_size primary_color">{{category.name}}板块</p>
                         <div class="category_content">
                             <div class="label"></div>
                             <!--得分最高的电子书-->
                             <div class="max_score_book_item"
                                 v-if="maxScoreBooks[iCategory] !== undefined">
+                                <a class="change link small_font_size vertical_center"
+                                   v-on:click="changeRandomBooks(iCategory)">
+                                    换一批
+                                </a>
                                 <div class="max_score_book_info">
                                     <a class="max_score_book_name large_font_size primary_color ellipses_text_singleline link"
                                        v-bind:href="'./book_detail.html?bookId=' + maxScoreBooks[iCategory].id">
