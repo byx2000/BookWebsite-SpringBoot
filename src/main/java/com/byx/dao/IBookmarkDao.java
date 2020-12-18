@@ -27,7 +27,7 @@ public interface IBookmarkDao
 
     /**
      * 保存
-     * @param bookmark 书签
+     * @param bookmark 书签数据
      */
     void save(Bookmark bookmark);
 

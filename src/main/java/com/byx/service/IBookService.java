@@ -12,14 +12,14 @@ import java.util.List;
 public interface IBookService
 {
     /**
-     * 根据条件查询电子书（无分页）
+     * 根据条件查询电子书
      * @param query 查询条件
      * @return 电子书列表
      */
     List<Book> query(BookQueryCondition query);
 
     /**
-     * 根据条件查询电子书（分页）
+     * 根据条件分页查询电子书
      * @param query 查询条件
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码

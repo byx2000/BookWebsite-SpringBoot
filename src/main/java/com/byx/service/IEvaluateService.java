@@ -37,7 +37,7 @@ public interface IEvaluateService
      * 是否已点赞
      * @param bookId 电子书id
      * @param userId 用户id
-     * @return 已点赞返回true，未点赞返回false
+     * @return true或false
      */
     boolean isLike(int bookId, int userId);
 
@@ -45,7 +45,7 @@ public interface IEvaluateService
      * 是否已点踩
      * @param bookId 电子书id
      * @param userId 用户id
-     * @return 已点踩返回true，未点踩返回false
+     * @return true或false
      */
     boolean isDislike(int bookId, int userId);
 }

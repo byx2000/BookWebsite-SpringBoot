@@ -19,7 +19,7 @@ public class CommentController extends BaseController
     private ICommentService commentService;
 
     /**
-     * 查询指定电子书的所有评论及其对应的用户信息
+     * 查询电子书的所有评论
      * @param bookId 电子书id
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
@@ -34,7 +34,7 @@ public class CommentController extends BaseController
     }
 
     /**
-     * 查询当前用户的所有评论及其对应的电子书信息
+     * 查询当前用户的所有评论
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @param bookName 书名搜索关键词
@@ -61,7 +61,7 @@ public class CommentController extends BaseController
      * 保存评论
      * @param bookId 电子书id
      * @param content 评论内容
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/publish")
     @RequireLogin
@@ -75,7 +75,7 @@ public class CommentController extends BaseController
     /**
      * 删除评论
      * @param commentId 评论id
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/delete")
     @RequireLogin

@@ -68,7 +68,7 @@ public class UserController extends BaseController
      * @param password 密码
      * @param nickname 昵称
      * @param avatar 头像
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/register")
     public ResultInfo register(@NotNull String username,

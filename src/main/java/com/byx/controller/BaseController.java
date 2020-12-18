@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 
 /**
- * 所有Controller的基类
+ * 所有Controller的基类，包含一些公共方法
  */
 public class BaseController
 {
@@ -43,7 +43,7 @@ public class BaseController
 
     /**
      * 获取静态资源实际路径
-     * @return 静态资源路径
+     * @return 路径
      */
     protected File getStaticResourcePath()
     {

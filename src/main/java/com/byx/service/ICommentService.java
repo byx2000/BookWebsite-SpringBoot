@@ -10,23 +10,23 @@ import java.util.List;
 public interface ICommentService
 {
     /**
-     * 查找电子书的所有评论及其对应的用户信息
+     * 查找电子书的所有评论
      * @param bookId 电子书id
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
-     * @return 分页数据，每个列表项格式为[Comment, User]
+     * @return 分页数据
      */
     PageBean<List<Object>> queryCommentsOfBook(int bookId, int pageSize, int currentPage);
 
     /**
-     * 查找用户的所有评论及其对应的电子书信息
+     * 查找用户的所有评论
      * @param userId 用户id
      * @param bookName 书名搜索关键词
      * @param commentContent 评论内容搜索关键词
      * @param isDesc 是否按照时间降序排序
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
-     * @return 分页数据，每个列表项格式为[Comment, Book]
+     * @return 分页数据
      */
     PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, boolean isDesc, int pageSize, int currentPage);
 

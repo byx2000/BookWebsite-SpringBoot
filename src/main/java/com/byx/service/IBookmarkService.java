@@ -27,12 +27,12 @@ public interface IBookmarkService
      * 判断是否添加了书签
      * @param userId 用户id
      * @param chapterId 章节id
-     * @return true/false
+     * @return true或false
      */
     boolean isBookmark(int userId, int chapterId);
 
     /**
-     * 获取指定用户的书签列表及其对应的电子书和章节信息
+     * 获取指定用户的书签列表
      * @param userId 用户id
      * @param bookName 书名搜索关键词
      * @param chapterName 章节名搜索关键词

@@ -20,7 +20,7 @@ public interface IChapterDao
     /**
      * 查询结果列表
      * @param query 查询条件
-     * @return 结果列表
+     * @return 章节列表
      */
     List<Chapter> query(Query query);
 }

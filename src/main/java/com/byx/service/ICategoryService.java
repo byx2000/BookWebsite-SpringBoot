@@ -18,7 +18,7 @@ public interface ICategoryService
     /**
      * 根据id查询电子书类型
      * @param categoryId 类型id
-     * @return 类型
+     * @return 指定id的类型
      */
     Category queryById(int categoryId);
 }

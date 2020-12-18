@@ -19,7 +19,7 @@ public interface IEvaluateDao
 
     /**
      * 保存点评记录
-     * @param evaluate 点评
+     * @param evaluate 点评数据
      */
     void save(Evaluate evaluate);
 

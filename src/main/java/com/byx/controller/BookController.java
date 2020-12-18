@@ -17,9 +17,9 @@ public class BookController extends BaseController
     /**
      * 根据条件查询电子书
      * @param bookQueryCondition 查询条件
-     * @param pageSize 每页显示的条数
-     * @param currentPage 当前页码
-     * @return 结果
+     * @param pageSize 每页显示的条数（可选）
+     * @param currentPage 当前页码（可选）
+     * @return 电子书列表或分页数据
      */
     @RequestMapping("/query")
     public ResultInfo query(BookQueryCondition bookQueryCondition,

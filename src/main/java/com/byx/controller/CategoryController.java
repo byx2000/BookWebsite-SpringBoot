@@ -16,7 +16,7 @@ public class CategoryController extends BaseController
     /**
      * 查询电子书类型
      * @param categoryId 类型id
-     * @return 如果指定了categoryId参数，则返回id为categoryId的类型信息，否则返回所有类型列表
+     * @return 所有类型列表，或指定id的类型
      */
     @RequestMapping("/query")
     public ResultInfo query(Integer categoryId)

@@ -30,7 +30,7 @@ public class EvaluateController extends BaseController
      * <p>"cancelDislike": 取消点踩</p>
      * @param bookId 电子书id
      * @param cmd 操作
-     * @return 成功返回{true, msg}，失败返回{false, msg}
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("")
     @RequireLogin
@@ -61,7 +61,7 @@ public class EvaluateController extends BaseController
     /**
      * 是否已点赞
      * @param bookId 电子书id
-     * @return 成功返回{true, msg}，失败返回{false, msg}
+     * @return true或false
      */
     @RequestMapping("/isLike")
     @RequireLogin
@@ -73,7 +73,7 @@ public class EvaluateController extends BaseController
     /**
      * 是否已点踩
      * @param bookId 电子书id
-     * @return 成功返回{true, msg}，失败返回{false, msg}
+     * @return true或false
      */
     @RequestMapping("/isDislike")
     @RequireLogin

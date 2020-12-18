@@ -24,13 +24,13 @@ public class FavoriteController extends BaseController
     private IFavoriteService favoriteService;
 
     /**
-     * 分页查询当前用户收藏记录
+     * 查询当前用户收藏记录
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @param bookName 书名搜索关键词
      * @param author 作者搜索关键词
      * @param isDesc 是否按照时间降序排序
-     * @return 分页数据，包含收藏数据和相应的电子书数据
+     * @return 分页数据
      */
     @RequestMapping("/query")
     @RequireLogin
@@ -51,7 +51,7 @@ public class FavoriteController extends BaseController
     /**
      * 判断当前用户是否收藏了指定电子书
      * @param bookId 电子书
-     * @return true/false
+     * @return true或false
      */
     @RequestMapping("/isFavorite")
     @RequireLogin
@@ -63,7 +63,7 @@ public class FavoriteController extends BaseController
     /**
      * 添加收藏
      * @param bookId 电子书id
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/add")
     @RequireLogin
@@ -76,7 +76,7 @@ public class FavoriteController extends BaseController
     /**
      * 取消收藏
      * @param bookId 电子书id
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/cancel")
     @RequireLogin

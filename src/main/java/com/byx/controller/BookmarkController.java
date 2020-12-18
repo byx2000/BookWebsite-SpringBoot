@@ -24,7 +24,7 @@ public class BookmarkController extends BaseController
     /**
      * 添加书签
      * @param chapterId 章节id
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/add")
     @RequireLogin
@@ -37,7 +37,7 @@ public class BookmarkController extends BaseController
     /**
      * 移除书签
      * @param chapterId 章节id
-     * @return 操作结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/remove")
     @RequireLogin
@@ -50,7 +50,7 @@ public class BookmarkController extends BaseController
     /**
      * 是否添加了书签
      * @param chapterId 章节id
-     * @return 如果已添加书签，返回true，否则返回false
+     * @return true或false
      */
     @RequestMapping("/is_bookmark")
     @RequireLogin
@@ -60,12 +60,12 @@ public class BookmarkController extends BaseController
     }
 
     /**
-     * 查询指定用户的书签列表及其对应的电子书信息
+     * 查询当前用户的书签列表
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
      * @param bookName 书名搜索关键词
      * @param chapterName 章节名搜索关键词
-     * @return 书签列表
+     * @return 分页数据
      */
     @RequestMapping("/query")
     @RequireLogin

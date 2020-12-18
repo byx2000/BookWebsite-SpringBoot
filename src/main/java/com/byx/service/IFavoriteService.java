@@ -10,22 +10,22 @@ import java.util.List;
 public interface IFavoriteService
 {
     /**
-     * 分页查询收藏和电子书
+     * 查询当前用户的收藏列表
      * @param userId 用户id
      * @param bookName 书名搜索关键词
      * @param author 作者搜索关键词
      * @param isDesc 是否按照时间降序排序
      * @param pageSize 每页显示条数
      * @param currentPage 当前页码
-     * @return 返回指定id用户的收藏列表，列表项格式为[Favorite, Book]
+     * @return 分页数据
      */
     PageBean<List<Object>> queryFavoritesOfUser(int userId, String bookName, String author, boolean isDesc, int pageSize, int currentPage);
 
     /**
-     * 判断指定用户是否收藏指定电子书
+     * 判断当前用户是否收藏指定电子书
      * @param bookId 电子书id
      * @param userId 用户id
-     * @return true/false
+     * @return true或false
      */
     boolean isFavorite(int bookId, int userId);
 

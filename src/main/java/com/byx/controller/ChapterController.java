@@ -25,7 +25,7 @@ public class ChapterController extends BaseController
      * 获取章节数据
      * @param bookId 电子书id
      * @param chapter 章节
-     * @return {Text, Book}
+     * @return 章节数据
      */
     @RequestMapping("/data")
     @RequireLogin
@@ -38,7 +38,7 @@ public class ChapterController extends BaseController
     /**
      * 获取电子书目录
      * @param bookId 电子书id
-     * @return [Chapter, ...]
+     * @return 目录
      */
     @RequestMapping("/contents")
     @RequireLogin

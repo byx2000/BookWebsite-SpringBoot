@@ -14,7 +14,7 @@ public interface IFavoriteDao
     /**
      * 根据条件查询收藏数量
      * @param query 查询条件
-     * @return 查询结果数
+     * @return 结果总数
      */
     int count(Query query);
 
