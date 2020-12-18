@@ -1,10 +1,13 @@
 package com.byx.exception;
 
-public class BookWebsiteException extends RuntimeException
+/**
+ * 业务逻辑异常
+ */
+public class LogicException extends RuntimeException
 {
     private final String message;
 
-    public BookWebsiteException(String message)
+    public LogicException(String message)
     {
         this.message = message;
     }

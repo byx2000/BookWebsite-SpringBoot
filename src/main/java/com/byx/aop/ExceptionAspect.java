@@ -1,7 +1,7 @@
 package com.byx.aop;
 
 import com.byx.domain.ResultInfo;
-import com.byx.exception.BookWebsiteException;
+import com.byx.exception.LogicException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -41,7 +41,7 @@ public class ExceptionAspect
             return ResultInfo.fail("参数错误：" + e.getMessage());
         }
         // 自定义异常
-        catch (BookWebsiteException e)
+        catch (LogicException e)
         {
             e.printStackTrace();
             return ResultInfo.fail(e.getMessage());

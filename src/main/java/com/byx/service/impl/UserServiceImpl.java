@@ -2,7 +2,7 @@ package com.byx.service.impl;
 
 import com.byx.dao.IUserDao;
 import com.byx.domain.User;
-import com.byx.exception.BookWebsiteException;
+import com.byx.exception.LogicException;
 import com.byx.query.Query;
 import com.byx.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService
     {
         // 查询用户是否已存在
         if (userDao.count(new Query().addWhere("username == ?", username)) > 0)
-            throw new BookWebsiteException("用户已存在：" + username);
+            throw new LogicException("用户已存在：" + username);
 
         // 插入用户
         User user = new User();
