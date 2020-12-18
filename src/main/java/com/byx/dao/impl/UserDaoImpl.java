@@ -36,4 +36,10 @@ public class UserDaoImpl extends BaseDao implements IUserDao
     {
         return super.save(user);
     }
+
+    @Override
+    public void delete(Query query)
+    {
+        super.delete(query);
+    }
 }

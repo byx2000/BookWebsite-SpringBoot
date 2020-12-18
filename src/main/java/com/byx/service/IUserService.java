@@ -16,13 +16,6 @@ public interface IUserService
     User login(String username, String password);
 
     /**
-     * 根据id查询用户
-     * @param userId 用户id
-     * @return 用户列表
-     */
-    User queryById(int userId);
-
-    /**
      * 注册
      * @param username 用户名
      * @param password 密码
@@ -30,4 +23,10 @@ public interface IUserService
      * @return 新用户的id
      */
     int register(String username, String password, String nickname);
+
+    /**
+     * 删除用户
+     * @param userId 用户id
+     */
+    void delete(int userId);
 }

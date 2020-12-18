@@ -30,4 +30,10 @@ public interface IUserDao
      * @return 新用户的id
      */
     int save(User user);
+
+    /**
+     * 删除用户
+     * @param query 查询条件
+     */
+    void delete(Query query);
 }

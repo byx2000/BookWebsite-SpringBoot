@@ -25,7 +25,7 @@ public class UserController extends BaseController
      * 登录
      * @param username 用户名
      * @param password 密码
-     * @return 结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/login")
     public ResultInfo login(@NotNull String username,
@@ -41,7 +41,7 @@ public class UserController extends BaseController
 
     /**
      * 注销
-     * @return 结果
+     * @return 操作结果：成功或失败
      */
     @RequestMapping("/logout")
     @RequireLogin
@@ -53,7 +53,7 @@ public class UserController extends BaseController
 
     /**
      * 获取当前登录用户
-     * @return 结果
+     * @return 当前登录用户信息
      */
     @RequestMapping("/current")
     @RequireLogin
@@ -63,37 +63,35 @@ public class UserController extends BaseController
     }
 
     /**
-     * 根据id查询用户
-     * @param userId 用户id
-     * @return 结果
-     */
-    @RequestMapping("/query")
-    public ResultInfo query(@NotNull Integer userId)
-    {
-        return ResultInfo.success(userService.queryById(userId));
-    }
-
-    /**
      * 注册
      * @param username 用户名
      * @param password 密码
      * @param nickname 昵称
      * @param avatar 头像
      * @return 操作结果
-     * @throws Exception 保存头像时可能抛出IO异常
      */
     @RequestMapping("/register")
     public ResultInfo register(@NotNull String username,
                                @NotNull String password,
                                @NotNull String nickname,
-                               @NotNull MultipartFile avatar) throws Exception
+                               @NotNull MultipartFile avatar)
     {
         // 保存用户数据，并获取id
         int id = userService.register(username, password, nickname);
 
         // 保存用户头像
-        File uploadPath = new File(getStaticResourcePath(), "upload/avatar");
-        avatar.transferTo(new File(uploadPath, id + ".jpg"));
+        try
+        {
+            File uploadPath = new File(getStaticResourcePath(), "upload/avatar");
+            avatar.transferTo(new File(uploadPath, id + ".jpg"));
+        }
+        // 保存失败，删除刚刚添加的用户
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            userService.delete(id);
+            return ResultInfo.fail("注册失败");
+        }
 
         return ResultInfo.success();
     }

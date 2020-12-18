@@ -33,15 +33,6 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public User queryById(int userId)
-    {
-        User user = userDao.query(new Query().addWhere("id == ?", userId)).get(0);
-        user.setPassword(null);
-        return user;
-    }
-
-    @Override
     public int register(String username, String password, String nickname)
     {
         // 查询用户是否已存在
@@ -54,5 +45,11 @@ public class UserServiceImpl implements IUserService
         user.setPassword(password);
         user.setNickname(nickname);
         return userDao.save(user);
+    }
+
+    @Override
+    public void delete(int userId)
+    {
+        userDao.delete(new Query().addWhere("id == ?", userId));
     }
 }
