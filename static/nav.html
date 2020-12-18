@@ -105,7 +105,7 @@
     }
 
     /* #nav .search a */
-    .search_button
+    .search_button_nav
     {
         display: inline-block;
         width: 15px;
@@ -117,7 +117,7 @@
     }
 
     /* #nav .search a:hover */
-    .search_button:hover
+    .search_button_nav:hover
     {
         cursor: pointer;
     }
@@ -244,7 +244,7 @@
                    v-on:keydown.down="downPressOnSearch"
                    v-on:keydown.up="upPressOnSearch"
                    v-on:input="onSearchTextChange"/>
-            <a class="search_button" v-on:click="search"></a>
+            <a class="search_button_nav" v-on:click="search"></a>
             <div class="search_predict" v-if="isSearchPredictShow">
                 <div v-bind:class="index === selectedSearchPredictItemIndex ? 'search_predict_item_hover' : 'search_predict_item'"
                      v-for="(book, index) in searchPredict">
