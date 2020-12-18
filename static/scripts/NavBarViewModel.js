@@ -13,7 +13,10 @@ $(function()
                 "./about.html"],
             selectedTabIndex: -1,
             keyword: "",
-            user: null
+            user: null,
+            isSearchPredictShow: false,
+            searchPredict: [],
+            selectedSearchPredictItemIndex: -1
         },
         methods: 
         {
@@ -33,6 +36,52 @@ $(function()
                     {
                         location.reload();
                     });
+            },
+            // 搜索词改变
+            onSearchTextChange: function()
+            {
+                this.selectedSearchPredictItemIndex = -1;
+                if (this.keyword.trim() !== "")
+                {   
+                    // 获取搜索预测
+                    request(BOOK_SEARCH_PREDICT_URL, { keyword: this.keyword.trim(), count: 10 })
+                        .then(books =>
+                        {
+                            if (books.length > 0)
+                            {
+                                app.searchPredict = books;
+                                this.isSearchPredictShow = true;
+                            }
+                        });
+                }
+                else
+                {
+                    this.isSearchPredictShow = false;
+                }
+            },
+            // 搜索预测项被鼠标滑过
+            onSearchPredictItemHover: function(index)
+            {
+                this.selectedSearchPredictItemIndex = index;
+                console.log("hover");
+            },
+            // 搜索时按下方向下键
+            downPressOnSearch: function()
+            {
+                if (this.selectedSearchPredictItemIndex < this.searchPredict.length - 1)
+                {
+                    this.selectedSearchPredictItemIndex++;
+                    this.keyword = this.searchPredict[this.selectedSearchPredictItemIndex].name;
+                }
+            },
+            // 搜索时按下方向上键
+            upPressOnSearch: function()
+            {
+                if (this.selectedSearchPredictItemIndex > 0)
+                {
+                    this.selectedSearchPredictItemIndex--;
+                    this.keyword = this.searchPredict[this.selectedSearchPredictItemIndex].name;
+                }
             }
         },
         mounted: function()

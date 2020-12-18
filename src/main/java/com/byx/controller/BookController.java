@@ -4,11 +4,15 @@ import com.byx.domain.ResultInfo;
 import com.byx.query.BookQueryCondition;
 import com.byx.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping("/book")
+@Validated
 public class BookController extends BaseController
 {
     @Autowired
@@ -36,5 +40,18 @@ public class BookController extends BaseController
         {
             return ResultInfo.success(bookService.queryByPage(bookQueryCondition, pageSize, currentPage));
         }
+    }
+
+    /**
+     * 搜索预测
+     * @param keyword 关键词
+     * @param count 数量
+     * @return 预测列表
+     */
+    @RequestMapping("/search_predict")
+    public ResultInfo searchPredict(@NotNull String keyword,
+                                    @NotNull Integer count)
+    {
+        return ResultInfo.success(bookService.searchPredict(keyword, count));
     }
 }

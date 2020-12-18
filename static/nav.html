@@ -5,7 +5,7 @@
 <style>
     #nav
     {
-        overflow: hidden;
+        /* overflow: hidden; */
         width: 100%;
         height: 68px;
         background-color: white;
@@ -49,7 +49,7 @@
 
     #nav .tab_normal
     {
-        color: rgb(158, 158, 158);
+        color:#999999;
     }
 
     #nav .tab_normal:hover
@@ -69,7 +69,7 @@
         width: 60px;
         height: 28px;
         font-size: 14px;
-        color: #9e9e9e;
+        color: #999999;
         background-color: white;
         border: 1px solid #d2d2d2;
         text-align: center;
@@ -79,7 +79,7 @@
 
     #nav .login_or_register a:hover
     {
-        background-color: #9e9e9e;
+        background-color: #999999;
         color: white;
     }
 
@@ -100,11 +100,12 @@
         border: none;
         background: transparent;
         padding-left: 12px;
-        color: #9e9e9e;
+        color: #999999;
         font-size: 12px;
     }
 
-    #nav .search a
+    /* #nav .search a */
+    .search_button
     {
         display: inline-block;
         width: 15px;
@@ -115,7 +116,8 @@
         background-size: 100% 100%;
     }
 
-    #nav .search a:hover
+    /* #nav .search a:hover */
+    .search_button:hover
     {
         cursor: pointer;
     }
@@ -135,20 +137,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
-    /*#nav .logout
-    {
-        font-size: 14px;
-        color: #9e9e9e;
-        margin-left: 20px;
-    }
-
-    #nav .logout:hover
-    {
-        color: #f26552;
-        cursor: pointer;
-        text-decoration: underline;
-    }*/
 
     #nav .logout
     {
@@ -185,6 +173,52 @@
         border-radius: 100%;
         margin-right: 10px;
     }
+
+    /*搜索预测*/
+
+    .search
+    {
+        position: relative;
+    }
+
+    .search_predict
+    {
+        position: absolute;
+        left: 0px;
+        top: 28px;
+        width: 232px;
+        height: fit-content;
+        max-height: 300px;
+        background-color: #ffffff;
+        border: 1px solid #f0f0f0;
+        margin-top: 1px;
+    }
+
+    .search_predict_item, .search_predict_item_hover
+    {
+        height: 30px;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        
+    }
+
+    .search_predict_item
+    {
+        background-color: #ffffff;
+    }
+
+    .search_predict_item_hover
+    {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .search_predict_book_name
+    {
+        font-size: 14px;
+        color: #999999;
+    }
 </style>
 
 <!--导航栏内容-->
@@ -206,8 +240,21 @@
             <input type="text" 
                    placeholder="请输入关键词" 
                    v-model="keyword"
-                   v-on:keyup.enter="search"/>
-            <a v-on:click="search"></a>
+                   v-on:keyup.enter="search"
+                   v-on:keydown.down="downPressOnSearch"
+                   v-on:keydown.up="upPressOnSearch"
+                   v-on:input="onSearchTextChange"/>
+            <a class="search_button" v-on:click="search"></a>
+            <div class="search_predict" v-if="isSearchPredictShow">
+                <div v-bind:class="index === selectedSearchPredictItemIndex ? 'search_predict_item_hover' : 'search_predict_item'"
+                     v-for="(book, index) in searchPredict">
+                    <a class="search_predict_book_name ellipses_text_singleline"
+                       v-bind:href="'./search_result.html?keyword=' + book.name + '&currentPage=1'"
+                       v-on:mouseover="onSearchPredictItemHover(index)">
+                        {{book.name}}
+                    </a>
+                </div>
+            </div>
         </div>
         <!--登录与注册入口-->
         <div class="login_or_register" v-if="user === null">

@@ -26,4 +26,12 @@ public interface IBookService
      * @return 分页数据
      */
     PageBean<Book> queryByPage(BookQueryCondition query, int pageSize, int currentPage);
+
+    /**
+     * 搜索预测
+     * @param keyword 关键词
+     * @param count 数量
+     * @return 预测电子书列表
+     */
+    List<Book> searchPredict(String keyword, int count);
 }

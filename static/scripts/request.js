@@ -50,3 +50,4 @@ var ADD_BOOKMARK_URL = "bookmark/add";
 var REMOVE_BOOKMARK_URL = "bookmark/remove";
 var IS_BOOKMARK_URL = "bookmark/is_bookmark";
 var BOOKMARK_QUERY_URL = "bookmark/query";
+var BOOK_SEARCH_PREDICT_URL = "book/search_predict";

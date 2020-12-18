@@ -80,4 +80,13 @@ public class BookServiceImpl implements IBookService
     {
         return bookDao.queryByPage(getQuery(bookQueryCondition), pageSize, currentPage);
     }
+
+    @Override
+    public List<Book> searchPredict(String keyword, int count)
+    {
+        return bookDao.query(new Query()
+                .addWhere("name LIKE ?", "%" + keyword + "%")
+                .addOrder("length(name)")
+                .setLimit(count));
+    }
 }

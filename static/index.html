@@ -34,9 +34,11 @@
 
             .banner_book_description
             {
-                opacity: 0.3;
+                opacity: 0.3; 
+                color: white;
                 max-width: 516px;
                 margin-top: 10px;
+                pointer-events: none;
             }
 
             .banner_book_list
@@ -272,7 +274,7 @@
                    v-bind:href="'./book_detail.html?bookId=' + books[index].id">
                     {{books[index].name}}
                 </a>
-                <p class="banner_book_description medium_font-size white_color ellipses_text_singleline">
+                <p class="banner_book_description medium_font-size ellipses_text_singleline">
                     {{books[index].description}}
                 </p>
                 <div class="banner_book_list">
