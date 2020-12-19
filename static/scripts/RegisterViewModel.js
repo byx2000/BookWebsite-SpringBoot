@@ -8,6 +8,7 @@ $(function()
                 username: "",
                 password: "",
                 nickname: "",
+                checkCode: "",
                 avatar: null
             },
             methods:
@@ -55,11 +56,18 @@ $(function()
                         return;
                     }
 
+                    if (this.checkCode.trim() === "")
+                    {
+                        alert("请输入验证码");
+                        return;
+                    }
+
                     let formData = new FormData();
                     formData.append("username", this.username);
                     formData.append("password", this.password);
                     formData.append("nickname", this.nickname);
                     formData.append("avatar", this.avatar);
+                    formData.append("checkCode", this.checkCode);
                     request(REGISTER_URL, formData, false, false)
                         .then(() =>
                         {
@@ -70,6 +78,11 @@ $(function()
                         {
                             alert(error);
                         });
+                },
+                // 更换验证码
+                changeCheckCode: function(e)
+                {
+                    e.srcElement.src = "check_code/generate?width=100&height=35&time=" + new Date().getTime();
                 }
             },
             mounted: function()

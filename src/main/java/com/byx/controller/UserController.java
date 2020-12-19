@@ -68,14 +68,19 @@ public class UserController extends BaseController
      * @param password 密码
      * @param nickname 昵称
      * @param avatar 头像
+     * @param checkCode 验证码
      * @return 操作结果：成功或失败
      */
     @RequestMapping("/register")
     public ResultInfo register(@NotNull String username,
                                @NotNull String password,
                                @NotNull String nickname,
-                               @NotNull MultipartFile avatar)
+                               @NotNull MultipartFile avatar,
+                               @NotNull String checkCode)
     {
+        // 验证验证码
+        verifyCheckCode(checkCode);
+
         // 保存用户数据，并获取id
         int id = userService.register(username, password, nickname);
 

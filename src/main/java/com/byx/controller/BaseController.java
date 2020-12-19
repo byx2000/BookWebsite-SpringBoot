@@ -1,6 +1,7 @@
 package com.byx.controller;
 
 import com.byx.domain.User;
+import com.byx.exception.LogicException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.system.ApplicationHome;
 
@@ -48,5 +49,32 @@ public class BaseController
     protected File getStaticResourcePath()
     {
         return new File(new ApplicationHome().getDir(), "static");
+    }
+
+    /**
+     * 设置验证码
+     * @param code 验证码
+     */
+    protected void setCheckCode(String code)
+    {
+        session.setAttribute("checkCode", code);
+    }
+
+    /**
+     * 验证验证码
+     * @param input 输入
+     */
+    protected void verifyCheckCode(String input)
+    {
+        String answer = (String) session.getAttribute("checkCode");
+        System.out.println(answer + " " + input);
+        if (answer == null || !answer.equalsIgnoreCase(input))
+        {
+            throw new LogicException("验证码错误");
+        }
+        else
+        {
+            session.removeAttribute("checkCode");
+        }
     }
 }
