@@ -63,7 +63,6 @@ $(function()
             onSearchPredictItemHover: function(index)
             {
                 this.selectedSearchPredictItemIndex = index;
-                console.log("hover");
             },
             // 搜索时按下方向下键
             downPressOnSearch: function()

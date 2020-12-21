@@ -84,9 +84,14 @@ public class BookServiceImpl implements IBookService
     @Override
     public List<Book> searchPredict(String keyword, int count)
     {
-        return bookDao.query(new Query()
+        List<Book> books = bookDao.query(new Query()
                 .addWhere("name LIKE ?", "%" + keyword + "%")
                 .addOrder("length(name)")
                 .setLimit(count));
+        for (Book book : books)
+        {
+            book.setDescription(null);
+        }
+        return books;
     }
 }
