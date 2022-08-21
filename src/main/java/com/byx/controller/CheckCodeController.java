@@ -14,13 +14,10 @@ import java.util.Random;
  */
 @Controller
 @RequestMapping("/check_code")
-public class CheckCodeController extends BaseController
-{
+public class CheckCodeController extends BaseController {
     @RequestMapping("/generate")
-    public void generate(Integer width, Integer height, HttpServletResponse response)
-    {
-        try
-        {
+    public void generate(Integer width, Integer height, HttpServletResponse response) {
+        try {
             if (width == null) width = 100;
             if (height == null) height = 35;
 
@@ -35,8 +32,7 @@ public class CheckCodeController extends BaseController
             Random rand = new Random();
             String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder answer = new StringBuilder();
-            for (int i = 0; i < 4; ++i)
-            {
+            for (int i = 0; i < 4; ++i) {
                 int index = rand.nextInt(str.length());
                 char ch = str.charAt(index);
                 answer.append(ch);
@@ -48,8 +44,7 @@ public class CheckCodeController extends BaseController
                 g.drawString(ch + "", x, y);
             }
 
-            for (int i = 0; i < 15; ++i)
-            {
+            for (int i = 0; i < 15; ++i) {
                 g.setColor(Color.GREEN);
                 int x1 = rand.nextInt(width);
                 int y1 = rand.nextInt(height);
@@ -62,9 +57,7 @@ public class CheckCodeController extends BaseController
 
             setCheckCode(answer.toString());
             ImageIO.write(image, "jpg", response.getOutputStream());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

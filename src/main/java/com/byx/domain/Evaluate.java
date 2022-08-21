@@ -4,8 +4,7 @@ package com.byx.domain;
  * 点评实体类
  * <p>对应于数据库中的evaluates表</p>
  */
-public class Evaluate
-{
+public class Evaluate {
     /**
      * 点评id
      */
@@ -26,49 +25,40 @@ public class Evaluate
      */
     private Integer state;
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Integer getBookId()
-    {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId)
-    {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
-    public Integer getUserId()
-    {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId)
-    {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public Integer getState()
-    {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(Integer state)
-    {
+    public void setState(Integer state) {
         this.state = state;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Evaluate{" +
                 "id=" + id +
                 ", bookId=" + bookId +

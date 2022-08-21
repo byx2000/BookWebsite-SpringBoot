@@ -17,38 +17,34 @@ import javax.validation.ConstraintViolationException;
 @Component
 @Aspect
 @Order(1)
-public class ExceptionAspect
-{
+public class ExceptionAspect {
     @Pointcut("execution(com.byx.domain.ResultInfo com.byx.controller.*.*(..))")
-    public void pointcut() {}
+    public void pointcut() {
+    }
 
     /**
      * 捕获controller层的异常
+     *
      * @param pjp 连接点
      * @return 错误消息或结果
      */
     @Around("pointcut()")
-    public ResultInfo handle(ProceedingJoinPoint pjp)
-    {
-        try
-        {
+    public ResultInfo handle(ProceedingJoinPoint pjp) {
+        try {
             return (ResultInfo) pjp.proceed();
         }
         // 参数异常
-        catch (ConstraintViolationException e)
-        {
+        catch (ConstraintViolationException e) {
             e.printStackTrace();
             return ResultInfo.fail("参数错误：" + e.getMessage());
         }
         // 自定义异常
-        catch (LogicException e)
-        {
+        catch (LogicException e) {
             e.printStackTrace();
             return ResultInfo.fail(e.getMessage());
         }
         // 未知异常
-        catch (Throwable e)
-        {
+        catch (Throwable e) {
             e.printStackTrace();
             return ResultInfo.fail("服务器内部错误：" + e.getMessage());
         }

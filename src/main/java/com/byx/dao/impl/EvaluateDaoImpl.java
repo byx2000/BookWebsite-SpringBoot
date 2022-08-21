@@ -11,35 +11,29 @@ import java.util.List;
  * 点评数据访问实现类
  */
 @Repository
-public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao
-{
+public class EvaluateDaoImpl extends BaseDao implements IEvaluateDao {
     @Override
-    protected String getTableName()
-    {
+    protected String getTableName() {
         return "evaluates";
     }
 
     @Override
-    public List<Evaluate> query(Query query)
-    {
+    public List<Evaluate> query(Query query) {
         return query(query, Evaluate.class);
     }
 
     @Override
-    public void save(Evaluate evaluate)
-    {
+    public void save(Evaluate evaluate) {
         super.save(evaluate);
     }
 
     @Override
-    public void delete(Query query)
-    {
+    public void delete(Query query) {
         super.delete(query);
     }
 
     @Override
-    public void updateState(int evaluateId, int state)
-    {
+    public void updateState(int evaluateId, int state) {
         getJdbcTemplate().update("UPDATE evaluates SET state = ? WHERE id == ?",
                 state, evaluateId);
     }

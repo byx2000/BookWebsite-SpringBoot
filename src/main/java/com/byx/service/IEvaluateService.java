@@ -3,10 +3,10 @@ package com.byx.service;
 /**
  * 点评服务接口
  */
-public interface IEvaluateService
-{
+public interface IEvaluateService {
     /**
      * 点赞
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      */
@@ -14,6 +14,7 @@ public interface IEvaluateService
 
     /**
      * 取消点赞
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      */
@@ -21,6 +22,7 @@ public interface IEvaluateService
 
     /**
      * 点踩
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      */
@@ -28,6 +30,7 @@ public interface IEvaluateService
 
     /**
      * 取消点踩
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      */
@@ -35,6 +38,7 @@ public interface IEvaluateService
 
     /**
      * 是否已点赞
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      * @return true或false
@@ -43,6 +47,7 @@ public interface IEvaluateService
 
     /**
      * 是否已点踩
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      * @return true或false

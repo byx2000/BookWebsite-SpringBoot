@@ -16,8 +16,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class EvaluateServiceImpl implements IEvaluateService
-{
+public class EvaluateServiceImpl implements IEvaluateService {
     @Autowired
     private IEvaluateDao evaluateDao;
 
@@ -25,20 +24,17 @@ public class EvaluateServiceImpl implements IEvaluateService
     private IBookDao bookDao;
 
     @Override
-    public void like(int bookId, int userId)
-    {
+    public void like(int bookId, int userId) {
         List<Evaluate> evaluates = evaluateDao.query(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));
 
         // 用户已有点评记录
-        if (evaluates.size() > 0)
-        {
+        if (evaluates.size() > 0) {
             // 获取点评记录
             Evaluate evaluate = evaluates.get(0);
             // 当前点评状态为踩
-            if (evaluate.getState() == 1)
-            {
+            if (evaluate.getState() == 1) {
                 // 设置当前点评状态为赞
                 evaluateDao.updateState(evaluate.getId(), 0);
                 // 踩的数量-1
@@ -48,8 +44,7 @@ public class EvaluateServiceImpl implements IEvaluateService
             }
         }
         // 用户没有点评记录
-        else
-        {
+        else {
             // 插入点评记录
             Evaluate evaluate = new Evaluate();
             evaluate.setBookId(bookId);
@@ -62,20 +57,17 @@ public class EvaluateServiceImpl implements IEvaluateService
     }
 
     @Override
-    public void cancelLike(int bookId, int userId)
-    {
+    public void cancelLike(int bookId, int userId) {
         List<Evaluate> evaluates = evaluateDao.query(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));
 
         // 用户已有点评记录
-        if (evaluates.size() > 0)
-        {
+        if (evaluates.size() > 0) {
             // 获取点评记录
             Evaluate evaluate = evaluates.get(0);
             // 当前点评状态为赞
-            if (evaluate.getState() == 0)
-            {
+            if (evaluate.getState() == 0) {
                 // 删除点评记录
                 evaluateDao.delete(new Query().addWhere("id == ?", evaluate.getId()));
                 // 赞的数量-1
@@ -85,20 +77,17 @@ public class EvaluateServiceImpl implements IEvaluateService
     }
 
     @Override
-    public void dislike(int bookId, int userId)
-    {
+    public void dislike(int bookId, int userId) {
         List<Evaluate> evaluates = evaluateDao.query(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));
 
         // 用户已有点评记录
-        if (evaluates.size() > 0)
-        {
+        if (evaluates.size() > 0) {
             // 获取点评记录
             Evaluate evaluate = evaluates.get(0);
             // 当前点评状态为赞
-            if (evaluate.getState() == 0)
-            {
+            if (evaluate.getState() == 0) {
                 // 设置当前点评状态为踩
                 evaluateDao.updateState(evaluate.getId(), 1);
                 // 赞的数量-1
@@ -108,8 +97,7 @@ public class EvaluateServiceImpl implements IEvaluateService
             }
         }
         // 用户没有点评记录
-        else
-        {
+        else {
             // 插入点评记录
             Evaluate evaluate = new Evaluate();
             evaluate.setBookId(bookId);
@@ -122,20 +110,17 @@ public class EvaluateServiceImpl implements IEvaluateService
     }
 
     @Override
-    public void cancelDislike(int bookId, int userId)
-    {
+    public void cancelDislike(int bookId, int userId) {
         List<Evaluate> evaluates = evaluateDao.query(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));
 
         // 用户已有点评记录
-        if (evaluates.size() > 0)
-        {
+        if (evaluates.size() > 0) {
             // 获取点评记录
             Evaluate evaluate = evaluates.get(0);
             // 当前点评记录为踩
-            if (evaluate.getState() == 1)
-            {
+            if (evaluate.getState() == 1) {
                 // 删除点评记录
                 evaluateDao.delete(new Query().addWhere("id == ?", evaluate.getId()));
                 // 踩的数量-1
@@ -146,8 +131,7 @@ public class EvaluateServiceImpl implements IEvaluateService
 
     @Override
     @Transactional(readOnly = true)
-    public boolean isLike(int bookId, int userId)
-    {
+    public boolean isLike(int bookId, int userId) {
         List<Evaluate> evaluates = evaluateDao.query(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));
@@ -157,8 +141,7 @@ public class EvaluateServiceImpl implements IEvaluateService
 
     @Override
     @Transactional(readOnly = true)
-    public boolean isDislike(int bookId, int userId)
-    {
+    public boolean isDislike(int bookId, int userId) {
         List<Evaluate> evaluates = evaluateDao.query(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));

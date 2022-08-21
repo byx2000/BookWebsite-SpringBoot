@@ -3,67 +3,55 @@ package com.byx.domain;
 /**
  * 评论实体类
  */
-public class Comment
-{
+public class Comment {
     private Integer id;
     private Integer bookId;
     private Integer userId;
     private String content;
     private String time;
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Integer getBookId()
-    {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId)
-    {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
-    public Integer getUserId()
-    {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId)
-    {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public String getContent()
-    {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(String content)
-    {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public String getTime()
-    {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(String time)
-    {
+    public void setTime(String time) {
         this.time = time;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", bookId=" + bookId +

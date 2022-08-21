@@ -23,8 +23,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class BookmarkServiceImpl implements IBookmarkService
-{
+public class BookmarkServiceImpl implements IBookmarkService {
     @Autowired
     private IBookmarkDao bookmarkDao;
 
@@ -35,8 +34,7 @@ public class BookmarkServiceImpl implements IBookmarkService
     private IChapterDao chapterDao;
 
     @Override
-    public void add(int userId, int chapterId)
-    {
+    public void add(int userId, int chapterId) {
         // 防止重复插入
         if (isBookmark(userId, chapterId)) return;
 
@@ -48,8 +46,7 @@ public class BookmarkServiceImpl implements IBookmarkService
     }
 
     @Override
-    public void remove(int userId, int chapterId)
-    {
+    public void remove(int userId, int chapterId) {
         bookmarkDao.delete(new Query()
                 .addWhere("userId == ?", userId)
                 .addWhere("chapterId == ?", chapterId));
@@ -57,8 +54,7 @@ public class BookmarkServiceImpl implements IBookmarkService
 
     @Override
     @Transactional(readOnly = true)
-    public boolean isBookmark(int userId, int chapterId)
-    {
+    public boolean isBookmark(int userId, int chapterId) {
         return bookmarkDao.count(new Query()
                 .addWhere("userId == ?", userId)
                 .addWhere("chapterId == ?", chapterId)) > 0;
@@ -66,8 +62,7 @@ public class BookmarkServiceImpl implements IBookmarkService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryBookmarksOfUser(int userId, String bookName, String chapterName, boolean isDesc, int pageSize, int currentPage)
-    {
+    public PageBean<List<Object>> queryBookmarksOfUser(int userId, String bookName, String chapterName, boolean isDesc, int pageSize, int currentPage) {
         // 获取书签列表
         Query bookmarkQuery = new Query()
                 .addWhere("userId == ?", userId)
@@ -78,8 +73,7 @@ public class BookmarkServiceImpl implements IBookmarkService
 
         // 获取书签对应的电子书信息和章节信息
         List<List<Object>> result = new ArrayList<>();
-        for (Bookmark bookmark : bookmarkPageBean.getData())
-        {
+        for (Bookmark bookmark : bookmarkPageBean.getData()) {
             Chapter chapter = chapterDao.query(new Query().addWhere("id == ?", bookmark.getChapterId())).get(0);
             Book book = bookDao.query(new Query().addWhere("id == ?", chapter.getBookId())).get(0);
             if (chapter.getContent().length() > 200)

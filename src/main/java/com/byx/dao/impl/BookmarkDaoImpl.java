@@ -10,35 +10,29 @@ import org.springframework.stereotype.Repository;
  * 书签数据访问实现类
  */
 @Repository
-public class BookmarkDaoImpl extends BaseDao implements IBookmarkDao
-{
+public class BookmarkDaoImpl extends BaseDao implements IBookmarkDao {
     @Override
-    protected String getTableName()
-    {
+    protected String getTableName() {
         return "bookmarks";
     }
 
     @Override
-    public int count(Query query)
-    {
+    public int count(Query query) {
         return super.count(query);
     }
 
     @Override
-    public PageBean<Bookmark> queryByPage(Query query, int pageSize, int currentPage)
-    {
+    public PageBean<Bookmark> queryByPage(Query query, int pageSize, int currentPage) {
         return queryByPage(query, Bookmark.class, pageSize, currentPage);
     }
 
     @Override
-    public void save(Bookmark bookmark)
-    {
+    public void save(Bookmark bookmark) {
         super.save(bookmark);
     }
 
     @Override
-    public void delete(Query query)
-    {
+    public void delete(Query query) {
         super.delete(query);
     }
 }

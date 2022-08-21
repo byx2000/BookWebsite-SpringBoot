@@ -21,8 +21,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class FavoriteServiceImpl implements IFavoriteService
-{
+public class FavoriteServiceImpl implements IFavoriteService {
     @Autowired
     private IFavoriteDao favoriteDao;
 
@@ -31,8 +30,7 @@ public class FavoriteServiceImpl implements IFavoriteService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryFavoritesOfUser(int userId, String bookName, String author, boolean isDesc, int pageSize, int currentPage)
-    {
+    public PageBean<List<Object>> queryFavoritesOfUser(int userId, String bookName, String author, boolean isDesc, int pageSize, int currentPage) {
         // 查询收藏记录
         Query favoriteQuery = new Query()
                 .addWhere("userId == ?", userId)
@@ -43,8 +41,7 @@ public class FavoriteServiceImpl implements IFavoriteService
 
         // 查询每条收藏记录对应的电子书信息
         List<List<Object>> result = new ArrayList<>();
-        for (Favorite f : favoritePageBean.getData())
-        {
+        for (Favorite f : favoritePageBean.getData()) {
             int bookId = f.getBookId();
             List<Book> books = bookDao.query(new Query().addWhere("id == ?", bookId));
             result.add(Arrays.asList(f, books.get(0)));
@@ -62,16 +59,14 @@ public class FavoriteServiceImpl implements IFavoriteService
 
     @Override
     @Transactional(readOnly = true)
-    public boolean isFavorite(int bookId, int userId)
-    {
+    public boolean isFavorite(int bookId, int userId) {
         return favoriteDao.count(new Query()
                 .addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId)) > 0;
     }
 
     @Override
-    public void add(int bookId, int userId)
-    {
+    public void add(int bookId, int userId) {
         // 判断是否已经收藏
         if (isFavorite(bookId, userId)) return;
 
@@ -86,8 +81,7 @@ public class FavoriteServiceImpl implements IFavoriteService
     }
 
     @Override
-    public void cancel(int bookId, int userId)
-    {
+    public void cancel(int bookId, int userId) {
         favoriteDao.delete(new Query().addWhere("bookId == ?", bookId)
                 .addWhere("userId == ?", userId));
     }

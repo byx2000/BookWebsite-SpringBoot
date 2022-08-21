@@ -18,13 +18,11 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class BookServiceImpl implements IBookService
-{
+public class BookServiceImpl implements IBookService {
     @Autowired
     private IBookDao bookDao;
 
-    private Query getQuery(BookQueryCondition bookQueryCondition)
-    {
+    private Query getQuery(BookQueryCondition bookQueryCondition) {
         Query query = new Query();
         if (bookQueryCondition.getBookId() != null)
             query.addWhere("id == ?", bookQueryCondition.getBookId());
@@ -36,10 +34,8 @@ public class BookServiceImpl implements IBookService
             query.addWhere("name LIKE ? OR author LIKE ? OR description LIKE ?",
                     "%" + bookQueryCondition.getKeyword() + "%", "%" + bookQueryCondition.getKeyword() + "%", "%" + bookQueryCondition.getKeyword() + "%");
 
-        if (bookQueryCondition.getOrderBy() != null)
-        {
-            switch (bookQueryCondition.getOrderBy())
-            {
+        if (bookQueryCondition.getOrderBy() != null) {
+            switch (bookQueryCondition.getOrderBy()) {
                 case "updateTime": // 按更新时间排序
                     query.addOrder("updateTime", true);
                     break;
@@ -69,27 +65,23 @@ public class BookServiceImpl implements IBookService
 
     @Override
     @Transactional(readOnly = true)
-    public List<Book> query(BookQueryCondition bookQueryCondition)
-    {
+    public List<Book> query(BookQueryCondition bookQueryCondition) {
         return bookDao.query(getQuery(bookQueryCondition));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<Book> queryByPage(BookQueryCondition bookQueryCondition, int pageSize, int currentPage)
-    {
+    public PageBean<Book> queryByPage(BookQueryCondition bookQueryCondition, int pageSize, int currentPage) {
         return bookDao.queryByPage(getQuery(bookQueryCondition), pageSize, currentPage);
     }
 
     @Override
-    public List<Book> searchPredict(String keyword, int count)
-    {
+    public List<Book> searchPredict(String keyword, int count) {
         List<Book> books = bookDao.query(new Query()
                 .addWhere("name LIKE ?", "%" + keyword + "%")
                 .addOrder("length(name)")
                 .setLimit(count));
-        for (Book book : books)
-        {
+        for (Book book : books) {
             book.setDescription(null);
         }
         return books;

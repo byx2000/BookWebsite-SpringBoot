@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * 电子书章节数据访问接口
  */
-public interface IChapterDao
-{
+public interface IChapterDao {
     /**
      * 查询结果总数
+     *
      * @param query 查询条件
      * @return 结果总数
      */
@@ -19,6 +19,7 @@ public interface IChapterDao
 
     /**
      * 查询结果列表
+     *
      * @param query 查询条件
      * @return 章节列表
      */

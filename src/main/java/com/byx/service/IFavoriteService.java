@@ -7,15 +7,15 @@ import java.util.List;
 /**
  * 收藏服务接口
  */
-public interface IFavoriteService
-{
+public interface IFavoriteService {
     /**
      * 查询当前用户的收藏列表
-     * @param userId 用户id
-     * @param bookName 书名搜索关键词
-     * @param author 作者搜索关键词
-     * @param isDesc 是否按照时间降序排序
-     * @param pageSize 每页显示条数
+     *
+     * @param userId      用户id
+     * @param bookName    书名搜索关键词
+     * @param author      作者搜索关键词
+     * @param isDesc      是否按照时间降序排序
+     * @param pageSize    每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据
      */
@@ -23,6 +23,7 @@ public interface IFavoriteService
 
     /**
      * 判断当前用户是否收藏指定电子书
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      * @return true或false
@@ -31,6 +32,7 @@ public interface IFavoriteService
 
     /**
      * 添加收藏
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      */
@@ -38,6 +40,7 @@ public interface IFavoriteService
 
     /**
      * 取消收藏
+     *
      * @param bookId 电子书id
      * @param userId 用户id
      */

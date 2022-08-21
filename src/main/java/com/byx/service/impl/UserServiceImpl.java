@@ -16,15 +16,13 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements IUserService
-{
+public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserDao userDao;
 
     @Override
     @Transactional(readOnly = true)
-    public User login(String username, String password)
-    {
+    public User login(String username, String password) {
         List<User> users = userDao.query(new Query()
                 .addWhere("username == ?", username)
                 .addWhere("password == ?", password));
@@ -33,8 +31,7 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    public int register(String username, String password, String nickname)
-    {
+    public int register(String username, String password, String nickname) {
         // 查询用户是否已存在
         if (userDao.count(new Query().addWhere("username == ?", username)) > 0)
             throw new LogicException("用户已存在：" + username);
@@ -48,8 +45,7 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    public void delete(int userId)
-    {
+    public void delete(int userId) {
         userDao.delete(new Query().addWhere("id == ?", userId));
     }
 }

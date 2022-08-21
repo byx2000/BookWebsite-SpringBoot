@@ -11,23 +11,19 @@ import java.util.List;
  * 电子书章节数据访问实现类
  */
 @Repository
-public class ChapterDaoImpl extends BaseDao implements IChapterDao
-{
+public class ChapterDaoImpl extends BaseDao implements IChapterDao {
     @Override
-    protected String getTableName()
-    {
+    protected String getTableName() {
         return "chapters";
     }
 
     @Override
-    public int count(Query query)
-    {
+    public int count(Query query) {
         return super.count(query);
     }
 
     @Override
-    public List<Chapter> query(Query query)
-    {
+    public List<Chapter> query(Query query) {
         return query(query, Chapter.class);
     }
 }

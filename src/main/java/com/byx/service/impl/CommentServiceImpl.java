@@ -23,8 +23,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class CommentServiceImpl implements ICommentService
-{
+public class CommentServiceImpl implements ICommentService {
     @Autowired
     private ICommentDao commentDao;
 
@@ -36,8 +35,7 @@ public class CommentServiceImpl implements ICommentService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryCommentsOfBook(int bookId, int pageSize, int currentPage)
-    {
+    public PageBean<List<Object>> queryCommentsOfBook(int bookId, int pageSize, int currentPage) {
         // 查询评论
         PageBean<Comment> commentPageBean = commentDao.queryByPage(new Query().addWhere("bookId == ?", bookId)
                         .addOrder("time", true),
@@ -45,8 +43,7 @@ public class CommentServiceImpl implements ICommentService
 
         // 查询评论对应的用户
         List<List<Object>> result = new ArrayList<>();
-        for (Comment comment : commentPageBean.getData())
-        {
+        for (Comment comment : commentPageBean.getData()) {
             User user = userDao.query(new Query().addWhere("id == ?", comment.getUserId())).get(0);
             user.setUsername(null);
             user.setPassword(null);
@@ -65,8 +62,7 @@ public class CommentServiceImpl implements ICommentService
 
     @Override
     @Transactional(readOnly = true)
-    public PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, boolean isDesc, int pageSize, int currentPage)
-    {
+    public PageBean<List<Object>> queryCommentsOfUser(int userId, String bookName, String commentContent, boolean isDesc, int pageSize, int currentPage) {
         // 查询评论
         Query commentQuery = new Query()
                 .addWhere("userId == ?", userId)
@@ -77,8 +73,7 @@ public class CommentServiceImpl implements ICommentService
 
         // 查询评论对应的电子书
         List<List<Object>> result = new ArrayList<>();
-        for (Comment comment : commentPageBean.getData())
-        {
+        for (Comment comment : commentPageBean.getData()) {
             Book book = bookDao.query(new Query().addWhere("id == ?", comment.getBookId())).get(0);
             result.add(Arrays.asList(comment, book));
         }
@@ -94,8 +89,7 @@ public class CommentServiceImpl implements ICommentService
     }
 
     @Override
-    public void publish(int bookId, int userId, String content)
-    {
+    public void publish(int bookId, int userId, String content) {
         Comment comment = new Comment();
         comment.setBookId(bookId);
         comment.setUserId(userId);
@@ -105,8 +99,7 @@ public class CommentServiceImpl implements ICommentService
     }
 
     @Override
-    public void delete(int commentId)
-    {
+    public void delete(int commentId) {
         commentDao.delete(new Query().addWhere("id == ?", commentId));
     }
 }

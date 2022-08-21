@@ -15,22 +15,19 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class CategoryServiceImpl implements ICategoryService
-{
+public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private ICategoryDao categoryDao;
 
     @Override
     @Transactional(readOnly = true)
-    public List<Category> queryAll()
-    {
+    public List<Category> queryAll() {
         return categoryDao.query(new Query());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Category queryById(int categoryId)
-    {
+    public Category queryById(int categoryId) {
         return categoryDao.query(new Query().addWhere("id == ?", categoryId)).get(0);
     }
 }

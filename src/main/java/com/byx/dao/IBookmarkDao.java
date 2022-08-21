@@ -7,10 +7,10 @@ import com.byx.query.Query;
 /**
  * 书签数据访问接口
  */
-public interface IBookmarkDao
-{
+public interface IBookmarkDao {
     /**
      * 查询结果总数
+     *
      * @param query 查询条件
      * @return 结果总数
      */
@@ -18,8 +18,9 @@ public interface IBookmarkDao
 
     /**
      * 分页查询
-     * @param query 查询条件
-     * @param pageSize 每页显示条数
+     *
+     * @param query       查询条件
+     * @param pageSize    每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据
      */
@@ -27,12 +28,14 @@ public interface IBookmarkDao
 
     /**
      * 保存
+     *
      * @param bookmark 书签数据
      */
     void save(Bookmark bookmark);
 
     /**
      * 删除
+     *
      * @param query 查询条件
      */
     void delete(Query query);

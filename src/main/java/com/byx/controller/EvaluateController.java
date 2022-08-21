@@ -16,8 +16,7 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/evaluate")
 @Validated
-public class EvaluateController extends BaseController
-{
+public class EvaluateController extends BaseController {
     @Autowired
     private IEvaluateService evaluateService;
 
@@ -28,18 +27,17 @@ public class EvaluateController extends BaseController
      * <p>"dislike": 点踩</p>
      * <p>"cancelLike": 取消点赞</p>
      * <p>"cancelDislike": 取消点踩</p>
+     *
      * @param bookId 电子书id
-     * @param cmd 操作
+     * @param cmd    操作
      * @return 操作结果：成功或失败
      */
     @RequestMapping("")
     @RequireLogin
     public ResultInfo evaluate(@NotNull Integer bookId,
-                               @NotNull String cmd)
-    {
+                               @NotNull String cmd) {
         int userId = getCurrentUser().getId();
-        switch (cmd)
-        {
+        switch (cmd) {
             case "like":
                 evaluateService.like(bookId, userId);
                 break;
@@ -60,25 +58,25 @@ public class EvaluateController extends BaseController
 
     /**
      * 是否已点赞
+     *
      * @param bookId 电子书id
      * @return true或false
      */
     @RequestMapping("/isLike")
     @RequireLogin
-    public ResultInfo isLike(@NotNull Integer bookId)
-    {
+    public ResultInfo isLike(@NotNull Integer bookId) {
         return ResultInfo.success(evaluateService.isLike(bookId, getCurrentUser().getId()));
     }
 
     /**
      * 是否已点踩
+     *
      * @param bookId 电子书id
      * @return true或false
      */
     @RequestMapping("/isDislike")
     @RequireLogin
-    public ResultInfo isDislike(@NotNull Integer bookId)
-    {
+    public ResultInfo isDislike(@NotNull Integer bookId) {
         return ResultInfo.success(evaluateService.isDislike(bookId, getCurrentUser().getId()));
     }
 }

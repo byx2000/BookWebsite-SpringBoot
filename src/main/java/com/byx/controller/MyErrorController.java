@@ -12,22 +12,17 @@ import javax.servlet.http.HttpServletRequest;
  * 转发到自定义Http错误页面
  */
 @Controller
-public class MyErrorController implements ErrorController
-{
+public class MyErrorController implements ErrorController {
     @RequestMapping("/error")
-    public String handleError(HttpServletRequest request)
-    {
+    public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-        if (status != null)
-        {
+        if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
 
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 return "redirect:/error/404.html";
-            }
-            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value())
-            {
+            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return "redirect:/error/500.html";
             }
         }
@@ -35,8 +30,7 @@ public class MyErrorController implements ErrorController
     }
 
     @Override
-    public String getErrorPath()
-    {
+    public String getErrorPath() {
         return null;
     }
 }

@@ -17,23 +17,23 @@ import javax.servlet.http.HttpSession;
 @Component
 @Aspect
 @Order(2)
-public class LoginVerifyAspect
-{
+public class LoginVerifyAspect {
     @Autowired
     private HttpSession session;
 
     @Pointcut("execution(com.byx.domain.ResultInfo com.byx.controller.*.*(..))" +
             "&& @annotation(com.byx.annotation.RequireLogin)")
-    public void pointcut() {}
+    public void pointcut() {
+    }
 
     /**
      * 登录校验
+     *
      * @param pjp 连接点
      * @return 错误消息或结果
      */
     @Around("pointcut()")
-    public ResultInfo handle(ProceedingJoinPoint pjp) throws Throwable
-    {
+    public ResultInfo handle(ProceedingJoinPoint pjp) throws Throwable {
         if (session.getAttribute("user") == null) return ResultInfo.fail("当前未登录");
         return (ResultInfo) pjp.proceed();
     }

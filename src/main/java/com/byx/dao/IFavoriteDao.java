@@ -9,10 +9,10 @@ import java.util.List;
 /**
  * 收藏数据访问接口
  */
-public interface IFavoriteDao
-{
+public interface IFavoriteDao {
     /**
      * 根据条件查询收藏数量
+     *
      * @param query 查询条件
      * @return 结果总数
      */
@@ -20,6 +20,7 @@ public interface IFavoriteDao
 
     /**
      * 查询
+     *
      * @param query 查询条件
      * @return 收藏列表
      */
@@ -27,8 +28,9 @@ public interface IFavoriteDao
 
     /**
      * 分页查询
-     * @param query 查询条件
-     * @param pageSize 每页显示条数
+     *
+     * @param query       查询条件
+     * @param pageSize    每页显示条数
      * @param currentPage 当前页码
      * @return 分页数据
      */
@@ -36,12 +38,14 @@ public interface IFavoriteDao
 
     /**
      * 保存收藏记录
+     *
      * @param favorite 收藏记录
      */
     void save(Favorite favorite);
 
     /**
      * 删除收藏记录
+     *
      * @param query 条件
      */
     void delete(Query query);

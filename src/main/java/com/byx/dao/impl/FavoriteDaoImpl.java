@@ -12,41 +12,34 @@ import java.util.List;
  * 收藏数据访问实现类
  */
 @Repository
-public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao
-{
+public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao {
     @Override
-    protected String getTableName()
-    {
+    protected String getTableName() {
         return "favorites";
     }
 
     @Override
-    public int count(Query query)
-    {
+    public int count(Query query) {
         return super.count(query);
     }
 
     @Override
-    public List<Favorite> query(Query query)
-    {
+    public List<Favorite> query(Query query) {
         return query(query, Favorite.class);
     }
 
     @Override
-    public PageBean<Favorite> queryByPage(Query query, int pageSize, int currentPage)
-    {
+    public PageBean<Favorite> queryByPage(Query query, int pageSize, int currentPage) {
         return queryByPage(query, Favorite.class, pageSize, currentPage);
     }
 
     @Override
-    public void save(Favorite favorite)
-    {
+    public void save(Favorite favorite) {
         super.save(favorite);
     }
 
     @Override
-    public void delete(Query query)
-    {
+    public void delete(Query query) {
         super.delete(query);
     }
 }

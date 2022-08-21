@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * 用户数据访问接口
  */
-public interface IUserDao
-{
+public interface IUserDao {
     /**
      * 查询结果总数
+     *
      * @param query 查询条件
      * @return 结果总数
      */
@@ -19,6 +19,7 @@ public interface IUserDao
 
     /**
      * 查询
+     *
      * @param query 查询条件
      * @return 用户列表
      */
@@ -26,6 +27,7 @@ public interface IUserDao
 
     /**
      * 保存用户
+     *
      * @param user 用户
      * @return 新用户的id
      */
@@ -33,6 +35,7 @@ public interface IUserDao
 
     /**
      * 删除用户
+     *
      * @param query 查询条件
      */
     void delete(Query query);

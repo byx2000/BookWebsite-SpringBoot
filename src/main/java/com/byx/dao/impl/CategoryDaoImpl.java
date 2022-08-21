@@ -11,17 +11,14 @@ import java.util.List;
  * 电子书类型数据访问实现类
  */
 @Repository
-public class CategoryDaoImpl extends BaseDao implements ICategoryDao
-{
+public class CategoryDaoImpl extends BaseDao implements ICategoryDao {
     @Override
-    protected String getTableName()
-    {
+    protected String getTableName() {
         return "categories";
     }
 
     @Override
-    public List<Category> query(Query query)
-    {
+    public List<Category> query(Query query) {
         return query(query, Category.class);
     }
 }

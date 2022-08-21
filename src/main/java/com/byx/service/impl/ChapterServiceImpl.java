@@ -18,8 +18,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class ChapterServiceImpl implements IChapterService
-{
+public class ChapterServiceImpl implements IChapterService {
     @Autowired
     private IChapterDao chapterDao;
 
@@ -28,8 +27,7 @@ public class ChapterServiceImpl implements IChapterService
 
     @Override
     @Transactional(readOnly = true)
-    public List<Object> getChapterAndBook(int bookId, int chapter)
-    {
+    public List<Object> getChapterAndBook(int bookId, int chapter) {
         // 查询文本信息
         Chapter c = chapterDao.query(new Query().addWhere("bookId == ?", bookId)
                 .addWhere("chapter == ?", chapter)).get(0);
@@ -42,11 +40,9 @@ public class ChapterServiceImpl implements IChapterService
 
     @Override
     @Transactional(readOnly = true)
-    public List<Chapter> getContents(int bookId)
-    {
+    public List<Chapter> getContents(int bookId) {
         List<Chapter> chapters = chapterDao.query(new Query().addWhere("bookId == ?", bookId).addOrder("chapter"));
-        for (Chapter c : chapters)
-        {
+        for (Chapter c : chapters) {
             c.setContent(null);
         }
         return chapters;

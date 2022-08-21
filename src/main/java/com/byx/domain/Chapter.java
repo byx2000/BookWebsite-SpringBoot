@@ -3,67 +3,55 @@ package com.byx.domain;
 /**
  * 电子书章节实体类
  */
-public class Chapter
-{
+public class Chapter {
     private Integer id;
     private Integer bookId;
     private Integer chapter;
     private String name;
     private String content;
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Integer getBookId()
-    {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId)
-    {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
-    public Integer getChapter()
-    {
+    public Integer getChapter() {
         return chapter;
     }
 
-    public void setChapter(Integer chapter)
-    {
+    public void setChapter(Integer chapter) {
         this.chapter = chapter;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getContent()
-    {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(String content)
-    {
+    public void setContent(String content) {
         this.content = content;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Chapter{" +
                 "id=" + id +
                 ", bookId=" + bookId +
